@@ -1,0 +1,112 @@
+import { motion } from "framer-motion";
+import { Mail, Linkedin, Github, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import QAVerifiedBadge from "@/components/QAVerifiedBadge";
+
+interface HeroSectionProps {
+  variant: "untested" | "tested";
+  onBugClick?: () => void;
+}
+
+const HeroSection = ({ variant, onBugClick }: HeroSectionProps) => {
+  const isUntested = variant === "untested";
+
+  return (
+    <section className="relative py-20 lg:py-32 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.05)_0%,transparent_50%)]" />
+
+      <div className="container px-4 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className={isUntested ? "order-2 lg:order-1" : "order-1"}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <MapPin className="w-4 h-4 text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">San Francisco, CA</span>
+            </div>
+
+            {/* Title - Buggy version has wrong positioning on mobile */}
+            <h1
+              className={`text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 ${
+                isUntested
+                  ? "absolute md:relative left-0 md:left-auto top-0 md:top-auto transform translate-x-[-20%] md:translate-x-0 translate-y-[100px] md:translate-y-0 z-[-1] md:z-auto opacity-50 md:opacity-100"
+                  : ""
+              }`}
+              onClick={isUntested ? onBugClick : undefined}
+              style={isUntested ? { cursor: "pointer" } : {}}
+            >
+              <span className="text-foreground">Jane Doe</span>
+              <br />
+              <span className="text-gradient">QA Engineer</span>
+              {!isUntested && (
+                <span className="inline-flex ml-3 align-middle">
+                  <QAVerifiedBadge
+                    testName="Hero title renders correctly on all viewports"
+                    testFile="Hero_Responsiveness.spec.ts"
+                  />
+                </span>
+              )}
+            </h1>
+
+            <p className={`text-lg text-muted-foreground mb-8 max-w-lg ${isUntested ? "mt-32 md:mt-0" : ""}`}>
+              Passionate about delivering bug-free experiences. 5+ years of experience
+              in manual and automated testing, specializing in web and mobile applications.
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <Button variant="default" size="lg" className="gap-2">
+                <Mail className="w-4 h-4" />
+                Contact Me
+              </Button>
+              <Button variant="secondary" size="lg" className="gap-2">
+                <Linkedin className="w-4 h-4" />
+                LinkedIn
+              </Button>
+              <Button variant="ghost" size="lg" className="gap-2">
+                <Github className="w-4 h-4" />
+                GitHub
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* Photo */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className={isUntested ? "order-1 lg:order-2" : "order-2"}
+          >
+            <div className="relative max-w-md mx-auto">
+              {/* Glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-3xl" />
+              
+              {/* Photo container */}
+              <div className="relative bg-card border border-border rounded-3xl overflow-hidden aspect-square">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-32 h-32 rounded-full bg-muted mx-auto mb-4 flex items-center justify-center">
+                      <span className="text-4xl">👩‍💻</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Profile Photo</p>
+                  </div>
+                </div>
+
+                {/* Decorative elements */}
+                <div className="absolute top-4 right-4 w-20 h-20 border border-primary/20 rounded-full" />
+                <div className="absolute bottom-4 left-4 w-16 h-16 border border-accent/20 rounded-lg rotate-12" />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;
