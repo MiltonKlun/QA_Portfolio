@@ -20,9 +20,9 @@ const Index = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8 sm:mb-12"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-12 sm:mb-16 lg:mb-20"
         >
-          <span className="text-foreground">Welcome to my </span>
+          <span className="text-foreground block">Welcome to my</span>
           <span className="text-gradient">Portfolio</span>
         </motion.h1>
 
