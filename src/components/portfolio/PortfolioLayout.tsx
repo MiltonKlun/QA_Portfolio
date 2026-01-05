@@ -16,30 +16,26 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
     <div className="min-h-screen relative">
       {/* Status Bar */}
       <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`sticky top-0 z-50 border-b backdrop-blur-md ${
-          isUntested
-            ? "bg-danger/10 border-danger/30"
-            : "bg-success/10 border-success/30"
-        }`}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative z-10 py-4"
       >
-        <div className="container flex items-center justify-between h-14 px-4">
-          <Link to="/">
+        <div className="container flex flex-col items-center px-4">
+          <Link to="/" className="absolute left-4 top-4">
             <Button variant="ghost" size="sm" className="gap-2">
               <ArrowLeft className="w-4 h-4" />
               Back to Lobby
             </Button>
           </Link>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 text-center mt-10 sm:mt-0">
             {isUntested ? (
               <>
                 <Bug className="w-5 h-5 text-danger" />
                 <span className="text-sm font-medium text-danger">
                   ⚠️ UNTESTED MODE ACTIVE
                 </span>
-                <span className="hidden sm:inline px-2 py-1 rounded-full bg-danger/20 text-danger text-xs font-bold">
+                <span className="text-muted-foreground text-xs sm:text-sm">
                   Known Critical Bugs: 3/3
                 </span>
               </>
@@ -49,7 +45,7 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
                 <span className="text-sm font-medium text-success">
                   ✅ QA VERIFIED MODE
                 </span>
-                <span className="hidden sm:inline px-2 py-1 rounded-full bg-success/20 text-success text-xs font-bold">
+                <span className="text-muted-foreground text-xs sm:text-sm">
                   All Tests Passing
                 </span>
               </>
