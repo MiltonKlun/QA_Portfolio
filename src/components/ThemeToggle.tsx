@@ -7,20 +7,19 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full flex items-center justify-center
-                 bg-muted/30 border border-border/30 
-                 shadow-[inset_0_2px_10px_hsl(var(--background)/0.5)]
-                 backdrop-blur-sm
-                 text-muted-foreground/60 hover:text-foreground/80
+      className="fixed top-4 right-4 sm:top-6 sm:right-6 z-40 w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center
+                 bg-background/50 border border-border/20
+                 shadow-[inset_0_4px_12px_hsl(var(--foreground)/0.08),inset_0_-2px_6px_hsl(var(--background)/0.5)]
+                 text-muted-foreground/50 hover:text-muted-foreground/80
                  transition-all duration-300 ease-out
-                 hover:bg-muted/40 hover:border-border/50
-                 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                 hover:shadow-[inset_0_4px_16px_hsl(var(--foreground)/0.12),inset_0_-2px_8px_hsl(var(--background)/0.6)]
+                 focus:outline-none"
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
       {theme === "dark" ? (
-        <Sun className="w-5 h-5 transition-transform duration-300" />
+        <Sun className="w-4 h-4 sm:w-[18px] sm:h-[18px] transition-transform duration-300" />
       ) : (
-        <Moon className="w-5 h-5 transition-transform duration-300" />
+        <Moon className="w-4 h-4 sm:w-[18px] sm:h-[18px] transition-transform duration-300" />
       )}
     </button>
   );
