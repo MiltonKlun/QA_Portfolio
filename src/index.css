@@ -172,32 +172,6 @@
     animation: float 3s ease-in-out infinite;
   }
 
-  /* Scan line effect */
-  @keyframes scanline {
-    0% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(100vh);
-    }
-  }
-
-  .scanline::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(
-      to bottom,
-      transparent,
-      hsl(var(--primary) / 0.1),
-      transparent
-    );
-    animation: scanline 8s linear infinite;
-    pointer-events: none;
-  }
 
   /* Glass morphism */
   .glass {
