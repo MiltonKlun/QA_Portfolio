@@ -26,8 +26,8 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
             : "bg-success/10 border-success/30"
         }`}
       >
-        <div className="container flex items-center justify-between h-14 px-4">
-          <Link to="/">
+        <div className="container flex items-center justify-center h-14 px-4 relative">
+          <Link to="/" className="absolute left-4">
             <Button variant="ghost" size="sm" className="gap-2">
               <ArrowLeft className="w-4 h-4" />
               Back to Lobby
@@ -61,7 +61,7 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
       </motion.header>
 
       {/* Theme Toggle - below banner */}
-      <div className="flex justify-end px-4 sm:px-6 pt-4">
+      <div className="absolute right-4 sm:right-6 top-[72px] z-10">
         <button
           onClick={toggleTheme}
           className="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center
