@@ -43,19 +43,19 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
   const isUntested = variant === "untested";
 
   return (
-    <section className="py-20 bg-card/50">
-      <div className="container px-4">
+    <section className="py-12 sm:py-16 lg:py-20 bg-card/50">
+      <div className="container px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
             Featured Projects
             {!isUntested && (
-              <span className="inline-flex ml-3 align-middle">
+              <span className="inline-flex ml-2 sm:ml-3 align-middle">
                 <QAVerifiedBadge
                   testName="All project cards are interactive and display correct data"
                   testFile="ProjectGrid_Interaction.spec.ts"
@@ -63,13 +63,13 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
               </span>
             )}
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto px-4">
             A selection of projects where I've implemented comprehensive QA strategies.
           </p>
         </motion.div>
 
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {projects.map((project, index) => {
             const isSecondCard = index === 1;
             const showDataBug = isUntested && index === 1;
@@ -95,14 +95,14 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                 }`}
               >
                 {/* Project Image */}
-                <div className="aspect-video bg-muted flex items-center justify-center text-6xl">
+                <div className="aspect-video bg-muted flex items-center justify-center text-4xl sm:text-5xl lg:text-6xl">
                   {project.image}
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+                <div className="p-4 sm:p-6">
+                  <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
+                    <h3 className="text-base sm:text-lg lg:text-xl font-bold group-hover:text-primary transition-colors line-clamp-2">
                       {project.title}
                     </h3>
                     {!isUntested && (
@@ -113,16 +113,16 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                     )}
                   </div>
 
-                  <p className="text-muted-foreground text-sm mb-4">
+                  <p className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">
                     {project.description}
                   </p>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-1 bg-muted rounded-md text-xs text-muted-foreground"
+                        className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-muted rounded-md text-[10px] sm:text-xs text-muted-foreground"
                       >
                         {tag}
                       </span>
@@ -131,7 +131,7 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
 
                   {/* Status - Shows bug in untested version */}
                   <div
-                    className="flex items-center justify-between"
+                    className="flex items-center justify-between gap-2"
                     onClick={(e) => {
                       if (showDataBug) {
                         e.stopPropagation();
@@ -139,38 +139,38 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                       }
                     }}
                   >
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground">Progress:</span>
+                    <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                      <span className="text-[10px] sm:text-xs text-muted-foreground">Progress:</span>
                       <span
-                        className={`text-sm font-semibold ${
+                        className={`text-xs sm:text-sm font-semibold ${
                           showDataBug ? "text-danger" : "text-foreground"
                         }`}
                       >
                         {showDataBug ? "NaN%" : `${project.progress}%`}
                       </span>
                       {showDataBug && (
-                        <span className="text-xs text-danger">(undefined)</span>
+                        <span className="text-[10px] sm:text-xs text-danger">(undefined)</span>
                       )}
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-1 sm:gap-2 flex-shrink-0">
                       <Button
                         variant="ghost"
                         size="icon"
-                        className={
+                        className={`w-8 h-8 sm:w-10 sm:h-10 ${
                           isUntested && isSecondCard ? "pointer-events-none" : ""
-                        }
+                        }`}
                       >
-                        <Github className="w-4 h-4" />
+                        <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className={
+                        className={`w-8 h-8 sm:w-10 sm:h-10 ${
                           isUntested && isSecondCard ? "pointer-events-none" : ""
-                        }
+                        }`}
                       >
-                        <ExternalLink className="w-4 h-4" />
+                        <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                       </Button>
                     </div>
                   </div>
@@ -178,8 +178,8 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
 
                 {/* Hover Arrow */}
                 {!(isUntested && isSecondCard) && (
-                  <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ArrowRight className="w-4 h-4 text-primary" />
+                  <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                   </div>
                 )}
               </motion.div>
