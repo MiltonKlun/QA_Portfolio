@@ -17,13 +17,12 @@ const HeroSection = ({ variant, onBugClick }: HeroSectionProps) => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.05)_0%,transparent_50%)]" />
 
       <div className="container px-4 sm:px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="max-w-2xl mx-auto lg:mx-0">
           {/* Content */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className={isUntested ? "order-2 lg:order-1" : "order-1"}
           >
             <div className="flex items-center gap-2 mb-3 sm:mb-4">
               <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground flex-shrink-0" />
@@ -71,36 +70,6 @@ const HeroSection = ({ variant, onBugClick }: HeroSectionProps) => {
                 <Github className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                 <span>GitHub</span>
               </Button>
-            </div>
-          </motion.div>
-
-          {/* Photo */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className={isUntested ? "order-1 lg:order-2" : "order-2"}
-          >
-            <div className="relative max-w-[280px] sm:max-w-sm md:max-w-md mx-auto">
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl sm:rounded-3xl blur-3xl" />
-              
-              {/* Photo container */}
-              <div className="relative bg-card border border-border rounded-2xl sm:rounded-3xl overflow-hidden aspect-square">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full bg-muted mx-auto mb-3 sm:mb-4 flex items-center justify-center">
-                      <span className="text-2xl sm:text-3xl md:text-4xl">👩‍💻</span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-muted-foreground">Profile Photo</p>
-                  </div>
-                </div>
-
-                {/* Decorative elements */}
-                <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 border border-primary/20 rounded-full" />
-                <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4 w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 border border-accent/20 rounded-lg rotate-12" />
-              </div>
             </div>
           </motion.div>
         </div>
