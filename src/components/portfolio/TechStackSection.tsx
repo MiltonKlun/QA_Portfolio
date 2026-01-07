@@ -59,7 +59,7 @@ const TechStackSection = ({ variant }: TechStackSectionProps) => {
   ];
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20">
+    <section className="py-12 sm:py-16 lg:py-20 bg-card/50">
       <div className="container px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

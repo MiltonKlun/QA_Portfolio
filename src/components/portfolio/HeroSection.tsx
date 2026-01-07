@@ -12,7 +12,7 @@ const HeroSection = ({ variant, onBugClick }: HeroSectionProps) => {
   const isUntested = variant === "untested";
 
   return (
-    <section className="relative py-12 sm:py-16 lg:py-32 overflow-hidden">
+    <section className="relative py-12 sm:py-16 lg:py-20 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.05)_0%,transparent_50%)]" />
 
