@@ -7,10 +7,9 @@ import seleniumLogo from "@/assets/tech-logos/selenium.svg";
 import jmeterLogo from "@/assets/tech-logos/jmeter.svg";
 import postmanLogo from "@/assets/tech-logos/postman.svg";
 import playwrightLogo from "@/assets/tech-logos/playwright.svg";
-import testrailLogo from "@/assets/tech-logos/testrail.svg";
-import xrayLogo from "@/assets/tech-logos/xray.svg";
-import appiumLogo from "@/assets/tech-logos/appium.svg";
-import pomLogo from "@/assets/tech-logos/pom.svg";
+import testrailLogo from "@/assets/tech-logos/testrail.png";
+import xrayLogo from "@/assets/tech-logos/xray.png";
+import appiumLogo from "@/assets/tech-logos/appium.png";
 import dockerLogo from "@/assets/tech-logos/docker.svg";
 import githubLogo from "@/assets/tech-logos/github.svg";
 import linuxLogo from "@/assets/tech-logos/linux.svg";
@@ -39,7 +38,6 @@ const techStack: Record<string, TechItem[]> = {
     { name: "TestRail", logo: testrailLogo },
     { name: "Xray", logo: xrayLogo },
     { name: "Appium", logo: appiumLogo },
-    { name: "POM", logo: pomLogo },
   ],
   toolsAndPlatforms: [
     { name: "Docker", logo: dockerLogo },
