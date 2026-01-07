@@ -1,37 +1,54 @@
 import { motion } from "framer-motion";
 
+// Import tech logos
+import pythonLogo from "@/assets/tech-logos/python.svg";
+import javaLogo from "@/assets/tech-logos/java.svg";
+import seleniumLogo from "@/assets/tech-logos/selenium.svg";
+import jmeterLogo from "@/assets/tech-logos/jmeter.svg";
+import postmanLogo from "@/assets/tech-logos/postman.svg";
+import playwrightLogo from "@/assets/tech-logos/playwright.svg";
+import testrailLogo from "@/assets/tech-logos/testrail.svg";
+import xrayLogo from "@/assets/tech-logos/xray.svg";
+import appiumLogo from "@/assets/tech-logos/appium.svg";
+import pomLogo from "@/assets/tech-logos/pom.svg";
+import dockerLogo from "@/assets/tech-logos/docker.svg";
+import githubLogo from "@/assets/tech-logos/github.svg";
+import linuxLogo from "@/assets/tech-logos/linux.svg";
+import postgresqlLogo from "@/assets/tech-logos/postgresql.svg";
+import mysqlLogo from "@/assets/tech-logos/mysql.svg";
+
 interface TechStackSectionProps {
   variant: "untested" | "tested";
 }
 
 interface TechItem {
   name: string;
-  icon: string;
-  isText?: boolean;
-  bgColor?: string;
+  logo: string;
 }
 
 const techStack: Record<string, TechItem[]> = {
   languages: [
-    { name: "Python", icon: "🐍" },
-    { name: "TypeScript", icon: "TS", isText: true, bgColor: "bg-blue-600" },
-    { name: "Java", icon: "☕" },
+    { name: "Python", logo: pythonLogo },
+    { name: "Java", logo: javaLogo },
   ],
   qaAndTesting: [
-    { name: "Selenium", icon: "Se", isText: true, bgColor: "bg-green-600" },
-    { name: "JMeter", icon: "⚡" },
-    { name: "Postman", icon: "📮" },
-    { name: "Playwright", icon: "🎭" },
+    { name: "Selenium", logo: seleniumLogo },
+    { name: "JMeter", logo: jmeterLogo },
+    { name: "Postman", logo: postmanLogo },
+    { name: "Playwright", logo: playwrightLogo },
+    { name: "TestRail", logo: testrailLogo },
+    { name: "Xray", logo: xrayLogo },
+    { name: "Appium", logo: appiumLogo },
+    { name: "POM", logo: pomLogo },
   ],
   toolsAndPlatforms: [
-    { name: "Docker", icon: "🐳" },
-    { name: "GitHub", icon: "🐙" },
-    { name: "Linux", icon: "🐧" },
+    { name: "Docker", logo: dockerLogo },
+    { name: "GitHub", logo: githubLogo },
+    { name: "Linux", logo: linuxLogo },
   ],
-  dataAndDatabases: [
-    { name: "PostgreSQL", icon: "🐘" },
-    { name: "Node.js", icon: "💚" },
-    { name: "Hasura", icon: "⚡" },
+  databases: [
+    { name: "PostgreSQL", logo: postgresqlLogo },
+    { name: "MySQL", logo: mysqlLogo },
   ],
 };
 
@@ -40,7 +57,7 @@ const TechStackSection = ({ variant }: TechStackSectionProps) => {
     { title: "Languages", items: techStack.languages },
     { title: "QA & Testing", items: techStack.qaAndTesting },
     { title: "Tools & Platforms", items: techStack.toolsAndPlatforms },
-    { title: "Data & Databases", items: techStack.dataAndDatabases },
+    { title: "Databases", items: techStack.databases },
   ];
 
   return (
@@ -56,7 +73,7 @@ const TechStackSection = ({ variant }: TechStackSectionProps) => {
             Tech Stack
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+          <div className="flex flex-col gap-8 sm:gap-10">
             {categories.map((category, categoryIndex) => (
               <motion.div
                 key={category.title}
@@ -69,20 +86,18 @@ const TechStackSection = ({ variant }: TechStackSectionProps) => {
                 <h3 className="text-sm sm:text-base font-semibold text-muted-foreground uppercase tracking-wider">
                   {category.title}
                 </h3>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 sm:gap-4">
                   {category.items.map((item) => (
                     <div
                       key={item.name}
-                      className="group relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-card border border-border hover:border-primary/50 transition-all duration-200 hover:scale-110"
+                      className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-card border border-border hover:border-primary/50 transition-all duration-200 hover:scale-110 p-2"
                       title={item.name}
                     >
-                      {item.isText ? (
-                        <span className={`text-xs sm:text-sm font-bold text-white ${item.bgColor} rounded px-1.5 py-0.5`}>
-                          {item.icon}
-                        </span>
-                      ) : (
-                        <span className="text-lg sm:text-xl">{item.icon}</span>
-                      )}
+                      <img
+                        src={item.logo}
+                        alt={item.name}
+                        className="w-full h-full object-contain"
+                      />
                       {/* Tooltip */}
                       <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-popover text-popover-foreground rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
                         {item.name}
