@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Github, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ExternalLink } from "lucide-react";
 import QAVerifiedBadge from "@/components/QAVerifiedBadge";
 
 interface ProjectsSectionProps {
@@ -43,33 +41,28 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
   const isUntested = variant === "untested";
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-card/50">
-      <div className="container px-4 sm:px-6">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-8 sm:mb-12"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
-            Featured Projects
-            {!isUntested && (
-              <span className="inline-flex ml-2 sm:ml-3 align-middle">
-                <QAVerifiedBadge
-                  testName="All project cards are interactive and display correct data"
-                  testFile="ProjectGrid_Interaction.spec.ts"
-                />
-              </span>
-            )}
-          </h2>
-          <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto px-4">
-            A selection of projects where I've implemented comprehensive QA strategies.
-          </p>
-        </motion.div>
+    <section id="projects" className="scroll-mt-24 lg:scroll-mt-0">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        {/* Mobile section title */}
+        <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 sticky top-0 bg-background/80 backdrop-blur-sm py-4 -mx-4 px-4">
+          Projects
+        </h2>
 
-        {/* Projects Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="mb-6">
+          {!isUntested && (
+            <QAVerifiedBadge
+              testName="All project cards are interactive and display correct data"
+              testFile="ProjectGrid_Interaction.spec.ts"
+            />
+          )}
+        </div>
+
+        {/* Projects List */}
+        <div className="space-y-6">
           {projects.map((project, index) => {
             const isSecondCard = index === 1;
             const showDataBug = isUntested && index === 1;
@@ -88,105 +81,70 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                     onBugClick?.("data");
                   }
                 }}
-                className={`group relative bg-card border border-border rounded-2xl overflow-hidden transition-all duration-300 ${
+                className={`group relative p-4 sm:p-6 rounded-lg transition-all duration-300 ${
                   isUntested && isSecondCard
-                    ? "cursor-not-allowed opacity-80 hover:opacity-80"
-                    : "hover:border-primary/50 hover:shadow-glow cursor-pointer"
+                    ? "cursor-not-allowed opacity-80"
+                    : "hover:bg-card/80 cursor-pointer"
                 }`}
               >
-                {/* Project Image */}
-                <div className="aspect-video bg-muted flex items-center justify-center text-4xl sm:text-5xl lg:text-6xl">
-                  {project.image}
-                </div>
-
-                {/* Content */}
-                <div className="p-4 sm:p-6">
-                  <div className="flex items-start justify-between gap-2 mb-2 sm:mb-3">
-                    <h3 className="text-base sm:text-lg lg:text-xl font-bold group-hover:text-primary transition-colors line-clamp-2">
-                      {project.title}
-                    </h3>
-                    {!isUntested && (
-                      <QAVerifiedBadge
-                        testName={`Project card ${project.id} clickable and navigates correctly`}
-                        testFile={`Project_Card_${project.id}.spec.ts`}
-                      />
-                    )}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {/* Project Image */}
+                  <div className="flex-shrink-0 w-full sm:w-32 h-20 sm:h-20 bg-muted rounded-lg flex items-center justify-center text-3xl">
+                    {project.image}
                   </div>
 
-                  <p className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-muted rounded-md text-[10px] sm:text-xs text-muted-foreground"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Status - Shows bug in untested version */}
-                  <div
-                    className="flex items-center justify-between gap-2"
-                    onClick={(e) => {
-                      if (showDataBug) {
-                        e.stopPropagation();
-                        onBugClick?.("data");
-                      }
-                    }}
-                  >
-                    <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-                      <span className="text-[10px] sm:text-xs text-muted-foreground">Progress:</span>
-                      <span
-                        className={`text-xs sm:text-sm font-semibold ${
-                          showDataBug ? "text-danger" : "text-foreground"
-                        }`}
-                      >
-                        {showDataBug ? "NaN%" : `${project.progress}%`}
-                      </span>
-                      {showDataBug && (
-                        <span className="text-[10px] sm:text-xs text-danger">(undefined)</span>
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start gap-2 mb-2">
+                      <h3 className="text-base font-semibold group-hover:text-primary transition-colors">
+                        {project.title}
+                        <ExternalLink className="inline-block ml-2 w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </h3>
+                      {!isUntested && (
+                        <QAVerifiedBadge
+                          testName={`Project card ${project.id} clickable and navigates correctly`}
+                          testFile={`Project_Card_${project.id}.spec.ts`}
+                        />
                       )}
                     </div>
 
-                    <div className="flex gap-1 sm:gap-2 flex-shrink-0">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className={`w-8 h-8 sm:w-10 sm:h-10 ${
-                          isUntested && isSecondCard ? "pointer-events-none" : ""
-                        }`}
-                      >
-                        <Github className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className={`w-8 h-8 sm:w-10 sm:h-10 ${
-                          isUntested && isSecondCard ? "pointer-events-none" : ""
-                        }`}
-                      >
-                        <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                      </Button>
+                    <p className="text-muted-foreground text-sm mb-3">
+                      {project.description}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
+
+                    {/* Progress - Shows bug in untested version */}
+                    {showDataBug && (
+                      <div
+                        className="mt-3 flex items-center gap-2"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onBugClick?.("data");
+                        }}
+                      >
+                        <span className="text-xs text-muted-foreground">Progress:</span>
+                        <span className="text-sm font-semibold text-danger">NaN%</span>
+                        <span className="text-xs text-danger">(undefined)</span>
+                      </div>
+                    )}
                   </div>
                 </div>
-
-                {/* Hover Arrow */}
-                {!(isUntested && isSecondCard) && (
-                  <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
-                  </div>
-                )}
               </motion.div>
             );
           })}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

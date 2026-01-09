@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PortfolioLayout from "@/components/portfolio/PortfolioLayout";
-import HeroSection from "@/components/portfolio/HeroSection";
+import AboutSection from "@/components/portfolio/AboutSection";
 import TechStackSection from "@/components/portfolio/TechStackSection";
 import ProjectsSection from "@/components/portfolio/ProjectsSection";
 import QAReportModal from "@/components/QAReportModal";
@@ -53,7 +53,7 @@ const UntestedPage = () => {
 
   return (
     <PortfolioLayout variant="untested">
-      <HeroSection variant="untested" onBugClick={() => handleBugClick("ui")} />
+      <AboutSection variant="untested" onBugClick={() => handleBugClick("ui")} />
       <TechStackSection variant="untested" />
       <ProjectsSection variant="untested" onBugClick={handleBugClick} />
 
