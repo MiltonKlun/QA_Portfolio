@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect } from "react";
+import { ReactNode, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Bug, ShieldCheck, Moon, Sun } from "lucide-react";
@@ -15,6 +15,18 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
   const isUntested = variant === "untested";
   const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState("about");
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Track mouse position for spotlight effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   // Track active section on scroll
   useEffect(() => {
@@ -47,7 +59,18 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
   };
 
   return (
-    <div className="min-h-screen relative">
+    <div ref={containerRef} className="min-h-screen relative">
+      {/* Mouse spotlight effect */}
+      <div
+        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 lg:block hidden"
+        style={{
+          background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, ${
+            isUntested 
+              ? "rgba(239, 68, 68, 0.07)" 
+              : "rgba(34, 197, 94, 0.07)"
+          }, transparent 80%)`,
+        }}
+      />
       {/* Status Bar */}
       <motion.header
         initial={{ y: -100 }}
