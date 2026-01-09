@@ -59,55 +59,54 @@ const TechStackSection = ({ variant }: TechStackSectionProps) => {
   ];
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-card/50">
-      <div className="container px-4 sm:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-8 sm:mb-10 lg:mb-12">
-            Tech Stack
-          </h2>
+    <section id="tech-stack" className="scroll-mt-24 lg:scroll-mt-0">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
+        {/* Mobile section title */}
+        <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 sticky top-0 bg-background/80 backdrop-blur-sm py-4 -mx-4 px-4">
+          Tech Stack
+        </h2>
 
-          <div className="flex flex-col gap-8 sm:gap-10">
-            {categories.map((category, categoryIndex) => (
-              <motion.div
-                key={category.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
-                className="space-y-4"
-              >
-                <h3 className="text-sm sm:text-base font-semibold text-muted-foreground uppercase tracking-wider">
-                  {category.title}
-                </h3>
-                <div className="flex flex-wrap gap-3 sm:gap-4">
-                  {category.items.map((item) => (
-                    <div
-                      key={item.name}
-                      className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-lg bg-card border border-border hover:border-primary/50 transition-all duration-200 hover:scale-110 p-2"
-                      title={item.name}
-                    >
-                      <img
-                        src={item.logo}
-                        alt={item.name}
-                        className="w-full h-full object-contain"
-                      />
-                      {/* Tooltip */}
-                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-popover text-popover-foreground rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
-                        {item.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
+        <div className="flex flex-col gap-8">
+          {categories.map((category, categoryIndex) => (
+            <motion.div
+              key={category.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
+              className="space-y-4"
+            >
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                {category.title}
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {category.items.map((item) => (
+                  <div
+                    key={item.name}
+                    className="group relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border border-border hover:border-primary/50 transition-all duration-200 hover:scale-110 p-2"
+                    title={item.name}
+                  >
+                    <img
+                      src={item.logo}
+                      alt={item.name}
+                      className="w-full h-full object-contain"
+                    />
+                    {/* Tooltip */}
+                    <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-popover text-popover-foreground rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                      {item.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
     </section>
   );
 };
