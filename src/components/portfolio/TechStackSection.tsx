@@ -59,7 +59,7 @@ const TechStackSection = ({ variant }: TechStackSectionProps) => {
   ];
 
   return (
-    <section id="tech-stack" className="scroll-mt-24 lg:scroll-mt-0">
+    <section id="tech-stack" className="scroll-mt-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
