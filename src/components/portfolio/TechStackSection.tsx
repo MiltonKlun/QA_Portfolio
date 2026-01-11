@@ -59,7 +59,7 @@ const TechStackSection = ({ variant }: TechStackSectionProps) => {
   ];
 
   return (
-    <section id="tech-stack" className="scroll-mt-24">
+    <section id="experience" className="scroll-mt-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -68,7 +68,7 @@ const TechStackSection = ({ variant }: TechStackSectionProps) => {
       >
         {/* Mobile section title */}
         <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 sticky top-0 bg-background/80 backdrop-blur-sm py-4 -mx-4 px-4">
-          Tech Stack
+          Experience
         </h2>
 
         <div className="flex flex-col gap-8">
