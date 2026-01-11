@@ -10,7 +10,7 @@ interface SidebarNavProps {
 
 const navItems = [
   { id: "about", label: "About" },
-  { id: "tech-stack", label: "Tech Stack" },
+  { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
 ];
 

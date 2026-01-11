@@ -30,7 +30,7 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
 
   // Track active section on scroll
   useEffect(() => {
-    const sections = ["about", "tech-stack", "projects"];
+    const sections = ["about", "experience", "projects"];
     
     const observer = new IntersectionObserver(
       (entries) => {
