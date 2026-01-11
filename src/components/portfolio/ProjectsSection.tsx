@@ -41,7 +41,7 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
   const isUntested = variant === "untested";
 
   return (
-    <section id="projects" className="scroll-mt-24 lg:scroll-mt-0">
+    <section id="projects" className="scroll-mt-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
