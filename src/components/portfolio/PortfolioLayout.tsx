@@ -17,6 +17,7 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
   const [activeSection, setActiveSection] = useState("about");
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const isScrollingRef = useRef(false);
 
   // Track mouse position for spotlight effect
   useEffect(() => {
@@ -34,6 +35,9 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
     
     const observer = new IntersectionObserver(
       (entries) => {
+        // Don't update if we're programmatically scrolling
+        if (isScrollingRef.current) return;
+        
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setActiveSection(entry.target.id);
@@ -54,6 +58,10 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
+      // Immediately set active section on click
+      setActiveSection(sectionId);
+      isScrollingRef.current = true;
+      
       const headerOffset = 96; // Account for fixed header
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - headerOffset;
@@ -62,6 +70,11 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
         top: offsetPosition,
         behavior: "smooth"
       });
+      
+      // Re-enable observer after scroll completes
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 1000);
     }
   };
 
