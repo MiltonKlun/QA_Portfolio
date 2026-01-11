@@ -33,26 +33,32 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
   useEffect(() => {
     const sections = ["about", "experience", "projects"];
     
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Don't update if we're programmatically scrolling
-        if (isScrollingRef.current) return;
-        
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+    const handleScroll = () => {
+      // Don't update if we're programmatically scrolling
+      if (isScrollingRef.current) return;
+      
+      const headerOffset = 120;
+      let currentSection = "about";
+      
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // If top of section is at or above the detection line, it's the current section
+          if (rect.top <= headerOffset) {
+            currentSection = sectionId;
           }
-        });
-      },
-      { rootMargin: "-50% 0px -50% 0px" }
-    );
+        }
+      }
+      
+      setActiveSection(currentSection);
+    };
 
-    sections.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
+    window.addEventListener("scroll", handleScroll);
+    // Set initial state
+    handleScroll();
 
-    return () => observer.disconnect();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (sectionId: string) => {
