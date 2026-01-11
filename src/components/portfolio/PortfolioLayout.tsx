@@ -37,6 +37,14 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
       // Don't update if we're programmatically scrolling
       if (isScrollingRef.current) return;
       
+      // Check if we're at the bottom of the page
+      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50;
+      
+      if (isAtBottom) {
+        setActiveSection("projects");
+        return;
+      }
+      
       const headerOffset = 120;
       let currentSection = "about";
       
