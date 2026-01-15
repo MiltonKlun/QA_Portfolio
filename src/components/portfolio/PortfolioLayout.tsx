@@ -105,6 +105,11 @@ const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps
       e.preventDefault();
       onBugClick("social");
     }
+    // Verified for tested: Show success modal
+    if (!isUntested && onBugClick) {
+      e.preventDefault();
+      onBugClick("social");
+    }
   };
 
   return (

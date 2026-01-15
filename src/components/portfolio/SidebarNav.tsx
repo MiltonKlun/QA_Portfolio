@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Linkedin, Github, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Mail, Linkedin, Github, CheckCircle } from "lucide-react";
 
 interface SidebarNavProps {
   variant: "untested" | "tested";
@@ -17,6 +16,7 @@ const navItems = [
 
 const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: SidebarNavProps) => {
   const isUntested = variant === "untested";
+  const isTested = variant === "tested";
 
   return (
     <div className="flex flex-col h-full">
@@ -64,6 +64,9 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
                   }`}
                 />
                 {item.label}
+                {isTested && (
+                  <CheckCircle className="w-3 h-3 text-success ml-1" />
+                )}
               </button>
             </motion.li>
           ))}
@@ -81,7 +84,11 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
           <a
             href="mailto:jane@example.com"
             onClick={onSocialClick}
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className={`transition-colors ${
+              isTested 
+                ? "text-success hover:text-success/80" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
             aria-label="Email"
           >
             <Mail className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -91,7 +98,11 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
             target="_blank"
             rel="noopener noreferrer"
             onClick={onSocialClick}
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className={`transition-colors ${
+              isTested 
+                ? "text-success hover:text-success/80" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
             aria-label="LinkedIn"
           >
             <Linkedin className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -101,11 +112,24 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
             target="_blank"
             rel="noopener noreferrer"
             onClick={onSocialClick}
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className={`transition-colors ${
+              isTested 
+                ? "text-success hover:text-success/80" 
+                : "text-muted-foreground hover:text-foreground"
+            }`}
             aria-label="GitHub"
           >
             <Github className="w-5 h-5 lg:w-6 lg:h-6" />
           </a>
+          {isTested && (
+            <button
+              onClick={(e) => onSocialClick?.(e)}
+              className="ml-2 flex items-center gap-1 px-2 py-1 rounded-full bg-success/10 border border-success/30 text-success text-xs font-medium hover:bg-success/20 transition-colors"
+            >
+              <CheckCircle className="w-3 h-3" />
+              <span className="hidden sm:inline">Links Verified</span>
+            </button>
+          )}
         </div>
       </motion.div>
     </div>

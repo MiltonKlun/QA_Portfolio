@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, CheckCircle } from "lucide-react";
 import QAVerifiedBadge from "@/components/QAVerifiedBadge";
 
 interface ProjectsSectionProps {
   variant: "untested" | "tested";
   onBugClick?: (bugType: string) => void;
 }
+
+const isTested = (variant: string) => variant === "tested";
 
 const projects = [
   {
@@ -136,6 +138,24 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                         <span className="text-xs text-muted-foreground">Progress:</span>
                         <span className="text-sm font-semibold text-danger">NaN%</span>
                         <span className="text-xs text-danger">(undefined)</span>
+                      </div>
+                    )}
+                    
+                    {/* Shows fixed status in tested version for the second card */}
+                    {isTested(variant) && index === 1 && (
+                      <div className="mt-3 flex items-center gap-2">
+                        <span className="text-xs text-muted-foreground">Progress:</span>
+                        <span className="text-sm font-semibold text-success">{project.progress}%</span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onBugClick?.("data");
+                          }}
+                          className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-success/10 border border-success/30 text-success text-xs font-medium hover:bg-success/20 transition-colors"
+                        >
+                          <CheckCircle className="w-3 h-3" />
+                          Fixed
+                        </button>
                       </div>
                     )}
                   </div>

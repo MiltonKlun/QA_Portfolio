@@ -50,8 +50,9 @@ const QAReportModal = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-lg z-50 max-h-[90vh] overflow-y-auto"
+            className="fixed inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-auto md:w-[90vw] md:max-w-lg z-50 flex items-center justify-center"
           >
+            <div className="w-full max-h-[calc(100vh-2rem)] overflow-y-auto rounded-2xl">
             <div className="bg-card border border-danger/30 rounded-2xl shadow-2xl shadow-danger/20 overflow-hidden">
               {/* Header */}
               <div className="bg-danger/10 border-b border-danger/20 px-6 py-4 flex items-center justify-between">
@@ -133,6 +134,7 @@ const QAReportModal = ({
                   Without QA, this bug would have reached production.
                 </p>
               </div>
+            </div>
             </div>
           </motion.div>
         </>

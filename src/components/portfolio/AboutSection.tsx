@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import QAVerifiedBadge from "@/components/QAVerifiedBadge";
+import { CheckCircle } from "lucide-react";
 
 interface AboutSectionProps {
   variant: "untested" | "tested";
@@ -8,6 +9,7 @@ interface AboutSectionProps {
 
 const AboutSection = ({ variant, onBugClick }: AboutSectionProps) => {
   const isUntested = variant === "untested";
+  const isTested = variant === "tested";
 
   return (
     <section id="about" className="scroll-mt-24">
@@ -81,12 +83,19 @@ const AboutSection = ({ variant, onBugClick }: AboutSectionProps) => {
             </div>
           )}
 
-          {!isUntested && (
-            <div className="pt-2">
+          {isTested && (
+            <div className="pt-2 flex items-center gap-3">
               <QAVerifiedBadge
                 testName="About section content renders correctly"
                 testFile="About_Content.spec.ts"
               />
+              <button
+                onClick={onBugClick}
+                className="flex items-center gap-1 px-2 py-1 rounded-full bg-success/10 border border-success/30 text-success text-xs font-medium hover:bg-success/20 transition-colors"
+              >
+                <CheckCircle className="w-3 h-3" />
+                Responsive Fixed
+              </button>
             </div>
           )}
         </div>
