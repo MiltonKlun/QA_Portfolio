@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { ImageOff } from "lucide-react";
 
 // Import tech logos
 import pythonLogo from "@/assets/tech-logos/python.svg";
@@ -18,29 +19,31 @@ import mysqlLogo from "@/assets/tech-logos/mysql.svg";
 
 interface TechStackSectionProps {
   variant: "untested" | "tested";
+  onBugClick?: () => void;
 }
 
 interface TechItem {
   name: string;
   logo: string;
+  isBroken?: boolean; // For untested variant
 }
 
-const techStack: Record<string, TechItem[]> = {
+const getTechStack = (isUntested: boolean): Record<string, TechItem[]> => ({
   languages: [
-    { name: "Python", logo: pythonLogo },
+    { name: "Python", logo: pythonLogo, isBroken: isUntested }, // Bug: broken
     { name: "Java", logo: javaLogo },
   ],
   qaAndTesting: [
-    { name: "Selenium", logo: seleniumLogo },
+    { name: "Selenium", logo: seleniumLogo, isBroken: isUntested }, // Bug: broken
     { name: "JMeter", logo: jmeterLogo },
     { name: "Postman", logo: postmanLogo },
-    { name: "Playwright", logo: playwrightLogo },
+    { name: "Playwright", logo: playwrightLogo, isBroken: isUntested }, // Bug: broken
     { name: "TestRail", logo: testrailLogo },
     { name: "Xray", logo: xrayLogo },
     { name: "Appium", logo: appiumLogo },
   ],
   toolsAndPlatforms: [
-    { name: "Docker", logo: dockerLogo },
+    { name: "Docker", logo: dockerLogo, isBroken: isUntested }, // Bug: broken
     { name: "GitHub", logo: githubLogo },
     { name: "Linux", logo: linuxLogo },
   ],
@@ -48,15 +51,24 @@ const techStack: Record<string, TechItem[]> = {
     { name: "PostgreSQL", logo: postgresqlLogo },
     { name: "MySQL", logo: mysqlLogo },
   ],
-};
+});
 
-const TechStackSection = ({ variant }: TechStackSectionProps) => {
+const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
+  const isUntested = variant === "untested";
+  const techStack = getTechStack(isUntested);
+  
   const categories = [
     { title: "Languages", items: techStack.languages },
     { title: "QA & Testing", items: techStack.qaAndTesting },
     { title: "Tools & Platforms", items: techStack.toolsAndPlatforms },
     { title: "Databases", items: techStack.databases },
   ];
+
+  const handleBrokenItemClick = (item: TechItem) => {
+    if (item.isBroken && onBugClick) {
+      onBugClick();
+    }
+  };
 
   return (
     <section id="experience" className="scroll-mt-24">
@@ -88,18 +100,38 @@ const TechStackSection = ({ variant }: TechStackSectionProps) => {
                 {category.items.map((item) => (
                   <div
                     key={item.name}
-                    className="group relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border border-border hover:border-primary/50 transition-all duration-200 hover:scale-110 p-2"
-                    title={item.name}
+                    onClick={() => handleBrokenItemClick(item)}
+                    className={`group relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border transition-all duration-200 p-2 ${
+                      item.isBroken 
+                        ? "border-danger/50 cursor-pointer hover:border-danger bg-danger/5" 
+                        : "border-border hover:border-primary/50 hover:scale-110"
+                    }`}
+                    title={item.isBroken ? "" : item.name}
                   >
-                    <img
-                      src={item.logo}
-                      alt={item.name}
-                      className="w-full h-full object-contain"
-                    />
-                    {/* Tooltip */}
-                    <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-popover text-popover-foreground rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
-                      {item.name}
-                    </span>
+                    {item.isBroken ? (
+                      // BUG: Show broken image placeholder
+                      <div className="w-full h-full flex items-center justify-center">
+                        <ImageOff className="w-6 h-6 text-danger/50" />
+                      </div>
+                    ) : (
+                      <img
+                        src={item.logo}
+                        alt={item.name}
+                        className="w-full h-full object-contain"
+                      />
+                    )}
+                    {/* Tooltip - only show for non-broken items */}
+                    {!item.isBroken && (
+                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-popover text-popover-foreground rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                        {item.name}
+                      </span>
+                    )}
+                    {/* BUG tooltip for broken items - shows undefined */}
+                    {item.isBroken && (
+                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-danger/20 text-danger border border-danger/30 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                        undefined
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>

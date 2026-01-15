@@ -9,9 +9,10 @@ import SidebarNav from "./SidebarNav";
 interface PortfolioLayoutProps {
   children: ReactNode;
   variant: "untested" | "tested";
+  onBugClick?: (bugType: string) => void;
 }
 
-const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
+const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps) => {
   const isUntested = variant === "untested";
   const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState("about");
@@ -70,6 +71,12 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
   }, []);
 
   const scrollToSection = (sectionId: string) => {
+    // BUG for untested: Navigation doesn't work
+    if (isUntested && onBugClick) {
+      onBugClick("navigation");
+      return; // Don't actually scroll
+    }
+
     const element = document.getElementById(sectionId);
     if (element) {
       // Immediately set active section on click
@@ -89,6 +96,14 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
       setTimeout(() => {
         isScrollingRef.current = false;
       }, 1000);
+    }
+  };
+
+  const handleSocialClick = (e: React.MouseEvent) => {
+    // BUG for untested: Social links don't work
+    if (isUntested && onBugClick) {
+      e.preventDefault();
+      onBugClick("social");
     }
   };
 
@@ -132,7 +147,7 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
                   ⚠️ UNTESTED
                 </span>
                 <span className="hidden md:inline px-2 py-0.5 rounded-full bg-danger/20 text-danger text-xs font-bold">
-                  Known Critical Bugs: 3/3
+                  Known Critical Bugs: 5/5
                 </span>
               </>
             ) : (
@@ -176,6 +191,7 @@ const PortfolioLayout = ({ children, variant }: PortfolioLayoutProps) => {
                 variant={variant}
                 activeSection={activeSection}
                 onNavigate={scrollToSection}
+                onSocialClick={handleSocialClick}
               />
             </header>
 

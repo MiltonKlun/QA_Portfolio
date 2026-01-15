@@ -5,7 +5,7 @@ import TechStackSection from "@/components/portfolio/TechStackSection";
 import ProjectsSection from "@/components/portfolio/ProjectsSection";
 import QAReportModal from "@/components/QAReportModal";
 
-type BugType = "ui" | "functional" | "data";
+type BugType = "navigation" | "social" | "techStack" | "data" | "responsive";
 
 const bugDetails: Record<
   BugType,
@@ -16,20 +16,28 @@ const bugDetails: Record<
     severity: "critical" | "high" | "medium";
   }
 > = {
-  ui: {
-    title: "Hero Section Layout Break on Mobile",
+  navigation: {
+    title: "Navigation Scroll Handler Not Implemented",
     description:
-      "The main title text is absolutely positioned incorrectly, causing it to overlap with other elements and become nearly invisible on mobile viewports (< 768px).",
+      "Clicking on the sidebar navigation buttons (About, Experience, Projects) does not scroll to the corresponding section. The click handler is attached but the scrollToSection function fails silently.",
     impact:
-      "Users on mobile devices cannot read the primary value proposition, leading to 40% higher bounce rates and lost conversion opportunities.",
+      "Users cannot navigate the portfolio efficiently, leading to frustration and a 60% increase in page abandonment. Recruiters may skip this candidate entirely.",
     severity: "critical",
   },
-  functional: {
-    title: "Project Card Click Handler Not Bound",
+  social: {
+    title: "Social Media Links Return 404/Broken",
     description:
-      "The second project card has no onClick handler attached. The element appears interactive (cursor, hover states) but clicking does nothing.",
+      "All social media contact links (Email, LinkedIn, GitHub) fail to open or redirect to error pages. The href attributes contain malformed URLs.",
     impact:
-      "Users cannot access project details, reducing portfolio engagement by 25% and making the candidate appear less credible.",
+      "Potential employers and recruiters cannot contact the candidate. This results in 100% loss of networking opportunities and job offers.",
+    severity: "critical",
+  },
+  techStack: {
+    title: "Tech Stack Icons Missing - Null Reference Error",
+    description:
+      "Several technology icons fail to render due to missing image references. The tooltip text also returns undefined, showing blank tooltips on hover.",
+    impact:
+      "Recruiters cannot assess the candidate's technical skills. Without visibility into the tech stack, the candidate appears unqualified, losing 80% of interview opportunities.",
     severity: "critical",
   },
   data: {
@@ -40,11 +48,19 @@ const bugDetails: Record<
       "Displays unprofessional, broken UI to potential employers. Indicates lack of data validation and error handling practices.",
     severity: "high",
   },
+  responsive: {
+    title: "Text Overflow on Mobile Viewport",
+    description:
+      "The About section text has incorrect CSS styling causing text to overflow its container on mobile devices. Font size is not responsive and text-wrap properties are misconfigured.",
+    impact:
+      "40% of users access portfolios from mobile devices. Broken layout makes the content unreadable, causing immediate bounce and lost opportunities.",
+    severity: "critical",
+  },
 };
 
 const UntestedPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentBug, setCurrentBug] = useState<BugType>("ui");
+  const [currentBug, setCurrentBug] = useState<BugType>("navigation");
 
   const handleBugClick = (bugType: string) => {
     setCurrentBug(bugType as BugType);
@@ -52,9 +68,9 @@ const UntestedPage = () => {
   };
 
   return (
-    <PortfolioLayout variant="untested">
-      <AboutSection variant="untested" onBugClick={() => handleBugClick("ui")} />
-      <TechStackSection variant="untested" />
+    <PortfolioLayout variant="untested" onBugClick={handleBugClick}>
+      <AboutSection variant="untested" onBugClick={() => handleBugClick("responsive")} />
+      <TechStackSection variant="untested" onBugClick={() => handleBugClick("techStack")} />
       <ProjectsSection variant="untested" onBugClick={handleBugClick} />
 
       <QAReportModal
