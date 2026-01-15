@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ImageOff } from "lucide-react";
+import { ImageOff, CheckCircle } from "lucide-react";
 
 // Import tech logos
 import pythonLogo from "@/assets/tech-logos/python.svg";
@@ -26,24 +26,25 @@ interface TechItem {
   name: string;
   logo: string;
   isBroken?: boolean; // For untested variant
+  wasFixed?: boolean; // For tested variant (items that were broken)
 }
 
 const getTechStack = (isUntested: boolean): Record<string, TechItem[]> => ({
   languages: [
-    { name: "Python", logo: pythonLogo, isBroken: isUntested }, // Bug: broken
+    { name: "Python", logo: pythonLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
     { name: "Java", logo: javaLogo },
   ],
   qaAndTesting: [
-    { name: "Selenium", logo: seleniumLogo, isBroken: isUntested }, // Bug: broken
+    { name: "Selenium", logo: seleniumLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
     { name: "JMeter", logo: jmeterLogo },
     { name: "Postman", logo: postmanLogo },
-    { name: "Playwright", logo: playwrightLogo, isBroken: isUntested }, // Bug: broken
+    { name: "Playwright", logo: playwrightLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
     { name: "TestRail", logo: testrailLogo },
     { name: "Xray", logo: xrayLogo },
     { name: "Appium", logo: appiumLogo },
   ],
   toolsAndPlatforms: [
-    { name: "Docker", logo: dockerLogo, isBroken: isUntested }, // Bug: broken
+    { name: "Docker", logo: dockerLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
     { name: "GitHub", logo: githubLogo },
     { name: "Linux", logo: linuxLogo },
   ],
@@ -55,6 +56,7 @@ const getTechStack = (isUntested: boolean): Record<string, TechItem[]> => ({
 
 const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
   const isUntested = variant === "untested";
+  const isTested = variant === "tested";
   const techStack = getTechStack(isUntested);
   
   const categories = [
@@ -64,8 +66,11 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
     { title: "Databases", items: techStack.databases },
   ];
 
-  const handleBrokenItemClick = (item: TechItem) => {
+  const handleItemClick = (item: TechItem) => {
     if (item.isBroken && onBugClick) {
+      onBugClick();
+    }
+    if (item.wasFixed && isTested && onBugClick) {
       onBugClick();
     }
   };
@@ -100,10 +105,12 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
                 {category.items.map((item) => (
                   <div
                     key={item.name}
-                    onClick={() => handleBrokenItemClick(item)}
+                    onClick={() => handleItemClick(item)}
                     className={`group relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border transition-all duration-200 p-2 ${
                       item.isBroken 
                         ? "border-danger/50 cursor-pointer hover:border-danger bg-danger/5" 
+                        : item.wasFixed
+                        ? "border-success/50 cursor-pointer hover:border-success bg-success/5"
                         : "border-border hover:border-primary/50 hover:scale-110"
                     }`}
                     title={item.isBroken ? "" : item.name}
@@ -114,11 +121,18 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
                         <ImageOff className="w-6 h-6 text-danger/50" />
                       </div>
                     ) : (
-                      <img
-                        src={item.logo}
-                        alt={item.name}
-                        className="w-full h-full object-contain"
-                      />
+                      <>
+                        <img
+                          src={item.logo}
+                          alt={item.name}
+                          className="w-full h-full object-contain"
+                        />
+                        {item.wasFixed && (
+                          <div className="absolute -top-1 -right-1 w-4 h-4 bg-success rounded-full flex items-center justify-center">
+                            <CheckCircle className="w-3 h-3 text-success-foreground" />
+                          </div>
+                        )}
+                      </>
                     )}
                     {/* Tooltip - only show for non-broken items */}
                     {!item.isBroken && (
