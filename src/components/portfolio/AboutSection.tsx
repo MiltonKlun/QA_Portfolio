@@ -26,7 +26,12 @@ const AboutSection = ({ variant, onBugClick }: AboutSectionProps) => {
           className={`space-y-4 ${isUntested ? "cursor-pointer" : ""}`}
           onClick={isUntested ? onBugClick : undefined}
         >
-          <p className="text-muted-foreground leading-relaxed">
+          {/* BUG: Responsive text issue for untested variant */}
+          <p className={`leading-relaxed ${
+            isUntested 
+              ? "text-muted-foreground text-[18px] sm:text-base leading-[1.2] tracking-[-0.5px] overflow-hidden whitespace-nowrap text-ellipsis sm:whitespace-normal sm:overflow-visible border-r-2 border-danger sm:border-none" 
+              : "text-muted-foreground"
+          }`}>
             I'm a QA Engineer passionate about crafting reliable, bug-free digital experiences 
             that blend thorough testing with user-focused quality assurance. My favorite work 
             lies at the intersection of{" "}
@@ -34,7 +39,11 @@ const AboutSection = ({ variant, onBugClick }: AboutSectionProps) => {
             ensuring that software not only works but works exceptionally well.
           </p>
 
-          <p className="text-muted-foreground leading-relaxed">
+          <p className={`leading-relaxed ${
+            isUntested 
+              ? "text-muted-foreground text-[17px] sm:text-base" 
+              : "text-muted-foreground"
+          }`}>
             Currently, I'm a Senior QA Engineer at{" "}
             <span className="text-foreground font-medium">TechCorp</span>, specializing in 
             test automation. I contribute to building and maintaining automated test suites 
@@ -42,7 +51,11 @@ const AboutSection = ({ variant, onBugClick }: AboutSectionProps) => {
             exceptional user experiences.
           </p>
 
-          <p className="text-muted-foreground leading-relaxed">
+          <p className={`leading-relaxed ${
+            isUntested 
+              ? "text-muted-foreground" 
+              : "text-muted-foreground"
+          }`}>
             In the past, I've had the opportunity to test software across a variety of 
             settings — from{" "}
             <span className="text-foreground font-medium">fintech startups</span> and{" "}
@@ -55,6 +68,18 @@ const AboutSection = ({ variant, onBugClick }: AboutSectionProps) => {
             In my spare time, I'm usually exploring new testing frameworks, contributing 
             to open-source QA tools, or diving deep into performance optimization techniques.
           </p>
+
+          {/* Visual Bug Indicator for untested */}
+          {isUntested && (
+            <div className="mt-4 p-3 rounded-lg border border-danger/30 bg-danger/5">
+              <p className="text-xs text-danger font-mono">
+                ⚠️ CSS Error: text-overflow and responsive sizing misconfigured
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Click anywhere in this section to view bug report
+              </p>
+            </div>
+          )}
 
           {!isUntested && (
             <div className="pt-2">

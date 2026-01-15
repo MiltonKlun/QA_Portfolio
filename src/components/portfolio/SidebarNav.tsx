@@ -6,6 +6,7 @@ interface SidebarNavProps {
   variant: "untested" | "tested";
   activeSection: string;
   onNavigate: (section: string) => void;
+  onSocialClick?: (e: React.MouseEvent) => void;
 }
 
 const navItems = [
@@ -14,7 +15,7 @@ const navItems = [
   { id: "projects", label: "Projects" },
 ];
 
-const SidebarNav = ({ variant, activeSection, onNavigate }: SidebarNavProps) => {
+const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: SidebarNavProps) => {
   const isUntested = variant === "untested";
 
   return (
@@ -79,6 +80,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate }: SidebarNavProps) => 
         <div className="flex items-center gap-4">
           <a
             href="mailto:jane@example.com"
+            onClick={onSocialClick}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Email"
           >
@@ -88,6 +90,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate }: SidebarNavProps) => 
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={onSocialClick}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="LinkedIn"
           >
@@ -97,6 +100,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate }: SidebarNavProps) => 
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={onSocialClick}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="GitHub"
           >
