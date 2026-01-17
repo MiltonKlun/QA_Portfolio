@@ -43,7 +43,7 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
   const isUntested = variant === "untested";
 
   return (
-    <section id="projects" className="scroll-mt-24">
+    <section id="projects" className="scroll-mt-24 relative">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -54,14 +54,16 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
           Projects
         </h2>
 
-        <div className="mb-6">
-          {!isUntested && (
-            <QAVerifiedBadge
-              testName="All project cards are interactive and display correct data"
-              testFile="ProjectGrid_Interaction.spec.ts"
-            />
-          )}
-        </div>
+        {/* Subtle verified tick for Projects section - positioned at top right */}
+        {!isUntested && (
+          <button
+            onClick={() => onBugClick?.("data")}
+            className="absolute -top-2 right-0 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors z-10"
+            title="Project data verified"
+          >
+            <CheckCircle className="w-3 h-3 text-success" />
+          </button>
+        )}
 
         {/* Projects List */}
         <div className="space-y-6">
@@ -102,12 +104,6 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                         {project.title}
                         <ExternalLink className="inline-block ml-2 w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </h3>
-                      {!isUntested && (
-                        <QAVerifiedBadge
-                          testName={`Project card ${project.id} clickable and navigates correctly`}
-                          testFile={`Project_Card_${project.id}.spec.ts`}
-                        />
-                      )}
                     </div>
 
                     <p className="text-muted-foreground text-sm mb-3">
@@ -145,17 +141,7 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                     {isTested(variant) && index === 1 && (
                       <div className="mt-3 flex items-center gap-2">
                         <span className="text-xs text-muted-foreground">Progress:</span>
-                        <span className="text-sm font-semibold text-success">{project.progress}%</span>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onBugClick?.("data");
-                          }}
-                          className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-success/10 border border-success/30 text-success text-xs font-medium hover:bg-success/20 transition-colors"
-                        >
-                          <CheckCircle className="w-3 h-3" />
-                          Fixed
-                        </button>
+                        <span className="text-sm font-semibold text-foreground">{project.progress}%</span>
                       </div>
                     )}
                   </div>
