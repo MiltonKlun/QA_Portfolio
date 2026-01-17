@@ -76,7 +76,7 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
   };
 
   return (
-    <section id="experience" className="scroll-mt-24">
+    <section id="experience" className="scroll-mt-24 relative">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -87,6 +87,17 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
         <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 sticky top-0 bg-background/80 backdrop-blur-sm py-4 -mx-4 px-4">
           Experience
         </h2>
+
+        {/* Subtle verified tick for the whole Experience section - positioned at top right */}
+        {isTested && (
+          <button
+            onClick={onBugClick}
+            className="absolute -top-2 right-0 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors z-10"
+            title="Tech stack icons verified"
+          >
+            <CheckCircle className="w-3 h-3 text-success" />
+          </button>
+        )}
 
         <div className="flex flex-col gap-8">
           {categories.map((category, categoryIndex) => (
@@ -105,12 +116,10 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
                 {category.items.map((item) => (
                   <div
                     key={item.name}
-                    onClick={() => handleItemClick(item)}
+                    onClick={() => item.isBroken && onBugClick?.()}
                     className={`group relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border transition-all duration-200 p-2 ${
                       item.isBroken 
                         ? "border-danger/50 cursor-pointer hover:border-danger bg-danger/5" 
-                        : item.wasFixed
-                        ? "border-success/50 cursor-pointer hover:border-success bg-success/5"
                         : "border-border hover:border-primary/50 hover:scale-110"
                     }`}
                     title={item.isBroken ? "" : item.name}
@@ -121,18 +130,11 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
                         <ImageOff className="w-6 h-6 text-danger/50" />
                       </div>
                     ) : (
-                      <>
-                        <img
-                          src={item.logo}
-                          alt={item.name}
-                          className="w-full h-full object-contain"
-                        />
-                        {item.wasFixed && (
-                          <div className="absolute -top-1 -right-1 w-4 h-4 bg-success rounded-full flex items-center justify-center">
-                            <CheckCircle className="w-3 h-3 text-success-foreground" />
-                          </div>
-                        )}
-                      </>
+                      <img
+                        src={item.logo}
+                        alt={item.name}
+                        className="w-full h-full object-contain"
+                      />
                     )}
                     {/* Tooltip - only show for non-broken items */}
                     {!item.isBroken && (

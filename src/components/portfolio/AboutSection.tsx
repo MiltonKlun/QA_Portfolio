@@ -12,7 +12,7 @@ const AboutSection = ({ variant, onBugClick }: AboutSectionProps) => {
   const isTested = variant === "tested";
 
   return (
-    <section id="about" className="scroll-mt-24">
+    <section id="about" className="scroll-mt-24 relative">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -23,6 +23,17 @@ const AboutSection = ({ variant, onBugClick }: AboutSectionProps) => {
         <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 sticky top-0 bg-background/80 backdrop-blur-sm py-4 -mx-4 px-4">
           About
         </h2>
+
+        {/* Subtle verified tick for About section - positioned at top right */}
+        {isTested && (
+          <button
+            onClick={onBugClick}
+            className="absolute -top-2 right-0 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors z-10"
+            title="Responsive text verified"
+          >
+            <CheckCircle className="w-3 h-3 text-success" />
+          </button>
+        )}
 
         <div
           className={`space-y-4 ${isUntested ? "cursor-pointer" : ""}`}
@@ -53,11 +64,7 @@ const AboutSection = ({ variant, onBugClick }: AboutSectionProps) => {
             exceptional user experiences.
           </p>
 
-          <p className={`leading-relaxed ${
-            isUntested 
-              ? "text-muted-foreground" 
-              : "text-muted-foreground"
-          }`}>
+          <p className="text-muted-foreground leading-relaxed">
             In the past, I've had the opportunity to test software across a variety of 
             settings — from{" "}
             <span className="text-foreground font-medium">fintech startups</span> and{" "}
@@ -80,22 +87,6 @@ const AboutSection = ({ variant, onBugClick }: AboutSectionProps) => {
               <p className="text-xs text-muted-foreground mt-1">
                 Click anywhere in this section to view bug report
               </p>
-            </div>
-          )}
-
-          {isTested && (
-            <div className="pt-2 flex items-center gap-3">
-              <QAVerifiedBadge
-                testName="About section content renders correctly"
-                testFile="About_Content.spec.ts"
-              />
-              <button
-                onClick={onBugClick}
-                className="flex items-center gap-1 px-2 py-1 rounded-full bg-success/10 border border-success/30 text-success text-xs font-medium hover:bg-success/20 transition-colors"
-              >
-                <CheckCircle className="w-3 h-3" />
-                Responsive Fixed
-              </button>
             </div>
           )}
         </div>

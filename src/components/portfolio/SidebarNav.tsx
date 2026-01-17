@@ -64,9 +64,6 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
                   }`}
                 />
                 {item.label}
-                {isTested && (
-                  <CheckCircle className="w-3 h-3 text-success ml-1" />
-                )}
               </button>
             </motion.li>
           ))}
@@ -80,15 +77,11 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
         transition={{ duration: 0.6, delay: 0.5 }}
         className="mt-8 lg:mt-auto pt-8"
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 relative">
           <a
             href="mailto:jane@example.com"
             onClick={onSocialClick}
-            className={`transition-colors ${
-              isTested 
-                ? "text-success hover:text-success/80" 
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Email"
           >
             <Mail className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -98,11 +91,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
             target="_blank"
             rel="noopener noreferrer"
             onClick={onSocialClick}
-            className={`transition-colors ${
-              isTested 
-                ? "text-success hover:text-success/80" 
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="LinkedIn"
           >
             <Linkedin className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -112,22 +101,19 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
             target="_blank"
             rel="noopener noreferrer"
             onClick={onSocialClick}
-            className={`transition-colors ${
-              isTested 
-                ? "text-success hover:text-success/80" 
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="GitHub"
           >
             <Github className="w-5 h-5 lg:w-6 lg:h-6" />
           </a>
+          {/* Subtle verified tick - only one for the whole social section */}
           {isTested && (
             <button
               onClick={(e) => onSocialClick?.(e)}
-              className="ml-2 flex items-center gap-1 px-2 py-1 rounded-full bg-success/10 border border-success/30 text-success text-xs font-medium hover:bg-success/20 transition-colors"
+              className="absolute -right-2 -top-2 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors"
+              title="Social links verified"
             >
-              <CheckCircle className="w-3 h-3" />
-              <span className="hidden sm:inline">Links Verified</span>
+              <CheckCircle className="w-3 h-3 text-success" />
             </button>
           )}
         </div>
