@@ -44,18 +44,21 @@ const QAReportModal = ({
             className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
           />
 
-          {/* Modal */}
+          {/* Modal Container - Full screen flex centering */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-auto md:w-[90vw] md:max-w-lg z-50 flex items-center justify-center"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="w-full max-h-[calc(100vh-2rem)] overflow-y-auto rounded-2xl">
-            <div className="bg-card border border-danger/30 rounded-2xl shadow-2xl shadow-danger/20 overflow-hidden">
+            {/* Modal Content */}
+            <div 
+              className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-card border border-danger/30 shadow-2xl shadow-danger/20 pointer-events-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
               {/* Header */}
-              <div className="bg-danger/10 border-b border-danger/20 px-6 py-4 flex items-center justify-between">
+              <div className="bg-danger/10 border-b border-danger/20 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-danger/20 flex items-center justify-center animate-pulse">
                     <Bug className="w-5 h-5 text-danger" />
@@ -134,7 +137,6 @@ const QAReportModal = ({
                   Without QA, this bug would have reached production.
                 </p>
               </div>
-            </div>
             </div>
           </motion.div>
         </>
