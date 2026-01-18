@@ -5,7 +5,7 @@ import TechStackSection from "@/components/portfolio/TechStackSection";
 import ProjectsSection from "@/components/portfolio/ProjectsSection";
 import QAReportModal from "@/components/QAReportModal";
 
-type BugType = "navigation" | "social" | "techStack" | "data" | "responsive";
+type BugType = "name" | "social" | "techStack" | "data" | "responsive";
 
 const bugDetails: Record<
   BugType,
@@ -16,12 +16,12 @@ const bugDetails: Record<
     severity: "critical" | "high" | "medium";
   }
 > = {
-  navigation: {
-    title: "Navigation Scroll Handler Not Implemented",
+  name: {
+    title: "Missing Portfolio Owner Name - Null Reference",
     description:
-      "Clicking on the sidebar navigation buttons (About, Experience, Projects) does not scroll to the corresponding section. The click handler is attached but the scrollToSection function fails silently.",
+      "The portfolio owner's name fails to render due to a null reference in the name variable. The component displays '[Missing Name]' placeholder instead of the actual name.",
     impact:
-      "Users cannot navigate the portfolio efficiently, leading to frustration and a 60% increase in page abandonment. Recruiters may skip this candidate entirely.",
+      "Recruiters cannot identify who the portfolio belongs to. This creates an unprofessional impression and makes it impossible to contact or remember the candidate.",
     severity: "critical",
   },
   social: {
@@ -60,7 +60,7 @@ const bugDetails: Record<
 
 const UntestedPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentBug, setCurrentBug] = useState<BugType>("navigation");
+  const [currentBug, setCurrentBug] = useState<BugType>("name");
 
   const handleBugClick = (bugType: string) => {
     setCurrentBug(bugType as BugType);

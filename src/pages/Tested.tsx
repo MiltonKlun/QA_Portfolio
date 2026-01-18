@@ -5,7 +5,7 @@ import TechStackSection from "@/components/portfolio/TechStackSection";
 import ProjectsSection from "@/components/portfolio/ProjectsSection";
 import QAVerifiedModal from "@/components/QAVerifiedModal";
 
-type BugType = "navigation" | "social" | "techStack" | "data" | "responsive";
+type BugType = "name" | "social" | "techStack" | "data" | "responsive";
 
 const fixedBugDetails: Record<
   BugType,
@@ -15,12 +15,12 @@ const fixedBugDetails: Record<
     solution: string;
   }
 > = {
-  navigation: {
-    title: "Navigation Scroll Handler Not Implemented",
+  name: {
+    title: "Missing Portfolio Owner Name - Null Reference",
     description:
-      "Clicking on the sidebar navigation buttons (About, Experience, Projects) did not scroll to the corresponding section.",
+      "The portfolio owner's name failed to render due to a null reference, showing '[Missing Name]' placeholder.",
     solution:
-      "Implemented smooth scroll behavior with proper section targeting. Added scroll offset to account for fixed header and ensured all navigation links correctly reference their target sections.",
+      "Fixed null reference by properly initializing the name variable with the correct value 'Milton Klun'. Added proper data validation to prevent null states.",
   },
   social: {
     title: "Social Media Links Return 404/Broken",
@@ -54,7 +54,7 @@ const fixedBugDetails: Record<
 
 const TestedPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentBug, setCurrentBug] = useState<BugType>("navigation");
+  const [currentBug, setCurrentBug] = useState<BugType>("name");
 
   const handleVerifiedClick = (bugType: string) => {
     setCurrentBug(bugType as BugType);

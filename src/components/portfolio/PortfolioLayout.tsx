@@ -71,12 +71,6 @@ const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    // BUG for untested: Navigation doesn't work
-    if (isUntested && onBugClick) {
-      onBugClick("navigation");
-      return; // Don't actually scroll
-    }
-
     const element = document.getElementById(sectionId);
     if (element) {
       // Immediately set active section on click
@@ -96,6 +90,12 @@ const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps
       setTimeout(() => {
         isScrollingRef.current = false;
       }, 1000);
+    }
+  };
+
+  const handleNameClick = () => {
+    if (onBugClick) {
+      onBugClick("name");
     }
   };
 
@@ -152,7 +152,7 @@ const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps
                   ⚠️ UNTESTED
                 </span>
                 <span className="hidden md:inline px-2 py-0.5 rounded-full bg-danger/20 text-danger text-xs font-bold">
-                  Known Critical Bugs: 5/5
+                  Known Critical Bugs: 4/4
                 </span>
               </>
             ) : (
@@ -197,6 +197,7 @@ const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps
                 activeSection={activeSection}
                 onNavigate={scrollToSection}
                 onSocialClick={handleSocialClick}
+                onNameClick={handleNameClick}
               />
             </header>
 
