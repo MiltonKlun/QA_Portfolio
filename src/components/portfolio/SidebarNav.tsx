@@ -6,6 +6,7 @@ interface SidebarNavProps {
   activeSection: string;
   onNavigate: (section: string) => void;
   onSocialClick?: (e: React.MouseEvent) => void;
+  onNameClick?: () => void;
 }
 
 const navItems = [
@@ -14,7 +15,7 @@ const navItems = [
   { id: "projects", label: "Projects" },
 ];
 
-const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: SidebarNavProps) => {
+const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameClick }: SidebarNavProps) => {
   const isUntested = variant === "untested";
   const isTested = variant === "tested";
 
@@ -27,9 +28,33 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
         transition={{ duration: 0.6 }}
         className="mb-8 lg:mb-12"
       >
-        <h1 className="text-4xl lg:text-5xl font-extrabold mb-2">
-          <span className="text-foreground">Jane Doe</span>
-        </h1>
+        <div className="flex items-center gap-3">
+          {isUntested ? (
+            <h1 
+              className="text-4xl lg:text-5xl font-extrabold mb-2 cursor-pointer text-danger/50 italic"
+              onClick={onNameClick}
+              title="Click to see bug details"
+            >
+              <span className="opacity-40">[Missing Name]</span>
+            </h1>
+          ) : (
+            <>
+              <h1 className="text-4xl lg:text-5xl font-extrabold mb-2">
+                <span className="text-foreground">Milton Klun</span>
+              </h1>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNameClick?.();
+                }}
+                className="w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors mt-1"
+                title="Name display verified"
+              >
+                <CheckCircle className="w-3 h-3 text-success" />
+              </button>
+            </>
+          )}
+        </div>
         <h2 className="text-lg lg:text-xl font-semibold text-gradient mb-4">
           QA Engineer
         </h2>
@@ -68,31 +93,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
             </motion.li>
           ))}
         </ul>
-        {/* Subtle verified tick for navigation - responsive */}
-        {isTested && (
-          <button
-            onClick={(e) => onSocialClick?.(e)}
-            className="absolute -right-6 top-1/2 -translate-y-1/2 lg:right-auto lg:left-full lg:ml-4 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors"
-            title="Navigation scroll verified"
-          >
-            <CheckCircle className="w-3 h-3 text-success" />
-          </button>
-        )}
       </nav>
-
-      {/* Navigation tick for mobile/tablet - shown below nav items would be */}
-      {isTested && (
-        <div className="lg:hidden flex justify-start mb-4">
-          <button
-            onClick={(e) => onSocialClick?.(e)}
-            className="w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors"
-            title="Navigation scroll verified"
-          >
-            <CheckCircle className="w-3 h-3 text-success" />
-          </button>
-          <span className="ml-2 text-xs text-success/70">Nav verified</span>
-        </div>
-      )}
 
       {/* Social Links */}
       <motion.div
