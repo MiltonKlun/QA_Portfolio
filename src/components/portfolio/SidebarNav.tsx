@@ -39,7 +39,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
       </motion.div>
 
       {/* Navigation - Only visible on large screens */}
-      <nav className="hidden lg:block mb-auto">
+      <nav className="hidden lg:block mb-auto relative">
         <ul className="space-y-1">
           {navItems.map((item, index) => (
             <motion.li
@@ -68,7 +68,31 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
             </motion.li>
           ))}
         </ul>
+        {/* Subtle verified tick for navigation - responsive */}
+        {isTested && (
+          <button
+            onClick={(e) => onSocialClick?.(e)}
+            className="absolute -right-6 top-1/2 -translate-y-1/2 lg:right-auto lg:left-full lg:ml-4 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors"
+            title="Navigation scroll verified"
+          >
+            <CheckCircle className="w-3 h-3 text-success" />
+          </button>
+        )}
       </nav>
+
+      {/* Navigation tick for mobile/tablet - shown below nav items would be */}
+      {isTested && (
+        <div className="lg:hidden flex justify-start mb-4">
+          <button
+            onClick={(e) => onSocialClick?.(e)}
+            className="w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors"
+            title="Navigation scroll verified"
+          >
+            <CheckCircle className="w-3 h-3 text-success" />
+          </button>
+          <span className="ml-2 text-xs text-success/70">Nav verified</span>
+        </div>
+      )}
 
       {/* Social Links */}
       <motion.div
@@ -77,10 +101,9 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
         transition={{ duration: 0.6, delay: 0.5 }}
         className="mt-8 lg:mt-auto pt-8"
       >
-        <div className="flex items-center gap-4 relative">
+        <div className="flex items-center gap-4">
           <a
             href="mailto:jane@example.com"
-            onClick={onSocialClick}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Email"
           >
@@ -90,7 +113,6 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={onSocialClick}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="LinkedIn"
           >
@@ -100,17 +122,16 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick }: Sideb
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={onSocialClick}
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="GitHub"
           >
             <Github className="w-5 h-5 lg:w-6 lg:h-6" />
           </a>
-          {/* Subtle verified tick - only one for the whole social section */}
+          {/* Verified tick next to GitHub with same spacing */}
           {isTested && (
             <button
               onClick={(e) => onSocialClick?.(e)}
-              className="absolute -right-2 -top-2 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors"
+              className="w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors"
               title="Social links verified"
             >
               <CheckCircle className="w-3 h-3 text-success" />
