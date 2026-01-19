@@ -63,8 +63,11 @@ const UntestedPage = () => {
   const [currentBug, setCurrentBug] = useState<BugType>("name");
 
   const handleBugClick = (bugType: string) => {
-    setCurrentBug(bugType as BugType);
-    setModalOpen(true);
+    // Only open modal if bugType exists in bugDetails
+    if (bugType in bugDetails) {
+      setCurrentBug(bugType as BugType);
+      setModalOpen(true);
+    }
   };
 
   return (
