@@ -103,40 +103,66 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
         className="mt-8 lg:mt-auto pt-8"
       >
         <div className="flex items-center gap-4">
-          <a
-            href="mailto:jane@example.com"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Email"
-          >
-            <Mail className="w-5 h-5 lg:w-6 lg:h-6" />
-          </a>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="LinkedIn"
-          >
-            <Linkedin className="w-5 h-5 lg:w-6 lg:h-6" />
-          </a>
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="GitHub"
-          >
-            <Github className="w-5 h-5 lg:w-6 lg:h-6" />
-          </a>
-          {/* Verified tick next to GitHub with same spacing */}
-          {isTested && (
-            <button
-              onClick={(e) => onSocialClick?.(e)}
-              className="w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors"
-              title="Social links verified"
-            >
-              <CheckCircle className="w-3 h-3 text-success" />
-            </button>
+          {isUntested ? (
+            <>
+              <button
+                onClick={onSocialClick}
+                className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                aria-label="Email (bug)"
+              >
+                <Mail className="w-5 h-5 lg:w-6 lg:h-6" />
+              </button>
+              <button
+                onClick={onSocialClick}
+                className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                aria-label="LinkedIn (bug)"
+              >
+                <Linkedin className="w-5 h-5 lg:w-6 lg:h-6" />
+              </button>
+              <button
+                onClick={onSocialClick}
+                className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                aria-label="GitHub (bug)"
+              >
+                <Github className="w-5 h-5 lg:w-6 lg:h-6" />
+              </button>
+            </>
+          ) : (
+            <>
+              <a
+                href="mailto:jane@example.com"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Email"
+              >
+                <Mail className="w-5 h-5 lg:w-6 lg:h-6" />
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5 lg:w-6 lg:h-6" />
+              </a>
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="GitHub"
+              >
+                <Github className="w-5 h-5 lg:w-6 lg:h-6" />
+              </a>
+              {/* Verified tick next to GitHub with same spacing */}
+              <button
+                onClick={(e) => onSocialClick?.(e)}
+                className="w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors"
+                title="Social links verified"
+              >
+                <CheckCircle className="w-3 h-3 text-success" />
+              </button>
+            </>
           )}
         </div>
       </motion.div>
