@@ -4,18 +4,24 @@ import { ImageOff, CheckCircle } from "lucide-react";
 // Import tech logos
 import pythonLogo from "@/assets/tech-logos/python.svg";
 import javaLogo from "@/assets/tech-logos/java.svg";
+import sqlLogo from "@/assets/tech-logos/sql.png";
+import playwrightLogo from "@/assets/tech-logos/playwright.svg";
 import seleniumLogo from "@/assets/tech-logos/selenium.svg";
+import pytestLogo from "@/assets/tech-logos/pytest.png";
+import cucumberLogo from "@/assets/tech-logos/cucumber.png";
+import appiumLogo from "@/assets/tech-logos/appium.png";
 import jmeterLogo from "@/assets/tech-logos/jmeter.svg";
 import postmanLogo from "@/assets/tech-logos/postman.svg";
-import playwrightLogo from "@/assets/tech-logos/playwright.svg";
+import jiraLogo from "@/assets/tech-logos/jira.png";
 import testrailLogo from "@/assets/tech-logos/testrail.png";
 import xrayLogo from "@/assets/tech-logos/xray.png";
-import appiumLogo from "@/assets/tech-logos/appium.png";
+import awsLogo from "@/assets/tech-logos/aws.png";
+import gitLogo from "@/assets/tech-logos/git.png";
 import dockerLogo from "@/assets/tech-logos/docker.svg";
+import jenkinsLogo from "@/assets/tech-logos/jenkins.png";
 import githubLogo from "@/assets/tech-logos/github.svg";
-import linuxLogo from "@/assets/tech-logos/linux.svg";
 import postgresqlLogo from "@/assets/tech-logos/postgresql.svg";
-import mysqlLogo from "@/assets/tech-logos/mysql.svg";
+import mongodbLogo from "@/assets/tech-logos/mongodb.png";
 
 interface TechStackSectionProps {
   variant: "untested" | "tested";
@@ -33,24 +39,32 @@ const getTechStack = (isUntested: boolean): Record<string, TechItem[]> => ({
   languages: [
     { name: "Python", logo: pythonLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
     { name: "Java", logo: javaLogo },
+    { name: "SQL", logo: sqlLogo },
   ],
-  qaAndTesting: [
-    { name: "Selenium", logo: seleniumLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
-    { name: "JMeter", logo: jmeterLogo },
-    { name: "Postman", logo: postmanLogo },
+  automation: [
     { name: "Playwright", logo: playwrightLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
-    { name: "TestRail", logo: testrailLogo },
-    { name: "Xray", logo: xrayLogo },
+    { name: "Selenium", logo: seleniumLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
+    { name: "Pytest", logo: pytestLogo },
+    { name: "Cucumber", logo: cucumberLogo },
     { name: "Appium", logo: appiumLogo },
   ],
-  toolsAndPlatforms: [
+  qaManagement: [
+    { name: "JMeter", logo: jmeterLogo },
+    { name: "Postman", logo: postmanLogo },
+    { name: "Jira", logo: jiraLogo },
+    { name: "TestRail", logo: testrailLogo },
+    { name: "Xray", logo: xrayLogo },
+  ],
+  infrastructure: [
+    { name: "AWS", logo: awsLogo },
+    { name: "Git", logo: gitLogo },
     { name: "Docker", logo: dockerLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
-    { name: "GitHub", logo: githubLogo },
-    { name: "Linux", logo: linuxLogo },
+    { name: "Jenkins", logo: jenkinsLogo },
+    { name: "GitHub Actions", logo: githubLogo },
   ],
   databases: [
     { name: "PostgreSQL", logo: postgresqlLogo },
-    { name: "MySQL", logo: mysqlLogo },
+    { name: "MongoDB", logo: mongodbLogo },
   ],
 });
 
@@ -58,11 +72,12 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
   const isUntested = variant === "untested";
   const isTested = variant === "tested";
   const techStack = getTechStack(isUntested);
-  
+
   const categories = [
     { title: "Languages", items: techStack.languages },
-    { title: "QA & Testing", items: techStack.qaAndTesting },
-    { title: "Tools & Platforms", items: techStack.toolsAndPlatforms },
+    { title: "Automation & Frameworks", items: techStack.automation },
+    { title: "QA Management & Tools", items: techStack.qaManagement },
+    { title: "Infrastructure & CI/CD", items: techStack.infrastructure },
     { title: "Databases", items: techStack.databases },
   ];
 
@@ -92,7 +107,7 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
         {isTested && (
           <button
             onClick={onBugClick}
-            className="absolute -top-2 right-0 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors z-10"
+            className="absolute -top-2 right-0 md:-right-8 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors z-10"
             title="Tech stack icons verified"
           >
             <CheckCircle className="w-3 h-3 text-success" />
@@ -117,11 +132,10 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
                   <div
                     key={item.name}
                     onClick={() => item.isBroken && onBugClick?.()}
-                    className={`group relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border transition-all duration-200 p-2 ${
-                      item.isBroken 
-                        ? "border-danger/50 cursor-pointer hover:border-danger bg-danger/5" 
-                        : "border-border hover:border-primary/50 hover:scale-110"
-                    }`}
+                    className={`group relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border transition-all duration-200 p-2 ${item.isBroken
+                      ? "border-danger/50 cursor-pointer hover:border-danger bg-danger/5"
+                      : "border-border hover:border-primary/50 hover:scale-110"
+                      }`}
                     title={item.isBroken ? "" : item.name}
                   >
                     {item.isBroken ? (

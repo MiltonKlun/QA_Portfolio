@@ -10,9 +10,10 @@ interface SidebarNavProps {
 }
 
 const navItems = [
-  { id: "about", label: "About" },
+  { id: "about", label: "About Me" },
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
+
 ];
 
 const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameClick }: SidebarNavProps) => {
@@ -28,9 +29,9 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
         transition={{ duration: 0.6 }}
         className="mb-8 lg:mb-12"
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 lg:gap-5">
           {isUntested ? (
-            <h1 
+            <h1
               className="text-4xl lg:text-5xl font-extrabold mb-2 cursor-pointer text-danger/50 italic"
               onClick={onNameClick}
               title="Click to see bug details"
@@ -55,12 +56,18 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
             </>
           )}
         </div>
-        <h2 className="text-lg lg:text-xl font-semibold text-gradient mb-4">
-          QA Engineer
+        <h2 className="text-lg lg:text-xl font-semibold text-gradient mb-2">
+          QA Automation Engineer
         </h2>
-        <p className="text-sm lg:text-base text-muted-foreground max-w-xs">
-          I build reliable, bug-free digital experiences for the web.
-        </p>
+
+        <div className="flex flex-col gap-1 mt-6 lg:mt-8">
+          <p className="text-sm text-muted-foreground/60 italic font-serif leading-relaxed">
+            "Quality is not an act, it is a habit."
+          </p>
+          <p className="text-sm text-muted-foreground/60 italic font-serif">
+            - Aristotle
+          </p>
+        </div>
       </motion.div>
 
       {/* Navigation - Only visible on large screens */}
@@ -75,18 +82,16 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
             >
               <button
                 onClick={() => onNavigate(item.id)}
-                className={`group flex items-center gap-4 py-3 text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
-                  activeSection === item.id
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className={`group flex items-center gap-4 py-3 text-xs font-bold uppercase tracking-widest transition-all duration-300 ${activeSection === item.id
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 <span
-                  className={`h-px transition-all duration-300 ${
-                    activeSection === item.id
-                      ? "w-16 bg-foreground"
-                      : "w-8 bg-muted-foreground group-hover:w-16 group-hover:bg-foreground"
-                  }`}
+                  className={`h-px transition-all duration-300 ${activeSection === item.id
+                    ? "w-16 bg-foreground"
+                    : "w-8 bg-muted-foreground group-hover:w-16 group-hover:bg-foreground"
+                    }`}
                 />
                 {item.label}
               </button>
@@ -102,42 +107,45 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
         transition={{ duration: 0.6, delay: 0.5 }}
         className="mt-8 lg:mt-auto pt-8"
       >
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 lg:gap-6">
           {isUntested ? (
             <>
-              <button
-                onClick={onSocialClick}
+              <a
+                href="http:///"
+                onClick={(e) => { e.preventDefault(); onSocialClick?.(e); }}
                 className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                 aria-label="Email (bug)"
               >
                 <Mail className="w-5 h-5 lg:w-6 lg:h-6" />
-              </button>
-              <button
-                onClick={onSocialClick}
+              </a>
+              <a
+                href="http:///"
+                onClick={(e) => { e.preventDefault(); onSocialClick?.(e); }}
                 className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                 aria-label="LinkedIn (bug)"
               >
                 <Linkedin className="w-5 h-5 lg:w-6 lg:h-6" />
-              </button>
-              <button
-                onClick={onSocialClick}
+              </a>
+              <a
+                href="http:///"
+                onClick={(e) => { e.preventDefault(); onSocialClick?.(e); }}
                 className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                 aria-label="GitHub (bug)"
               >
                 <Github className="w-5 h-5 lg:w-6 lg:h-6" />
-              </button>
+              </a>
             </>
           ) : (
             <>
               <a
-                href="mailto:jane@example.com"
+                href="mailto:miltonericklun@gmail.com"
                 className="text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="Email"
               >
                 <Mail className="w-5 h-5 lg:w-6 lg:h-6" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/milton-klun/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -146,7 +154,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
                 <Linkedin className="w-5 h-5 lg:w-6 lg:h-6" />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/MiltonKlun"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"

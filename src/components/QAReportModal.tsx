@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, AlertTriangle, ExternalLink, Bug, FileText } from "lucide-react";
+import { X, AlertTriangle, ExternalLink, Bug, FileText, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 interface QAReportModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ const QAReportModal = ({
   businessImpact,
   severity,
 }: QAReportModalProps) => {
+  const { toast } = useToast();
   const severityColors = {
     critical: "text-danger border-danger bg-danger/10",
     high: "text-warning border-warning bg-warning/10",
@@ -53,7 +55,9 @@ const QAReportModal = ({
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
             {/* Modal Content */}
-            <div 
+            <div
+              role="dialog"
+              aria-modal="true"
               className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-card border border-danger/30 shadow-2xl shadow-danger/20 pointer-events-auto"
               onClick={(e) => e.stopPropagation()}
             >
@@ -115,10 +119,16 @@ const QAReportModal = ({
                   <Button
                     variant="dangerOutline"
                     className="flex-1"
-                    onClick={() => window.open("https://jira.example.com/browse/BUG-1234", "_blank")}
+                    onClick={() => {
+                      toast({
+                        title: "Coming Soon",
+                        description: "GitHub link will be added in production.",
+                        duration: 3000,
+                      });
+                    }}
                   >
                     <FileText className="w-4 h-4" />
-                    View Jira Ticket
+                    View on Github
                     <ExternalLink className="w-3 h-3" />
                   </Button>
                   <Button

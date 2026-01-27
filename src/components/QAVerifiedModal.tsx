@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle, ShieldCheck, FileText, ExternalLink } from "lucide-react";
+import { X, CheckCircle, ShieldCheck, FileText, ExternalLink, Code2, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 interface QAVerifiedModalProps {
   isOpen: boolean;
@@ -8,6 +10,7 @@ interface QAVerifiedModalProps {
   bugTitle: string;
   bugDescription: string;
   solution: string;
+  testSnippet: string;
 }
 
 const QAVerifiedModal = ({
@@ -16,9 +19,13 @@ const QAVerifiedModal = ({
   bugTitle,
   bugDescription,
   solution,
+  testSnippet,
 }: QAVerifiedModalProps) => {
+  const { toast } = useToast();
+
+
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isOpen && (
         <>
           {/* Backdrop */}
@@ -30,7 +37,7 @@ const QAVerifiedModal = ({
             className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
           />
 
-          {/* Modal Container - Full screen flex centering */}
+          {/* Modal Container */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -38,13 +45,12 @@ const QAVerifiedModal = ({
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
-            {/* Modal Content */}
-            <div 
-              className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-card border border-success/30 shadow-2xl shadow-success/20 pointer-events-auto"
+            <div
+              className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-card border border-success/30 shadow-2xl shadow-success/20 pointer-events-auto flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="bg-success/10 border-b border-success/20 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+              <div className="bg-success/5 border-b border-success/20 px-6 py-4 flex items-center justify-between sticky top-0 z-10 shrink-0">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center">
                     <ShieldCheck className="w-5 h-5 text-success" />
@@ -66,46 +72,62 @@ const QAVerifiedModal = ({
               </div>
 
               {/* Content */}
-              <div className="p-6 space-y-4">
-                {/* Status Badge */}
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">Status:</span>
-                  <span className="px-3 py-1 rounded-full text-xs font-bold border text-success border-success bg-success/10">
-                    RESOLVED
-                  </span>
-                </div>
-
-                {/* Bug Details */}
-                <div className="space-y-3">
-                  <div>
-                    <h3 className="text-sm font-medium text-muted-foreground mb-1">Original Bug</h3>
-                    <p className="text-foreground font-semibold">{bugTitle}</p>
+              <div className="p-6 overflow-y-auto">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.2 }}
+                  className="space-y-4"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">Status:</span>
+                    <span className="px-3 py-1 rounded-full text-xs font-bold border text-success border-success bg-success/10">
+                      RESOLVED
+                    </span>
                   </div>
 
-                  <div>
-                    <h3 className="text-sm font-medium text-muted-foreground mb-1">Issue Description</h3>
-                    <p className="text-foreground/80 text-sm">{bugDescription}</p>
-                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-sm font-medium text-muted-foreground mb-1">Original Bug</h3>
+                      <p className="text-foreground font-semibold">{bugTitle}</p>
+                    </div>
 
-                  <div className="p-4 rounded-lg bg-success/5 border border-success/20">
-                    <h3 className="text-sm font-medium text-success mb-1 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      Solution Applied
-                    </h3>
-                    <p className="text-foreground/80 text-sm">{solution}</p>
-                  </div>
-                </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-muted-foreground mb-1">Issue Description</h3>
+                      <p className="text-foreground/80 text-sm leading-relaxed">{bugDescription}</p>
+                    </div>
 
-                {/* Actions */}
-                <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                    <div className="p-4 rounded-lg bg-success/5 border border-success/20">
+                      <h3 className="text-sm font-medium text-success mb-2 flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4" />
+                        Solution Applied
+                      </h3>
+                      <p className="text-foreground/80 text-sm leading-relaxed">{solution}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Actions */}
+              <div className="p-6 pt-2 shrink-0">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button
                     variant="outline"
                     className="flex-1 border-success/50 text-success hover:bg-success/10"
-                    onClick={() => window.open("https://jira.example.com/browse/BUG-1234", "_blank")}
+                    onClick={() => {
+                      // In a real app this would go to the commit/PR
+                      // window.open("https://github.com/...", "_blank")
+                      toast({
+                        title: "Coming Soon",
+                        description: "GitHub link will be added in production.",
+                        duration: 3000,
+                      });
+                    }}
                   >
-                    <FileText className="w-4 h-4" />
-                    View Jira Ticket
-                    <ExternalLink className="w-3 h-3" />
+                    <FileText className="w-4 h-4 mr-2" />
+                    View on Github
+                    <ExternalLink className="w-3 h-3 ml-2" />
                   </Button>
                   <Button
                     variant="secondary"
@@ -117,12 +139,6 @@ const QAVerifiedModal = ({
                 </div>
               </div>
 
-              {/* Footer */}
-              <div className="px-6 py-3 bg-muted/30 border-t border-border">
-                <p className="text-xs text-muted-foreground text-center">
-                  QA ensures bugs are caught before they reach production.
-                </p>
-              </div>
             </div>
           </motion.div>
         </>

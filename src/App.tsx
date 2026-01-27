@@ -8,6 +8,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import Index from "./pages/Index";
 import UntestedPage from "./pages/Untested";
 import TestedPage from "./pages/Tested";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const AppRoutes = () => {
         <Route path="/" element={<Index />} />
         <Route path="/untested" element={<UntestedPage />} />
         <Route path="/tested" element={<TestedPage />} />
+
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>

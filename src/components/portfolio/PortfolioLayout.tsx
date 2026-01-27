@@ -10,9 +10,11 @@ interface PortfolioLayoutProps {
   children: ReactNode;
   variant: "untested" | "tested";
   onBugClick?: (bugType: string) => void;
+  bugCount?: number;
+  totalBugs?: number;
 }
 
-const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps) => {
+const PortfolioLayout = ({ children, variant, onBugClick, bugCount = 0, totalBugs = 5 }: PortfolioLayoutProps) => {
   const isUntested = variant === "untested";
   const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState("about");
@@ -33,22 +35,22 @@ const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps
   // Track active section on scroll
   useEffect(() => {
     const sections = ["about", "experience", "projects"];
-    
+
     const handleScroll = () => {
       // Don't update if we're programmatically scrolling
       if (isScrollingRef.current) return;
-      
+
       // Check if we're at the bottom of the page
       const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50;
-      
+
       if (isAtBottom) {
         setActiveSection("projects");
         return;
       }
-      
+
       const headerOffset = 120;
       let currentSection = "about";
-      
+
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -59,7 +61,7 @@ const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps
           }
         }
       }
-      
+
       setActiveSection(currentSection);
     };
 
@@ -76,16 +78,16 @@ const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps
       // Immediately set active section on click
       setActiveSection(sectionId);
       isScrollingRef.current = true;
-      
+
       const headerOffset = 96; // Account for fixed header
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - headerOffset;
-      
+
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
       });
-      
+
       // Re-enable observer after scroll completes
       setTimeout(() => {
         isScrollingRef.current = false;
@@ -118,22 +120,20 @@ const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps
       <div
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 lg:block hidden"
         style={{
-          background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, ${
-            isUntested 
-              ? "rgba(239, 68, 68, 0.07)" 
-              : "rgba(34, 197, 94, 0.07)"
-          }, transparent 80%)`,
+          background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, ${isUntested
+            ? "rgba(239, 68, 68, 0.07)"
+            : "rgba(34, 197, 94, 0.07)"
+            }, transparent 80%)`,
         }}
       />
       {/* Status Bar */}
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-md ${
-          isUntested
-            ? "bg-danger/10 border-danger/30"
-            : "bg-success/10 border-success/30"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 border-b backdrop-blur-md ${isUntested
+          ? "bg-danger/10 border-danger/30"
+          : "bg-success/10 border-success/30"
+          }`}
       >
         <div className="container flex items-center justify-between min-h-12 py-2 px-4">
           <Link to="/">
@@ -151,8 +151,8 @@ const PortfolioLayout = ({ children, variant, onBugClick }: PortfolioLayoutProps
                 <span className="text-xs font-medium text-danger">
                   ⚠️ UNTESTED
                 </span>
-                <span className="hidden md:inline px-2 py-0.5 rounded-full bg-danger/20 text-danger text-xs font-bold">
-                  Known Critical Bugs: 4/4
+                <span className="px-2 py-0.5 rounded-full bg-danger/20 text-danger text-xs font-bold">
+                  Bugs Found: {bugCount}/{totalBugs}
                 </span>
               </>
             ) : (

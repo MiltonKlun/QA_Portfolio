@@ -58,7 +58,7 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
         {!isUntested && (
           <button
             onClick={() => onBugClick?.("data")}
-            className="absolute -top-2 right-0 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors z-10"
+            className="absolute -top-2 right-0 md:-right-8 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors z-10"
             title="Project data verified"
           >
             <CheckCircle className="w-3 h-3 text-success" />
@@ -85,11 +85,10 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                     onBugClick?.("data");
                   }
                 }}
-                className={`group relative p-4 sm:p-6 rounded-lg transition-all duration-300 ${
-                  isUntested && isSecondCard
-                    ? "cursor-not-allowed opacity-80"
-                    : "hover:bg-card/80 cursor-pointer"
-                }`}
+                className={`group relative p-4 sm:p-6 rounded-lg transition-all duration-300 ${isUntested && isSecondCard
+                  ? "cursor-not-allowed opacity-80"
+                  : "hover:bg-card/80 cursor-pointer"
+                  }`}
               >
                 <div className="flex flex-col sm:flex-row gap-4">
                   {/* Project Image */}
@@ -132,11 +131,11 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                         }}
                       >
                         <span className="text-xs text-muted-foreground">Progress:</span>
-                        <span className="text-sm font-semibold text-danger">NaN%</span>
-                        <span className="text-xs text-danger">(undefined)</span>
+                        <span className="text-sm font-semibold text-danger">[object Object]</span>
+                        <span className="text-xs text-danger">(type error)</span>
                       </div>
                     )}
-                    
+
                     {/* Shows fixed status in tested version for the second card */}
                     {isTested(variant) && index === 1 && (
                       <div className="mt-3 flex items-center gap-2">
