@@ -5,6 +5,8 @@ import { ArrowLeft, Bug, ShieldCheck, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/useTheme";
 import SidebarNav from "./SidebarNav";
+import MobileNav from "./MobileNav";
+import ParticleGrid from "@/components/ParticleGrid";
 
 interface PortfolioLayoutProps {
   children: ReactNode;
@@ -12,9 +14,25 @@ interface PortfolioLayoutProps {
   onBugClick?: (bugType: string) => void;
   bugCount?: number;
   totalBugs?: number;
+  showHints?: boolean;
+  onToggleHints?: () => void;
+  showChecks?: boolean;
+  onToggleChecks?: () => void;
+  foundBugs?: Set<string>;
 }
 
-const PortfolioLayout = ({ children, variant, onBugClick, bugCount = 0, totalBugs = 5 }: PortfolioLayoutProps) => {
+const PortfolioLayout = ({
+  children,
+  variant,
+  onBugClick,
+  bugCount = 0,
+  totalBugs = 5,
+  showHints = false,
+  onToggleHints,
+  showChecks = false,
+  onToggleChecks,
+  foundBugs
+}: PortfolioLayoutProps) => {
   const isUntested = variant === "untested";
   const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = useState("about");
@@ -34,7 +52,7 @@ const PortfolioLayout = ({ children, variant, onBugClick, bugCount = 0, totalBug
 
   // Track active section on scroll
   useEffect(() => {
-    const sections = ["about", "experience", "projects"];
+    const sections = ["about", "skills", "experience"];
 
     const handleScroll = () => {
       // Don't update if we're programmatically scrolling
@@ -44,7 +62,7 @@ const PortfolioLayout = ({ children, variant, onBugClick, bugCount = 0, totalBug
       const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50;
 
       if (isAtBottom) {
-        setActiveSection("projects");
+        setActiveSection("experience");
         return;
       }
 
@@ -116,6 +134,11 @@ const PortfolioLayout = ({ children, variant, onBugClick, bugCount = 0, totalBug
 
   return (
     <div ref={containerRef} className="min-h-screen relative">
+      {/* Particle Grid Background */}
+      <div className="fixed inset-0 z-[1] pointer-events-none">
+        <ParticleGrid />
+      </div>
+
       {/* Mouse spotlight effect */}
       <div
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 lg:block hidden"
@@ -139,8 +162,6 @@ const PortfolioLayout = ({ children, variant, onBugClick, bugCount = 0, totalBug
           <Link to="/">
             <Button variant="ghost" size="sm" className="gap-2 text-xs">
               <ArrowLeft className="w-3 h-3" />
-              <span className="hidden sm:inline">Back to Lobby</span>
-              <span className="sm:hidden">Back</span>
             </Button>
           </Link>
 
@@ -149,21 +170,49 @@ const PortfolioLayout = ({ children, variant, onBugClick, bugCount = 0, totalBug
               <>
                 <Bug className="w-4 h-4 text-danger" />
                 <span className="text-xs font-medium text-danger">
-                  ⚠️ UNTESTED
+                  UNTESTED
                 </span>
                 <span className="px-2 py-0.5 rounded-full bg-danger/20 text-danger text-xs font-bold">
                   Bugs Found: {bugCount}/{totalBugs}
                 </span>
+
+                {/* Hints Toggle */}
+                {onToggleHints && (
+                  <button
+                    onClick={onToggleHints}
+                    className={`ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold border transition-colors ${showHints
+                      ? "bg-danger text-white border-danger"
+                      : "bg-transparent text-danger/70 border-danger/30 hover:bg-danger/10"
+                      }`}
+                    title={showHints ? "Hide bug hints" : "Show bug hints"}
+                  >
+                    {showHints ? "HINTS ON" : "HINTS"}
+                  </button>
+                )}
               </>
             ) : (
               <>
                 <ShieldCheck className="w-4 h-4 text-success" />
                 <span className="text-xs font-medium text-success">
-                  ✅ QA VERIFIED
+                  VERIFIED
                 </span>
                 <span className="hidden md:inline px-2 py-0.5 rounded-full bg-success/20 text-success text-xs font-bold">
                   All Tests Passing
                 </span>
+
+                {/* Checks Toggle */}
+                {onToggleChecks && (
+                  <button
+                    onClick={onToggleChecks}
+                    className={`ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold border transition-colors ${showChecks
+                      ? "bg-success text-white border-success"
+                      : "bg-transparent text-success/70 border-success/30 hover:bg-success/10"
+                      }`}
+                    title={showChecks ? "Hide verified checks" : "Show verified checks"}
+                  >
+                    {showChecks ? "CHECKS ON" : "CHECKS"}
+                  </button>
+                )}
               </>
             )}
           </div>
@@ -187,7 +236,7 @@ const PortfolioLayout = ({ children, variant, onBugClick, bugCount = 0, totalBug
       </motion.header>
 
       {/* Main Layout */}
-      <div className="pt-12 min-h-screen">
+      <div className="pt-12 min-h-screen relative z-10 pb-20 lg:pb-0">
         <div className="mx-auto max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
           <div className="lg:flex lg:justify-between lg:gap-4">
             {/* Left Sidebar - Sticky on desktop */}
@@ -198,6 +247,9 @@ const PortfolioLayout = ({ children, variant, onBugClick, bugCount = 0, totalBug
                 onNavigate={scrollToSection}
                 onSocialClick={handleSocialClick}
                 onNameClick={handleNameClick}
+                showHint={showHints}
+                foundBugs={foundBugs}
+                showChecks={showChecks}
               />
             </header>
 
@@ -210,6 +262,13 @@ const PortfolioLayout = ({ children, variant, onBugClick, bugCount = 0, totalBug
           </div>
         </div>
       </div>
+
+      {/* Mobile Navigation - Stick to bottom on small screens */}
+      <MobileNav
+        activeSection={activeSection}
+        onNavigate={scrollToSection}
+        variant={variant}
+      />
     </div>
   );
 };

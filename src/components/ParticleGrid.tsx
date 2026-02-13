@@ -122,14 +122,34 @@ const ParticleGrid = () => {
             mouseRef.current = { x: -1000, y: -1000 };
         };
 
+        // Touch tracking for mobile devices
+        const handleTouchMove = (e: TouchEvent) => {
+            const touch = e.touches[0];
+            if (!touch) return;
+            const rect = canvas.getBoundingClientRect();
+            mouseRef.current = {
+                x: touch.clientX - rect.left,
+                y: touch.clientY - rect.top,
+            };
+        };
+
+        const handleTouchEnd = () => {
+            // Fade out gradually by moving "mouse" far away
+            mouseRef.current = { x: -1000, y: -1000 };
+        };
+
         window.addEventListener("mousemove", handleMouseMove);
         window.addEventListener("mouseleave", handleMouseLeave);
+        window.addEventListener("touchmove", handleTouchMove, { passive: true });
+        window.addEventListener("touchend", handleTouchEnd);
 
         return () => {
             if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
             if (resizeObserverRef.current) resizeObserverRef.current.disconnect();
             window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("mouseleave", handleMouseLeave);
+            window.removeEventListener("touchmove", handleTouchMove);
+            window.removeEventListener("touchend", handleTouchEnd);
         };
     }, [initDots, animate]);
 

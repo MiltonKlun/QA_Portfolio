@@ -3,6 +3,7 @@ import { X, CheckCircle, ShieldCheck, FileText, ExternalLink, Code2, Terminal } 
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { createPortal } from "react-dom";
 
 interface QAVerifiedModalProps {
   isOpen: boolean;
@@ -23,8 +24,7 @@ const QAVerifiedModal = ({
 }: QAVerifiedModalProps) => {
   const { toast } = useToast();
 
-
-  return (
+  return createPortal(
     <AnimatePresence mode="wait">
       {isOpen && (
         <>
@@ -34,7 +34,7 @@ const QAVerifiedModal = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100]"
           />
 
           {/* Modal Container */}
@@ -43,7 +43,7 @@ const QAVerifiedModal = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none"
           >
             <div
               className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-card border border-success/30 shadow-2xl shadow-success/20 pointer-events-auto flex flex-col"
@@ -143,7 +143,8 @@ const QAVerifiedModal = ({
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 

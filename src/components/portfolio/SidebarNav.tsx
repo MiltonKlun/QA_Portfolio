@@ -1,5 +1,9 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
 import { Mail, Linkedin, Github, CheckCircle } from "lucide-react";
+import BugHint from "@/components/BugHint";
+
+
 
 interface SidebarNavProps {
   variant: "untested" | "tested";
@@ -7,18 +11,46 @@ interface SidebarNavProps {
   onNavigate: (section: string) => void;
   onSocialClick?: (e: React.MouseEvent) => void;
   onNameClick?: () => void;
+  showHint?: boolean;
+  showChecks?: boolean;
+  foundBugs?: Set<string>;
 }
 
 const navItems = [
   { id: "about", label: "About Me" },
+  { id: "skills", label: "Skills" },
   { id: "experience", label: "Experience" },
-  { id: "projects", label: "Projects" },
 
 ];
 
-const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameClick }: SidebarNavProps) => {
+const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameClick, showHint, showChecks, foundBugs }: SidebarNavProps) => {
   const isUntested = variant === "untested";
-  const isTested = variant === "tested";
+  const [buggyName, setBuggyName] = useState("[Missing Name]");
+
+  useEffect(() => {
+    if (isUntested) {
+      const glitches = ["null", "undefined", "NaN", "[Object]", "Error", "void"];
+      let interval: NodeJS.Timeout;
+
+      // Start flickering
+      interval = setInterval(() => {
+        setBuggyName(glitches[Math.floor(Math.random() * glitches.length)]);
+      }, 100);
+
+      // Stop after 1.5 seconds and settle on the bug
+      const timeout = setTimeout(() => {
+        clearInterval(interval);
+        setBuggyName("[Missing Name]");
+      }, 1500);
+
+      return () => {
+        clearInterval(interval);
+        clearTimeout(timeout);
+      };
+    } else {
+      setBuggyName("Milton Klun");
+    }
+  }, [isUntested]);
 
   return (
     <div className="flex flex-col h-full">
@@ -32,14 +64,15 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
         <div className="flex items-center gap-3 lg:gap-5">
           {isUntested ? (
             <h1
-              className="text-4xl lg:text-5xl font-extrabold mb-2 cursor-pointer text-danger/50 italic"
+              className="text-4xl lg:text-5xl font-extrabold mb-2 cursor-pointer text-danger/50 italic relative inline-block"
               onClick={onNameClick}
               title="Click to see bug details"
             >
-              <span className="opacity-40">[Missing Name]</span>
+              <span className="opacity-40">{buggyName}</span>
+              <BugHint visible={!!showHint && !foundBugs?.has("name")} className="-right-6 top-1/2 -translate-y-1/2" />
             </h1>
           ) : (
-            <>
+            <div className="group flex items-center gap-3">
               <h1 className="text-4xl lg:text-5xl font-extrabold mb-2">
                 <span className="text-foreground">Milton Klun</span>
               </h1>
@@ -48,12 +81,13 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
                   e.preventDefault();
                   onNameClick?.();
                 }}
-                className="w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors mt-1"
+                className={`w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-all duration-300 mt-1 ${showChecks ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                  }`}
                 title="Name display verified"
               >
                 <CheckCircle className="w-3 h-3 text-success" />
               </button>
-            </>
+            </div>
           )}
         </div>
         <h2 className="text-lg lg:text-xl font-semibold text-gradient mb-2">
@@ -63,9 +97,6 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
         <div className="flex flex-col gap-1 mt-6 lg:mt-8">
           <p className="text-sm text-muted-foreground/60 italic font-serif leading-relaxed">
             "Quality is not an act, it is a habit."
-          </p>
-          <p className="text-sm text-muted-foreground/60 italic font-serif">
-            - Aristotle
           </p>
         </div>
       </motion.div>
@@ -105,9 +136,9 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="mt-8 lg:mt-auto pt-8"
+        className="mt-8 lg:mt-auto pt-8 flex flex-col gap-6"
       >
-        <div className="flex items-center gap-4 lg:gap-6">
+        <div className="flex items-center gap-4 lg:gap-6 relative" data-testid="social-links-container">
           {isUntested ? (
             <>
               <a
@@ -134,9 +165,12 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
               >
                 <Github className="w-5 h-5 lg:w-6 lg:h-6" />
               </a>
+              <div className="relative w-4 h-4 ml-2">
+                <BugHint visible={!!showHint && !foundBugs?.has("social")} className="top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              </div>
             </>
           ) : (
-            <>
+            <div className="group flex items-center gap-6">
               <a
                 href="mailto:miltonericklun@gmail.com"
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -165,14 +199,17 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
               {/* Verified tick next to GitHub with same spacing */}
               <button
                 onClick={(e) => onSocialClick?.(e)}
-                className="w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors"
+                className={`w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-all duration-300 ${showChecks ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                  }`}
                 title="Social links verified"
               >
                 <CheckCircle className="w-3 h-3 text-success" />
               </button>
-            </>
+            </div>
           )}
         </div>
+
+
       </motion.div>
     </div>
   );

@@ -25,7 +25,7 @@ When('I click on the [Missing Name] Text', async ({ page }) => {
 
 When('I click on the Broken Tech Icon', async ({ page }) => {
     // Scope to experience section and handle 'border-danger/50' class
-    await nuclearClick(page, page.locator('#experience [class*="border-danger"]').first());
+    await nuclearClick(page, page.locator('#skills [class*="border-danger"]').first());
 });
 
 When('I click on the [object Object]', async ({ page }) => {
@@ -65,7 +65,7 @@ Given('I have already found 4 bugs', async ({ page }) => {
     await expect(page.getByRole('dialog')).toBeHidden();
 
     // 2. Tech Stack (Broken Icon)
-    await nuclearClick(page, page.locator('#experience [class*="border-danger"]').first());
+    await nuclearClick(page, page.locator('#skills [class*="border-danger"]').first());
     await expect(page.getByRole('dialog')).toBeVisible();
     await page.getByRole('button', { name: /Close|Continue/i }).click();
     await expect(page.getByRole('dialog')).toBeHidden();

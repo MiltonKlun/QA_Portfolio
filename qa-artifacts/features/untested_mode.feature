@@ -12,12 +12,18 @@ Feature: Untested Portfolio Experience
     Then I should see the text "[Missing Name]"
     And the text color should be "red"
 
+  Scenario: Project Data Corruption Cascade
+    When I scroll to the "Experience" section
+    Then I should see the project description corrupt to "[object Object]"
+
   @severity=high
   Scenario: Social Media links are broken
     When I click the "Connect" button in the sidebar
     And I click the "LinkedIn" icon
     Then the browser should fail to navigate to a valid URL
     And I should remain on the same page or see an error
+
+
 
   @severity=high
   Scenario: Mobile layout overflows on small screens

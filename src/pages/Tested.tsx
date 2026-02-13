@@ -94,6 +94,7 @@ const fixedBugDetails: Record<
 const TestedPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentBug, setCurrentBug] = useState<BugType>("name");
+  const [showChecks, setShowChecks] = useState(false);
 
   const handleVerifiedClick = (bugType: string) => {
     setCurrentBug(bugType as BugType);
@@ -101,11 +102,28 @@ const TestedPage = () => {
   };
 
   return (
-    <PortfolioLayout variant="tested" onBugClick={handleVerifiedClick}>
+    <PortfolioLayout
+      variant="tested"
+      onBugClick={handleVerifiedClick}
+      showChecks={showChecks}
+      onToggleChecks={() => setShowChecks(!showChecks)}
+    >
       <SEO title="Milton Klun | QA Automation Engineer" />
-      <AboutSection variant="tested" onBugClick={() => handleVerifiedClick("responsive")} />
-      <TechStackSection variant="tested" onBugClick={() => handleVerifiedClick("techStack")} />
-      <ProjectsSection variant="tested" onBugClick={handleVerifiedClick} />
+      <AboutSection
+        variant="tested"
+        onBugClick={() => handleVerifiedClick("responsive")}
+        showChecks={showChecks}
+      />
+      <TechStackSection
+        variant="tested"
+        onBugClick={() => handleVerifiedClick("techStack")}
+        showChecks={showChecks}
+      />
+      <ProjectsSection
+        variant="tested"
+        onBugClick={handleVerifiedClick}
+        showChecks={showChecks}
+      />
 
       <QAVerifiedModal
         isOpen={modalOpen}

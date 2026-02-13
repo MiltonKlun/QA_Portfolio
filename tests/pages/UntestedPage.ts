@@ -17,14 +17,13 @@ export class UntestedPage extends BasePage {
         // Locating by text or accessible role where possible to simulate user behavior
         this.ownerName = page.locator('h1', { hasText: 'Missing Name' });
         this.socialLink = page.locator('a[href*="http:///"]'); // Malformed link
-        this.techStackImages = page.locator('svg.text-danger\\/50'); // The <ImageOff /> icon class
+        this.techStackImages = page.locator('#skills [class*="border-danger"]'); // Broken tech icons under Skills section
         this.progressValue = page.locator('text=NaN%'); // Broken data
         this.aboutText = page.locator('#about p').first(); // For CSS check
 
         // UI Interaction elements
         this.bugCardTrigger = page.locator('text=Missing Name'); // Triggers modal
-        this.modal = page.locator('.bg-card.shadow-2xl'); // Modal container
-        this.modal = page.locator('.bg-card.shadow-2xl'); // Modal container
+        this.modal = page.locator('[role="dialog"]'); // Modal container
         this.modalJiraButton = page.locator('button:has-text("View on Github")');
         this.bugCounter = page.locator('text=Bugs Found:');
     }

@@ -20,7 +20,8 @@ When('I view the Hero Headline', async ({ page }) => {
 
 Then('I should see the text "[Missing Name]"', async ({ page }) => {
     // The Intentional Bug 1: Name is missing
-    await expect(page.locator('h1')).toContainText('[Missing Name]');
+    // Wait for flickering to stop (1.5s delay)
+    await expect(page.locator('h1')).toContainText('[Missing Name]', { timeout: 5000 });
 });
 
 Then('the text color should be "red"', async ({ page }) => {
@@ -28,6 +29,17 @@ Then('the text color should be "red"', async ({ page }) => {
     // Tailwind text-danger is usually a red color.
     // We can check class or computed style. Checking class is easier for now.
     await expect(heading).toHaveClass(/text-danger/);
+});
+
+Then('I should see the project description corrupt to "[object Object]"', async ({ page }) => {
+    // Wait for the corruption timeout (2s)
+    // We target the second project card's description
+    const description = page.locator('#experience p').nth(1); // 0-indexed, so 1 is the 2nd card
+    await expect(description).toContainText('[object Object]', { timeout: 5000 });
+
+    // Check for the corrupted span class
+    const corruptedSpan = description.locator('span.text-danger');
+    await expect(corruptedSpan).toBeVisible();
 });
 
 // Social Scenario
@@ -63,6 +75,11 @@ When('I scroll to the "About Me" section', async ({ page }) => {
     await aboutSection.scrollIntoViewIfNeeded();
 });
 
+When('I scroll to the "Experience" section', async ({ page }) => {
+    const experienceSection = page.locator('#experience');
+    await experienceSection.scrollIntoViewIfNeeded();
+});
+
 Then('the text paragraph should overflow the container', async ({ page }) => {
     const paragraph = page.locator('#about p').first();
 
@@ -83,3 +100,5 @@ Then('the text paragraph should overflow the container', async ({ page }) => {
 Then('a horizontal scrollbar should be visible', async ({ page }) => {
     expect(true).toBe(true);
 });
+
+

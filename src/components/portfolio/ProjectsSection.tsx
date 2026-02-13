@@ -1,10 +1,15 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, CheckCircle } from "lucide-react";
 import QAVerifiedBadge from "@/components/QAVerifiedBadge";
+import BugHint from "@/components/BugHint";
 
 interface ProjectsSectionProps {
   variant: "untested" | "tested";
   onBugClick?: (bugType: string) => void;
+  showHint?: boolean;
+  showChecks?: boolean;
+  foundBugs?: Set<string>;
 }
 
 const isTested = (variant: string) => variant === "tested";
@@ -39,33 +44,57 @@ const projects = [
   },
 ];
 
-const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
+const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs }: ProjectsSectionProps) => {
   const isUntested = variant === "untested";
+  const [isCorrupted, setIsCorrupted] = useState(false);
+
+  useEffect(() => {
+    if (isUntested) {
+      const timer = setTimeout(() => {
+        setIsCorrupted(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsCorrupted(false);
+    }
+  }, [isUntested]);
 
   return (
-    <section id="projects" className="scroll-mt-24 relative">
+    <section id="experience" className="scroll-mt-24 relative">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
+        className="group"
       >
         {/* Mobile section title */}
-        <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 sticky top-0 bg-background/80 backdrop-blur-sm py-4 -mx-4 px-4">
-          Projects
+        <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 flex items-center justify-between group/mobile">
+          Experience
+          {!isUntested && (
+            <button
+              onClick={() => onBugClick?.("data")}
+              className={`w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-all duration-300 ${showChecks ? "opacity-100" : "opacity-0 group-hover/mobile:opacity-100"
+                }`}
+              title="Project data verified"
+            >
+              <CheckCircle className="w-3 h-3 text-success" />
+            </button>
+          )}
         </h2>
 
-        {/* Subtle verified tick for Projects section - positioned at top right */}
+        {/* Desktop verified tick */}
         {!isUntested && (
           <button
             onClick={() => onBugClick?.("data")}
-            className="absolute -top-2 right-0 md:-right-8 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors z-10"
+            className={`hidden lg:flex absolute top-1 -right-8 w-5 h-5 rounded-full bg-success/20 border border-success/40 items-center justify-center hover:bg-success/30 transition-all duration-300 z-10 ${showChecks ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+              }`}
             title="Project data verified"
           >
             <CheckCircle className="w-3 h-3 text-success" />
           </button>
         )}
 
-        {/* Projects List */}
+        {/* Experience List */}
         <div className="space-y-6">
           {projects.map((project, index) => {
             const isSecondCard = index === 1;
@@ -80,16 +109,15 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                 transition={{ delay: index * 0.1 }}
                 onClick={() => {
                   if (isUntested && isSecondCard) {
-                    onBugClick?.("functional");
-                  } else if (isUntested && showDataBug) {
                     onBugClick?.("data");
                   }
                 }}
                 className={`group relative p-4 sm:p-6 rounded-lg transition-all duration-300 ${isUntested && isSecondCard
-                  ? "cursor-not-allowed opacity-80"
+                  ? "hover:bg-card/80 cursor-pointer"
                   : "hover:bg-card/80 cursor-pointer"
                   }`}
               >
+
                 <div className="flex flex-col sm:flex-row gap-4">
                   {/* Project Image */}
                   <div className="flex-shrink-0 w-full sm:w-32 h-20 sm:h-20 bg-muted rounded-lg flex items-center justify-center text-3xl">
@@ -103,10 +131,22 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                         {project.title}
                         <ExternalLink className="inline-block ml-2 w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </h3>
+                      {isUntested && isSecondCard && (
+                        <div className="relative w-4 h-4 mt-1">
+                          <BugHint
+                            visible={!!showHint && (!foundBugs?.has("data") || !foundBugs?.has("functional"))}
+                            className="left-0 top-0"
+                          />
+                        </div>
+                      )}
                     </div>
 
                     <p className="text-muted-foreground text-sm mb-3">
-                      {project.description}
+                      {isUntested && index === 1 && isCorrupted ? (
+                        <span className="text-danger font-mono font-bold animate-pulse">[object Object]</span>
+                      ) : (
+                        project.description
+                      )}
                     </p>
 
                     {/* Tags */}
@@ -121,28 +161,7 @@ const ProjectsSection = ({ variant, onBugClick }: ProjectsSectionProps) => {
                       ))}
                     </div>
 
-                    {/* Progress - Shows bug in untested version */}
-                    {showDataBug && (
-                      <div
-                        className="mt-3 flex items-center gap-2"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onBugClick?.("data");
-                        }}
-                      >
-                        <span className="text-xs text-muted-foreground">Progress:</span>
-                        <span className="text-sm font-semibold text-danger">[object Object]</span>
-                        <span className="text-xs text-danger">(type error)</span>
-                      </div>
-                    )}
 
-                    {/* Shows fixed status in tested version for the second card */}
-                    {isTested(variant) && index === 1 && (
-                      <div className="mt-3 flex items-center gap-2">
-                        <span className="text-xs text-muted-foreground">Progress:</span>
-                        <span className="text-sm font-semibold text-foreground">{project.progress}%</span>
-                      </div>
-                    )}
                   </div>
                 </div>
               </motion.div>

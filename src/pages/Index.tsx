@@ -39,7 +39,7 @@ const Index = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-8 w-full"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-6 lg:gap-8 w-full max-w-xs mx-auto md:max-w-none"
         >
           {/* Untested Card */}
           <div className="group relative p-5 sm:p-8 rounded-2xl glass border border-danger/20 hover:border-danger/50 transition-all duration-300 hover:shadow-danger/20 hover:shadow-2xl h-full cursor-default">

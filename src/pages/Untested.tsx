@@ -69,7 +69,7 @@ const bugDetails: Record<
       "Perceived Quality Degradation. UI appears broken and untrustworthy, suggesting a lack of basic data validation standards.",
     severity: "medium",
     reproductionSteps: [
-      "Locate the 'Projects' section",
+      "Locate the 'Experience' section",
       "Check the 'Completion Status' progress bar",
       "Verify the label reads '[object Object]' instead of a integer value"
     ]
@@ -96,6 +96,7 @@ const UntestedPage = () => {
   const [currentBug, setCurrentBug] = useState<BugType>("name");
   const [hasShownCompletion, setHasShownCompletion] = useState(false);
   const [foundBugs, setFoundBugs] = useState<Set<string>>(new Set());
+  const [showHints, setShowHints] = useState(false);
 
   const handleBugClick = (bugType: string) => {
     // Only open modal if bugType exists in bugDetails
@@ -121,12 +122,34 @@ const UntestedPage = () => {
     }
   };
 
+  const isBugFound = (bugType: string) => foundBugs.has(bugType);
+
   return (
-    <PortfolioLayout variant="untested" onBugClick={handleBugClick} bugCount={foundBugs.size}>
+    <PortfolioLayout
+      variant="untested"
+      onBugClick={handleBugClick}
+      bugCount={foundBugs.size}
+      showHints={showHints}
+      onToggleHints={() => setShowHints(!showHints)}
+      foundBugs={foundBugs}
+    >
       <SEO title="Milton Klun | QA Automation Engineer" />
-      <AboutSection variant="untested" onBugClick={() => handleBugClick("responsive")} />
-      <TechStackSection variant="untested" onBugClick={() => handleBugClick("techStack")} />
-      <ProjectsSection variant="untested" onBugClick={handleBugClick} />
+      <AboutSection
+        variant="untested"
+        onBugClick={() => handleBugClick("responsive")}
+        showHint={showHints && !isBugFound("responsive")}
+      />
+      <TechStackSection
+        variant="untested"
+        onBugClick={() => handleBugClick("techStack")}
+        showHint={showHints && !isBugFound("techStack")}
+      />
+      <ProjectsSection
+        variant="untested"
+        onBugClick={handleBugClick}
+        showHint={showHints}
+        foundBugs={foundBugs}
+      />
 
       <QAReportModal
         isOpen={modalOpen}

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ImageOff, CheckCircle } from "lucide-react";
+import BugHint from "@/components/BugHint";
 
 // Import tech logos
 import pythonLogo from "@/assets/tech-logos/python.svg";
@@ -26,6 +27,8 @@ import mongodbLogo from "@/assets/tech-logos/mongodb.png";
 interface TechStackSectionProps {
   variant: "untested" | "tested";
   onBugClick?: () => void;
+  showHint?: boolean;
+  showChecks?: boolean;
 }
 
 interface TechItem {
@@ -68,7 +71,7 @@ const getTechStack = (isUntested: boolean): Record<string, TechItem[]> => ({
   ],
 });
 
-const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
+const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechStackSectionProps) => {
   const isUntested = variant === "untested";
   const isTested = variant === "tested";
   const techStack = getTechStack(isUntested);
@@ -91,23 +94,35 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
   };
 
   return (
-    <section id="experience" className="scroll-mt-24 relative">
+    <section id="skills" className="scroll-mt-24 relative">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
+        className="group/section"
       >
         {/* Mobile section title */}
-        <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 sticky top-0 bg-background/80 backdrop-blur-sm py-4 -mx-4 px-4">
-          Experience
+        <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 flex items-center justify-between group/mobile">
+          Skills
+          {isTested && (
+            <button
+              onClick={onBugClick}
+              className={`w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-all duration-300 ${showChecks ? "opacity-100" : "opacity-0 group-hover/mobile:opacity-100"
+                }`}
+              title="Tech stack icons verified"
+            >
+              <CheckCircle className="w-3 h-3 text-success" />
+            </button>
+          )}
         </h2>
 
-        {/* Subtle verified tick for the whole Experience section - positioned at top right */}
+        {/* Desktop verified tick */}
         {isTested && (
           <button
             onClick={onBugClick}
-            className="absolute -top-2 right-0 md:-right-8 w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-colors z-10"
+            className={`hidden lg:flex absolute top-1 -right-8 w-5 h-5 rounded-full bg-success/20 border border-success/40 items-center justify-center hover:bg-success/30 transition-all duration-300 z-10 ${showChecks ? "opacity-100" : "opacity-0 group-hover/section:opacity-100"
+              }`}
             title="Tech stack icons verified"
           >
             <CheckCircle className="w-3 h-3 text-success" />
@@ -124,20 +139,28 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
               transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
               className="space-y-4"
             >
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                {category.title}
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                  {category.title}
+                </h3>
+                {category.title === "Languages" && isUntested && (
+                  <div className="relative w-3 h-3">
+                    <BugHint visible={!!showHint} className="top-0 left-0" />
+                  </div>
+                )}
+              </div>
               <div className="flex flex-wrap gap-3">
                 {category.items.map((item) => (
                   <div
                     key={item.name}
                     onClick={() => item.isBroken && onBugClick?.()}
-                    className={`group relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border transition-all duration-200 p-2 ${item.isBroken
+                    className={`group/item relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border transition-all duration-200 p-2 ${item.isBroken
                       ? "border-danger/50 cursor-pointer hover:border-danger bg-danger/5"
                       : "border-border hover:border-primary/50 hover:scale-110"
                       }`}
                     title={item.isBroken ? "" : item.name}
                   >
+
                     {item.isBroken ? (
                       // BUG: Show broken image placeholder
                       <div className="w-full h-full flex items-center justify-center">
@@ -152,13 +175,13 @@ const TechStackSection = ({ variant, onBugClick }: TechStackSectionProps) => {
                     )}
                     {/* Tooltip - only show for non-broken items */}
                     {!item.isBroken && (
-                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-popover text-popover-foreground rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-popover text-popover-foreground rounded shadow-lg opacity-0 group-hover/item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
                         {item.name}
                       </span>
                     )}
                     {/* BUG tooltip for broken items - shows undefined */}
                     {item.isBroken && (
-                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-danger/20 text-danger border border-danger/30 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-danger/20 text-danger border border-danger/30 rounded shadow-lg opacity-0 group-hover/item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
                         undefined
                       </span>
                     )}

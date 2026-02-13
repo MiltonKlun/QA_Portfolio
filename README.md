@@ -1,73 +1,66 @@
-# Welcome to your Lovable project
+# QA Automation Engineer Portfolio 🚀
 
-## Project info
+> **"Quality is not an act, it is a habit."**
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Welcome to my interactive QA Portfolio! This project is designed to demonstrate my skills as a QA Automation Engineer not just by *listing* them, but by letting you *experience* them.
 
-## How can I edit this code?
+## 🎮 The Concept: Untested vs. Verified
 
-There are several ways of editing your application.
+This portfolio features two distinct modes:
 
-**Use Lovable**
+1.  **🔴 Untested Mode**: The default state. A chaos-engineered version of the site full of deliberate bugs, UI glitches, and functional errors.
+    *   **Goal**: Find the bugs!
+    *   **Interactive Bug Reporting**: Click on glitches (like the flickering name or broken layout) to see a detailed "Jira-style" bug report explaining the technical root cause (e.g., specific JS errors, CSS overflow, API failures).
+    *   **The Check**: Can you find all 5 hidden bugs?
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+2.  **🟢 Verified Mode**: The "fixed" version.
+    *   Toggle this switch to see the power of QA.
+    *   All bugs are resolved, layouts are stable, and the user experience is polished.
+    *   **Verified Badges**: Click on the green checkmarks to see how each bug was fixed and validated.
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠️ Tech Stack
 
-**Use your preferred IDE**
+This project was built with modern web technologies:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+-   **Framework**: [React](https://react.dev/) (Vite)
+-   **Language**: [TypeScript](https://www.typescriptlang.org/)
+-   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+-   **Animations**: [Framer Motion](https://www.framer.com/motion/)
+-   **Testing**: [Playwright](https://playwright.dev/) (End-to-End & BDD)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🧪 Automated Testing Strategy
 
-Follow these steps:
+This repository isn't just a website; it's a test target. I've implemented a comprehensive test suite to verify the behavior of both modes.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### BDD (Behavior Driven Development)
+I use **Cucumber/Gherkin** syntax to define human-readable test scenarios.
+*   `features/untested_mode.feature`: Defines the expected broken behavior.
+*   `features/tested_mode.feature`: Defines the expected correct behavior.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Running Tests
+To run the automated checks locally:
 
-# Step 3: Install the necessary dependencies.
-npm i
+```bash
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Run all tests
+npx playwright test
+
+# Run specific scenarios (e.g., Verified Mode)
+npx playwright test --grep "Verified"
 ```
 
-**Edit a file directly in GitHub**
+## 📂 Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+-   `src/`: React source code.
+-   `tests/`: Playwright test specs and page objects.
+-   `qa-artifacts/`: Gherkin feature files and test documentation.
+-   `IMPROVEMENTS_PLAN.md` & `TEST_FIX_PLAN.md`: Documentation of the development and QA process used to build this site.
 
-**Use GitHub Codespaces**
+## 👨‍💻 Author
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+**Milton Klun**
+*QA Automation Engineer*
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+[LinkedIn](https://www.linkedin.com/in/milton-klun/) | [GitHub](https://github.com/MiltonKlun)
