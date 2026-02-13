@@ -58,9 +58,17 @@ npx playwright test --grep "Verified"
 -   `qa-artifacts/`: Gherkin feature files and test documentation.
 -   `IMPROVEMENTS_PLAN.md` & `TEST_FIX_PLAN.md`: Documentation of the development and QA process used to build this site.
 
-## 👨‍💻 Author
+---
 
-**Milton Klun**
-*QA Automation Engineer*
+## Author
+**Milton Klun**  
+*QA Automation Engineer | Backend Developer*
 
-[LinkedIn](https://www.linkedin.com/in/milton-klun/) | [GitHub](https://github.com/MiltonKlun)
+<div align="left">
+  <a href="https://www.linkedin.com/in/milton-klun/">
+    <img src="https://img.shields.io/badge/LinkedIn-Milton%20Klun-blue?style=for-the-badge&logo=linkedin" alt="LinkedIn"/>
+  </a>
+  <a href="mailto:miltonericklun@gmail.com">
+    <img src="https://img.shields.io/badge/Email-Contact%20Me-red?style=for-the-badge&logo=gmail" alt="Email"/>
+  </a>
+</div>
