@@ -20,6 +20,11 @@ This matrix maps High-Level Requirements (HLR) to Test Cases (TC) and Automated 
 | **REQ-04** | The application layout shall be responsive on Mobile Viewports (375px). | **TC-05** | Verify "Responsive" Overflow | `untested_mode.feature` | ✅ Automated |
 | **REQ-05** | Users shall be able to switch to a "Tested" version where all bugs are resolved. | **TC-08** | Verify "Tested" Toggle/Flow | `tested_mode.feature` | ✅ Automated |
 | **REQ-06** | The "Tested" version shall display "Green Tick" badges verifying the fix. | **TC-08** | Verify "Tested" Toggle/Flow | `tested_mode.feature` | ✅ Automated |
+| **REQ-07** | The "Tested" page shall be free of critical accessibility violations (WCAG 2.1 AA). | **TC-09** | Verify Accessibility (Tested) | `accessibility.feature` | ✅ Automated |
+| **REQ-07** | (Cont.) The "Untested" page shall contain detectable accessibility violations. | **TC-10** | Verify Accessibility Violations (Untested) | `accessibility.feature` | ✅ Automated |
+| **REQ-08** | The "Tested" page shall load (LCP) in under 5.0 seconds (adjusted for dev). | **TC-11** | Verify Page Load Performance | `performance.feature` | ✅ Automated |
+| **REQ-09** | The application shall handle missing resources (e.g., images) gracefully. | **TC-12** | Verify Network Failure Handling | `performance.feature` | ✅ Automated |
+| **REQ-10** | The application UI shall match the approved baseline snapshots. | **TC-13** | Verify Visual Regression | `visual_regression.feature` | ✅ Automated |
 
 ---
 
@@ -27,8 +32,8 @@ This matrix maps High-Level Requirements (HLR) to Test Cases (TC) and Automated 
 
 | Metric | Count |
 | :--- | :--- |
-| **Total Requirements** | 6 |
-| **Total Test Cases** | 9 |
+| **Total Requirements** | 10 |
+| **Total Test Cases** | 14 |
 | **Automated Coverage** | 100% |
 | **Orphan Requirements** | 0 |
 | **Orphan Test Cases** | 0 |

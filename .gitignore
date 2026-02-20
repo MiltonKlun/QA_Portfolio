@@ -43,19 +43,20 @@ blob-report/
 .features-gen/
 
 # GSD / Workflow Artifacts (Root Markdown Files)
-# Keeping these as part of the portfolio documentation
-# BDD_IMPLEMENTATION_PLAN.md
-# BUG_IMPROVEMENT_PROPOSAL.md
-# GSD_CHEATSHEET.md
-# GSD_USAGE_BRIEF.md
-# PHASE_*_STATUS.md
-# TEST_FIX_PLAN.md
-# TEST_IMPLEMENTATION_PLAN.md
-# TEST_RESUME.md
-# Walkthrough_*.md
-# LOGS.md
-# TODO.md
-# notes.md
+# GSD / Workflow Artifacts (Root Markdown Files)
+# We explicitly ignore these to keep the repo clean for the portfolio
+BDD_IMPLEMENTATION_PLAN.md
+BUG_IMPROVEMENT_PROPOSAL.md
+GSD_CHEATSHEET.md
+GSD_USAGE_BRIEF.md
+PHASE_*_STATUS.md
+TEST_FIX_PLAN.md
+TEST_IMPLEMENTATION_PLAN.md
+TEST_RESUME.md
+Walkthrough_*.md
+LOGS.md
+TODO.md
+notes.md
 
 # Keep README.md
 !README.md

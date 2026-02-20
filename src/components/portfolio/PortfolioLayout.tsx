@@ -159,8 +159,8 @@ const PortfolioLayout = ({
           }`}
       >
         <div className="container flex items-center justify-between min-h-12 py-2 px-4">
-          <Link to="/">
-            <Button variant="ghost" size="sm" className="gap-2 text-xs">
+          <Link to="/" aria-label="Back to Home">
+            <Button variant="ghost" size="sm" className="gap-2 text-xs" aria-label="Back to Home">
               <ArrowLeft className="w-3 h-3" />
             </Button>
           </Link>

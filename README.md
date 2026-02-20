@@ -1,5 +1,7 @@
 # QA Automation Engineer Portfolio 🚀
 
+![Playwright Tests](https://github.com/MiltonKlun/QA_Portfolio/actions/workflows/tests.yml/badge.svg)
+
 > **"Quality is not an act, it is a habit."**
 
 Welcome to my interactive QA Portfolio! This project is designed to demonstrate my skills as a QA Automation Engineer not just by *listing* them, but by letting you *experience* them.

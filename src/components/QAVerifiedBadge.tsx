@@ -20,6 +20,7 @@ const QAVerifiedBadge = ({ testName, testFile }: QAVerifiedBadgeProps) => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         className="w-6 h-6 rounded-full bg-success/20 border border-success/30 flex items-center justify-center cursor-help hover:bg-success/30 transition-colors"
+        aria-label={`QA Verified: ${testName}`}
       >
         <CheckCircle className="w-4 h-4 text-success" />
       </motion.button>
