@@ -5,6 +5,7 @@ import TechStackSection from "@/components/portfolio/TechStackSection";
 import ProjectsSection from "@/components/portfolio/ProjectsSection";
 import QAVerifiedModal from "@/components/QAVerifiedModal";
 import SEO from "@/components/SEO";
+import { AriaLiveRegion } from "@/components/AriaLiveRegion";
 
 type BugType = "name" | "social" | "techStack" | "data" | "responsive";
 
@@ -91,14 +92,16 @@ const fixedBugDetails: Record<
 
 
 
-const TestedPage = () => {
+const Tested = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentBug, setCurrentBug] = useState<BugType>("name");
   const [showChecks, setShowChecks] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
 
   const handleVerifiedClick = (bugType: string) => {
     setCurrentBug(bugType as BugType);
     setModalOpen(true);
+    setAnnouncement(`Verified fix details opened for: ${fixedBugDetails[bugType as BugType].title}`);
   };
 
   return (
@@ -133,8 +136,10 @@ const TestedPage = () => {
         solution={fixedBugDetails[currentBug].solution}
         testSnippet={fixedBugDetails[currentBug].testSnippet}
       />
+      
+      <AriaLiveRegion message={announcement} />
     </PortfolioLayout>
   );
 };
 
-export default TestedPage;
+export default Tested;

@@ -17,30 +17,33 @@ const isTested = (variant: string) => variant === "tested";
 const projects = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    description: "Full test suite for a high-traffic e-commerce platform with 50K+ daily users.",
-    image: "🛒",
-    tags: ["Selenium", "Cypress", "API Testing"],
+    title: "Test Automation Suite",
+    description: "Test automation framework tailored for PG Original.",
+    image: <img src="/pg_logo.webp" alt="PG Logo" width={64} height={64} loading="lazy" className="w-12 h-12 sm:w-16 sm:h-16 object-contain opacity-90 hover:opacity-100 transition-opacity" />,
+    tags: ["Playwright", "Python", "POM"],
     status: "Completed",
     progress: 100,
+    link: "https://github.com/MiltonKlun/PG_Original_POM"
   },
   {
     id: 2,
-    title: "Healthcare App",
-    description: "HIPAA-compliant mobile testing for a patient management system.",
-    image: "🏥",
-    tags: ["Appium", "Security Testing", "HIPAA"],
+    title: "CSA Pharma Framework",
+    description: "Compliance-focused testing framework for pharmaceutical systems (GAMP5).",
+    image: "💊",
+    tags: ["Compliance", "Validation", "GAMP5"],
     status: "In Progress",
-    progress: 75, // Will show as "undefined" in untested
+    progress: 75,
+    link: "https://github.com/MiltonKlun/CSA_Pharma_Framework"
   },
   {
     id: 3,
-    title: "FinTech Dashboard",
-    description: "Automated regression testing for a real-time financial analytics dashboard.",
-    image: "📊",
-    tags: ["Jest", "Playwright", "Performance"],
+    title: "Pombot",
+    description: "Serverless Telegram bot with sales, expenses, and stock management.",
+    image: <img src="/pg_logo.webp" alt="PG Logo" width={64} height={64} loading="lazy" className="w-12 h-12 sm:w-16 sm:h-16 object-contain opacity-90 hover:opacity-100 transition-opacity" />,
+    tags: ["AWS-Lambda", "CI/CD", "API"],
     status: "Completed",
     progress: 100,
+    link: "https://github.com/MiltonKlun/Pombot_PG_Original"
   },
 ];
 
@@ -99,22 +102,36 @@ const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs 
           {projects.map((project, index) => {
             const isSecondCard = index === 1;
             const showDataBug = isUntested && index === 1;
+            const isBugInteracting = isUntested && isSecondCard;
 
             return (
-              <motion.div
+              <motion.a
                 key={project.id}
+                href={isBugInteracting ? undefined : project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                role={isBugInteracting ? "button" : "link"}
+                tabIndex={0}
+                aria-label={isBugInteracting ? "Trigger data corruption bug" : `Go to ${project.title} repository`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                onClick={() => {
-                  if (isUntested && isSecondCard) {
+                transition={{ opacity: { delay: index * 0.1 }, y: { delay: index * 0.1 } }}
+                onClick={(e) => {
+                  if (isBugInteracting) {
+                    e.preventDefault();
                     onBugClick?.("data");
                   }
                 }}
-                className={`group relative p-4 sm:p-6 rounded-lg transition-all duration-300 ${isUntested && isSecondCard
+                onKeyDown={(e) => {
+                  if (isBugInteracting && (e.key === "Enter" || e.key === " ")) {
+                    e.preventDefault();
+                    onBugClick?.("data");
+                  }
+                }}
+                className={`block group relative p-4 sm:p-6 rounded-lg transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-primary ${isBugInteracting
                   ? "hover:bg-card/80 cursor-pointer"
-                  : "hover:bg-card/80 cursor-pointer"
+                  : "hover:bg-card/80 cursor-pointer hover:shadow-lg hover:scale-[1.01]"
                   }`}
               >
 
@@ -127,7 +144,7 @@ const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start gap-2 mb-2">
-                      <h3 className="text-base font-semibold group-hover:text-primary transition-colors">
+                      <h3 className="text-base font-semibold group-hover:text-primary">
                         {project.title}
                         <ExternalLink className="inline-block ml-2 w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                       </h3>
@@ -164,7 +181,7 @@ const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs 
 
                   </div>
                 </div>
-              </motion.div>
+              </motion.a>
             );
           })}
         </div>

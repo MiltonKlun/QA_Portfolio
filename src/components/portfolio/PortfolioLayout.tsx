@@ -54,12 +54,28 @@ const PortfolioLayout = ({
   useEffect(() => {
     const sections = ["about", "skills", "experience"];
 
+    let sectionOffsets: { id: string; top: number }[] = [];
+    let pageHeight = 0;
+    let viewportHeight = 0;
+
+    const calculateOffsets = () => {
+      sectionOffsets = sections.map((id) => {
+        const element = document.getElementById(id);
+        return { id, top: element ? element.offsetTop : 0 };
+      });
+      pageHeight = document.documentElement.scrollHeight;
+      viewportHeight = window.innerHeight;
+    };
+
+    // Calculate initial offsets
+    calculateOffsets();
+
     const handleScroll = () => {
       // Don't update if we're programmatically scrolling
       if (isScrollingRef.current) return;
 
       // Check if we're at the bottom of the page
-      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50;
+      const isAtBottom = viewportHeight + window.scrollY >= pageHeight - 50;
 
       if (isAtBottom) {
         setActiveSection("experience");
@@ -68,26 +84,29 @@ const PortfolioLayout = ({
 
       const headerOffset = 120;
       let currentSection = "about";
+      const scrollY = window.scrollY;
 
-      for (const sectionId of sections) {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          // If top of section is at or above the detection line, it's the current section
-          if (rect.top <= headerOffset) {
-            currentSection = sectionId;
-          }
+      for (const section of sectionOffsets) {
+        // If current scroll position is past the section's top (minus header buffer)
+        if (scrollY >= section.top - headerOffset) {
+          currentSection = section.id;
         }
       }
 
       setActiveSection(currentSection);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    // Recalculate offsets on resize to maintain accuracy
+    window.addEventListener("resize", calculateOffsets);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    
     // Set initial state
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("resize", calculateOffsets);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -98,8 +117,7 @@ const PortfolioLayout = ({
       isScrollingRef.current = true;
 
       const headerOffset = 96; // Account for fixed header
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+      const offsetPosition = element.offsetTop - headerOffset;
 
       window.scrollTo({
         top: offsetPosition,

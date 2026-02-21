@@ -12,6 +12,7 @@ interface Dot {
 
 const ParticleGrid = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const canvasRectRef = useRef<DOMRect | null>(null);
     const dotsRef = useRef<Dot[]>([]);
     const mouseRef = useRef({ x: -1000, y: -1000 });
     const animFrameRef = useRef<number>(0);
@@ -46,13 +47,13 @@ const ParticleGrid = () => {
         dotsRef.current = dots;
     }, []);
 
+    const primaryHslRef = useRef<string>("210 100% 50%"); // Fallback
+
     const animate = useCallback((ctx: CanvasRenderingContext2D, width: number, height: number) => {
         const now = Date.now();
         ctx.clearRect(0, 0, width, height);
 
-        // Get the computed primary color from CSS variables
-        const style = getComputedStyle(document.documentElement);
-        const primaryHSL = style.getPropertyValue("--primary").trim();
+        const primaryHSL = primaryHslRef.current;
 
         for (const dot of dotsRef.current) {
             // Pulse breathing effect
@@ -91,17 +92,28 @@ const ParticleGrid = () => {
         const setupCanvas = () => {
             const dpr = window.devicePixelRatio || 1;
             const rect = canvas.getBoundingClientRect();
+            canvasRectRef.current = rect;
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
             ctx.scale(dpr, dpr);
+            
+            // Cache CSS variable here to avoid forced reflows in the render loop
+            const style = getComputedStyle(document.documentElement);
+            const cssPrimary = style.getPropertyValue("--primary").trim();
+            if (cssPrimary) {
+                primaryHslRef.current = cssPrimary;
+            }
+
             initDots(rect.width, rect.height);
             // Cancel any existing animation before starting new
             if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
             animate(ctx, rect.width, rect.height);
         };
 
-        // Initial setup
-        setupCanvas();
+        // Initial setup - deferred to protect FCP and LCP main thread
+        const startTimeout = setTimeout(() => {
+            setupCanvas();
+        }, 800);
 
         // Resize observer for responsive canvas
         resizeObserverRef.current = new ResizeObserver(() => {
@@ -111,7 +123,8 @@ const ParticleGrid = () => {
 
         // Mouse tracking
         const handleMouseMove = (e: MouseEvent) => {
-            const rect = canvas.getBoundingClientRect();
+            if (!canvasRectRef.current) return;
+            const rect = canvasRectRef.current;
             mouseRef.current = {
                 x: e.clientX - rect.left,
                 y: e.clientY - rect.top,
@@ -125,8 +138,8 @@ const ParticleGrid = () => {
         // Touch tracking for mobile devices
         const handleTouchMove = (e: TouchEvent) => {
             const touch = e.touches[0];
-            if (!touch) return;
-            const rect = canvas.getBoundingClientRect();
+            if (!touch || !canvasRectRef.current) return;
+            const rect = canvasRectRef.current;
             mouseRef.current = {
                 x: touch.clientX - rect.left,
                 y: touch.clientY - rect.top,
@@ -144,6 +157,7 @@ const ParticleGrid = () => {
         window.addEventListener("touchend", handleTouchEnd);
 
         return () => {
+            clearTimeout(startTimeout);
             if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
             if (resizeObserverRef.current) resizeObserverRef.current.disconnect();
             window.removeEventListener("mousemove", handleMouseMove);

@@ -6,6 +6,7 @@ import ProjectsSection from "@/components/portfolio/ProjectsSection";
 import QAReportModal from "@/components/QAReportModal";
 import CompletionModal from "@/components/CompletionModal";
 import SEO from "@/components/SEO";
+import { AriaLiveRegion } from "@/components/AriaLiveRegion";
 
 type BugType = "name" | "social" | "techStack" | "data" | "responsive";
 
@@ -58,54 +59,54 @@ const bugDetails: Record<
       "Scroll to the 'Tech Stack' section",
       "Observe broken image icons",
       "Hover over any icon placeholder",
-      "Note inability to read tooltips describing the technology"
+      "Check network tab for 404 errors on image requests"
     ]
   },
   data: {
-    title: "Type Coercion Error: Object Object",
+    title: "[object Object] Cast Exception",
     description:
-      "The system attempted to render a raw Javascript object directly into the JSX tree, resulting in '[object Object]' being displayed. This indicates a missing data transformation layer or incorrect API response handling.",
+      "A JavaScript object is being directly rendered into the DOM without proper stringification or data extraction, resulting in the '[object Object]' string literal.",
     impact:
-      "Perceived Quality Degradation. UI appears broken and untrustworthy, suggesting a lack of basic data validation standards.",
-    severity: "medium",
+      "Data Corruption. Project details are unreadable, undermining the candidate's claims of technical competence.",
+    severity: "high",
     reproductionSteps: [
-      "Locate the 'Experience' section",
-      "Check the 'Completion Status' progress bar",
-      "Verify the label reads '[object Object]' instead of a integer value"
+      "Scroll to the 'Experience' section",
+      "Locate the 'Healthcare App' project card",
+      "Wait 2 seconds or observe the description text",
+      "Verify the description renders as '[object Object]'"
     ]
   },
   responsive: {
-    title: "Layout Overflow: Mobile Viewport (CSS)",
+    title: "CSS Rule Violation: Text Overflow",
     description:
-      "Text content in the About section lacks 'word-wrap' or 'overflow-wrap' properties, causing horizontal overflow breakage on viewports widths < 375px.",
+      "Missing 'word-wrap' or 'overflow: hidden' CSS properties on the container element cause long text strings to break out of their bounds on smaller viewports.",
     impact:
-      "Mobile Usability Violation. Content is unreadable on standard mobile devices, violating WCAG 1.4.10 (Reflow), leading to immediate user bounce.",
-    severity: "high",
+      "Visual Breakage. The UI becomes horizontally scrollable (breaking mobile layout) and text overlaps adjacent elements, creating an unpolished appearance.",
+    severity: "medium",
     reproductionSteps: [
-      "Resize browser window to iPhone SE dimensions (375x667)",
-      "Navigate to the About section",
-      "Observe text extending beyond the viewport boundary",
-      "Verify horizontal scrollbar appearance"
+      "Navigate to the 'About Me' section",
+      "Resize browser window or use mobile view",
+      "Observe the 'Test Automation Expert' text overflowing the right boundary of the card"
     ]
-  },
+  }
 };
 
-const UntestedPage = () => {
+const Untested = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [completionModalOpen, setCompletionModalOpen] = useState(false);
   const [currentBug, setCurrentBug] = useState<BugType>("name");
   const [hasShownCompletion, setHasShownCompletion] = useState(false);
   const [foundBugs, setFoundBugs] = useState<Set<string>>(new Set());
   const [showHints, setShowHints] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
 
   const handleBugClick = (bugType: string) => {
-    // Only open modal if bugType exists in bugDetails
-    if (bugType in bugDetails) {
-      setCurrentBug(bugType as BugType);
-      setModalOpen(true);
+    setCurrentBug(bugType as BugType);
+    setModalOpen(true);
+    setAnnouncement(`Bug found: ${bugDetails[bugType as BugType].title}. Report modal opened.`);
 
-      // Add unique bug to found set
-      setFoundBugs(prev => {
+    if (!foundBugs.has(bugType)) {
+      setFoundBugs((prev) => {
         const newSet = new Set(prev);
         newSet.add(bugType);
         return newSet;
@@ -164,8 +165,10 @@ const UntestedPage = () => {
         isOpen={completionModalOpen}
         onClose={() => setCompletionModalOpen(false)}
       />
+      
+      <AriaLiveRegion message={announcement} />
     </PortfolioLayout>
   );
 };
 
-export default UntestedPage;
+export default Untested;

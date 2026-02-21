@@ -5,24 +5,24 @@ import BugHint from "@/components/BugHint";
 // Import tech logos
 import pythonLogo from "@/assets/tech-logos/python.svg";
 import javaLogo from "@/assets/tech-logos/java.svg";
-import sqlLogo from "@/assets/tech-logos/sql.png";
+import sqlLogo from "@/assets/tech-logos/sql.webp";
 import playwrightLogo from "@/assets/tech-logos/playwright.svg";
 import seleniumLogo from "@/assets/tech-logos/selenium.svg";
-import pytestLogo from "@/assets/tech-logos/pytest.png";
-import cucumberLogo from "@/assets/tech-logos/cucumber.png";
-import appiumLogo from "@/assets/tech-logos/appium.png";
+import pytestLogo from "@/assets/tech-logos/pytest.webp";
+import cucumberLogo from "@/assets/tech-logos/cucumber.webp";
+import appiumLogo from "@/assets/tech-logos/appium.webp";
 import jmeterLogo from "@/assets/tech-logos/jmeter.svg";
 import postmanLogo from "@/assets/tech-logos/postman.svg";
-import jiraLogo from "@/assets/tech-logos/jira.png";
-import testrailLogo from "@/assets/tech-logos/testrail.png";
-import xrayLogo from "@/assets/tech-logos/xray.png";
-import awsLogo from "@/assets/tech-logos/aws.png";
-import gitLogo from "@/assets/tech-logos/git.png";
+import jiraLogo from "@/assets/tech-logos/jira.webp";
+import testrailLogo from "@/assets/tech-logos/testrail.webp";
+import xrayLogo from "@/assets/tech-logos/xray.webp";
+import awsLogo from "@/assets/tech-logos/aws.webp";
+import gitLogo from "@/assets/tech-logos/git.webp";
 import dockerLogo from "@/assets/tech-logos/docker.svg";
-import jenkinsLogo from "@/assets/tech-logos/jenkins.png";
+import jenkinsLogo from "@/assets/tech-logos/jenkins.webp";
 import githubLogo from "@/assets/tech-logos/github.svg";
 import postgresqlLogo from "@/assets/tech-logos/postgresql.svg";
-import mongodbLogo from "@/assets/tech-logos/mongodb.png";
+import mongodbLogo from "@/assets/tech-logos/mongodb.webp";
 
 interface TechStackSectionProps {
   variant: "untested" | "tested";
@@ -154,7 +154,15 @@ const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechSta
                   <div
                     key={item.name}
                     onClick={() => item.isBroken && onBugClick?.()}
-                    className={`group/item relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border transition-all duration-200 p-2 ${item.isBroken
+                    onKeyDown={(e) => {
+                      if (item.isBroken && (e.key === "Enter" || e.key === " ")) {
+                        e.preventDefault();
+                        onBugClick?.();
+                      }
+                    }}
+                    tabIndex={item.isBroken ? 0 : -1}
+                    aria-label={item.isBroken ? "Trigger broken image bug" : item.name}
+                    className={`group/item relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border transition-all duration-200 p-2 outline-none focus-visible:ring-2 focus-visible:ring-primary ${item.isBroken
                       ? "border-danger/50 cursor-pointer hover:border-danger bg-danger/5"
                       : "border-border hover:border-primary/50 hover:scale-110"
                       }`}
@@ -170,6 +178,9 @@ const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechSta
                       <img
                         src={item.logo}
                         alt={item.name}
+                        width={56}
+                        height={56}
+                        loading="lazy"
                         className="w-full h-full object-contain"
                       />
                     )}

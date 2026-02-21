@@ -1,68 +1,160 @@
 # QA Automation Engineer Portfolio 🚀
 
-![Playwright Tests](https://github.com/MiltonKlun/QA_Portfolio/actions/workflows/tests.yml/badge.svg)
+<div align="center">
+  <img src="https://github.com/MiltonKlun/QA_Portfolio/actions/workflows/tests.yml/badge.svg" alt="Playwright Tests" />
+</div>
 
-> **"Quality is not an act, it is a habit."**
+<br/>
 
-Welcome to my interactive QA Portfolio! This project is designed to demonstrate my skills as a QA Automation Engineer not just by *listing* them, but by letting you *experience* them.
+<div align="center">
+  <strong>🔴 Untested Mode</strong> — Find the bugs &nbsp;|&nbsp; <strong>🟢 Verified Mode</strong> — See the fixes
+  <br/><br/>
+  <a href="https://www.miltonklun.com/untested"><img src="https://img.shields.io/badge/Try%20Untested-FF4444?style=for-the-badge" alt="Try Untested Mode"/></a>
+  &nbsp;
+  <a href="https://www.miltonklun.com/tested"><img src="https://img.shields.io/badge/Try%20Verified-22C55E?style=for-the-badge" alt="Try Verified Mode"/></a>
+</div>
 
-## 🎮 The Concept: Untested vs. Verified
+---
 
-This portfolio features two distinct modes:
+## 💡 What Is This?
 
-1.  **🔴 Untested Mode**: The default state. A chaos-engineered version of the site full of deliberate bugs, UI glitches, and functional errors.
-    *   **Goal**: Find the bugs!
-    *   **Interactive Bug Reporting**: Click on glitches (like the flickering name or broken layout) to see a detailed "Jira-style" bug report explaining the technical root cause (e.g., specific JS errors, CSS overflow, API failures).
-    *   **The Check**: Can you find all 5 hidden bugs?
+An interactive portfolio that **shows** QA skills instead of just listing them. The same website exists in two states — one full of deliberate bugs, and one where every issue has been found, documented, and fixed.
 
-2.  **🟢 Verified Mode**: The "fixed" version.
-    *   Toggle this switch to see the power of QA.
-    *   All bugs are resolved, layouts are stable, and the user experience is polished.
-    *   **Verified Badges**: Click on the green checkmarks to see how each bug was fixed and validated.
+- **Untested Mode**: Chaos-engineered with 5 hidden bugs (broken layouts, flickering names, dead links, API failures). Click on glitches to see Jira-style bug reports with root cause analysis.
+- **Verified Mode**: Every bug is resolved. Click green checkmarks to see how each issue was fixed and validated.
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+graph TB
+    subgraph Frontend["React SPA (Vite + TypeScript)"]
+        Router[React Router] --> Landing[Landing Page]
+        Router --> Untested["/untested — Chaos Mode"]
+        Router --> Tested["/tested — Verified Mode"]
+        Untested --> Layout[PortfolioLayout]
+        Tested --> Layout
+        Layout --> Sidebar[SidebarNav]
+        Layout --> Hero[HeroSection]
+        Layout --> Tech[TechStackSection]
+        Layout --> Projects[ProjectsSection]
+    end
+
+    subgraph Testing["Playwright Test Suite"]
+        Features[10 Gherkin Features] --> Steps[10 Step Definitions]
+        Steps --> Pages[3 Page Objects]
+        Pages --> Specs[4 Test Specs]
+    end
+
+    subgraph CI["CI/CD"]
+        GH[GitHub Actions] --> PW[Playwright Tests]
+        PW --> Vercel[Vercel Deployment]
+    end
+
+    Testing -.->|validates| Frontend
+    CI -.->|deploys| Frontend
+```
+
+---
 
 ## 🛠️ Tech Stack
 
-This project was built with modern web technologies:
+| Layer | Technology |
+|-------|-----------|
+| **Framework** | React 18 + TypeScript |
+| **Build Tool** | Vite |
+| **Styling** | Tailwind CSS |
+| **Animations** | Framer Motion |
+| **UI Components** | Radix UI (shadcn/ui) |
+| **E2E Testing** | Playwright |
+| **BDD** | Cucumber / Gherkin |
+| **CI/CD** | GitHub Actions |
+| **Hosting** | Vercel |
+| **Analytics** | Vercel Analytics |
 
--   **Framework**: [React](https://react.dev/) (Vite)
--   **Language**: [TypeScript](https://www.typescriptlang.org/)
--   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
--   **Animations**: [Framer Motion](https://www.framer.com/motion/)
--   **Testing**: [Playwright](https://playwright.dev/) (End-to-End & BDD)
+---
 
-## 🧪 Automated Testing Strategy
+## 🧪 Test Strategy
 
-This repository isn't just a website; it's a test target. I've implemented a comprehensive test suite to verify the behavior of both modes.
+### Page Object Model (POM)
+```
+tests/
+├── pages/          # Page Objects (BasePage, UntestedPage, TestedPage)
+├── specs/          # 4 Playwright test specs
+└── steps/          # 10 BDD step definitions
+```
 
-### BDD (Behavior Driven Development)
-I use **Cucumber/Gherkin** syntax to define human-readable test scenarios.
-*   `features/untested_mode.feature`: Defines the expected broken behavior.
-*   `features/tested_mode.feature`: Defines the expected correct behavior.
+### BDD Feature Coverage
+```
+qa-artifacts/features/
+├── untested_mode.feature      # Broken behavior scenarios
+├── tested_mode.feature        # Fixed behavior scenarios
+├── bug_reporting.feature      # Interactive bug report modals
+├── bug_hints.feature          # Bug discovery hint system
+├── verified_checks.feature    # Fix verification badges
+├── enhanced_bugs.feature      # Advanced chaos-engineered bugs
+├── accessibility.feature      # WCAG compliance checks
+├── mobile_navigation.feature  # Responsive layout tests
+├── performance.feature        # Lighthouse score targets
+└── visual_regression.feature  # Screenshot comparison tests
+```
 
 ### Running Tests
-To run the automated checks locally:
 
 ```bash
 # Install dependencies
 npm install
 
-# Run all tests
+# Run all Playwright tests
 npx playwright test
 
-# Run specific scenarios (e.g., Verified Mode)
+# Run with UI mode
+npx playwright test --ui
+
+# Run specific scenarios
 npx playwright test --grep "Verified"
 ```
 
+---
+
 ## 📂 Project Structure
 
--   `src/`: React source code.
--   `tests/`: Playwright test specs and page objects.
--   `qa-artifacts/`: Gherkin feature files and test documentation.
--   `IMPROVEMENTS_PLAN.md` & `TEST_FIX_PLAN.md`: Documentation of the development and QA process used to build this site.
+```
+qa-showcase/
+├── src/
+│   ├── components/portfolio/   # Page sections (Hero, TechStack, Projects)
+│   ├── components/ui/          # Reusable UI primitives (shadcn/ui)
+│   ├── hooks/                  # Custom React hooks
+│   └── pages/                  # Route components (Index, Untested, Tested)
+├── tests/                      # Playwright E2E tests (POM pattern)
+├── qa-artifacts/               # Gherkin features, test docs, Lighthouse reports
+├── IMPROVEMENTS_PLAN.md        # 6-phase development roadmap
+└── TEST_FIX_PLAN.md            # Bug documentation and fix tracking
+```
+
+---
+
+## 🚀 Local Development
+
+```bash
+# Clone and install
+git clone https://github.com/MiltonKlun/QA_Portfolio.git
+cd QA_Portfolio
+npm install
+
+# Start dev server
+npm run dev
+
+# Production build
+npm run build
+npm run preview
+```
 
 ---
 
 ## Author
+
 **Milton Klun**  
 *QA Automation Engineer | Backend Developer*
 
@@ -72,5 +164,8 @@ npx playwright test --grep "Verified"
   </a>
   <a href="mailto:miltonericklun@gmail.com">
     <img src="https://img.shields.io/badge/Email-Contact%20Me-red?style=for-the-badge&logo=gmail" alt="Email"/>
+  </a>
+  <a href="https://www.miltonklun.com">
+    <img src="https://img.shields.io/badge/Portfolio-miltonklun.com-purple?style=for-the-badge&logo=vercel" alt="Live Site"/>
   </a>
 </div>

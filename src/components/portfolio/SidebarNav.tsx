@@ -64,8 +64,17 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
         <div className="flex items-center gap-3 lg:gap-5">
           {isUntested ? (
             <h1
-              className="text-4xl lg:text-5xl font-extrabold mb-2 cursor-pointer text-danger/50 italic relative inline-block"
+              role="button"
+              tabIndex={0}
+              aria-label="Trigger corrupted name bug"
+              className="text-4xl lg:text-5xl font-extrabold mb-2 cursor-pointer text-danger/50 italic relative inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
               onClick={onNameClick}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onNameClick?.();
+                }
+              }}
               title="Click to see bug details"
             >
               <span className="opacity-40">{buggyName}</span>
@@ -73,7 +82,8 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
             </h1>
           ) : (
             <div className="group flex items-center gap-3">
-              <h1 className="text-4xl lg:text-5xl font-extrabold mb-2">
+
+              <h1 className="text-4xl lg:text-5xl font-extrabold mb-2 flex items-center">
                 <span className="text-foreground">Milton Klun</span>
               </h1>
               <button
@@ -94,11 +104,6 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
           QA Automation Engineer
         </h2>
 
-        <div className="flex flex-col gap-1 mt-6 lg:mt-8">
-          <p className="text-sm text-muted-foreground/60 italic font-serif leading-relaxed">
-            "Quality is not an act, it is a habit."
-          </p>
-        </div>
       </motion.div>
 
       {/* Navigation - Only visible on large screens */}
