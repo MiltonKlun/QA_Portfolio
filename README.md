@@ -1,4 +1,4 @@
-# QA Automation Engineer Portfolio 🚀
+# QA Automation Engineer Portfolio
 
 <div align="center">
   <img src="https://github.com/MiltonKlun/QA_Portfolio/actions/workflows/tests.yml/badge.svg" alt="Playwright Tests" />
