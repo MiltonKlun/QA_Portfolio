@@ -30,10 +30,8 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
   useEffect(() => {
     if (isUntested) {
       const glitches = ["null", "undefined", "NaN", "[Object]", "Error", "void"];
-      let interval: NodeJS.Timeout;
-
       // Start flickering
-      interval = setInterval(() => {
+      const interval = setInterval(() => {
         setBuggyName(glitches[Math.floor(Math.random() * glitches.length)]);
       }, 100);
 

@@ -1,6 +1,6 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
-import { expect } from '@playwright/test';
+import { expect, Page, Locator } from '@playwright/test';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -11,7 +11,7 @@ const { Given, When, Then } = createBdd(test);
 // And the modal title should be "<Title>"
 // And the severity badge should display "<Severity>"
 
-const nuclearClick = async (page: any, locator: any) => {
+const nuclearClick = async (page: Page, locator: Locator) => {
     // Scroll and dispatch event to ensure React catches it even if obscured
     await locator.scrollIntoViewIfNeeded();
     await locator.evaluate((el: HTMLElement) => {

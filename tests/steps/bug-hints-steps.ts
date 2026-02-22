@@ -1,6 +1,6 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
-import { expect } from '@playwright/test';
+import { expect, Page, Locator } from '@playwright/test';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -44,7 +44,7 @@ Then('the hint for "Social Links" should still be visible', async ({ page }) => 
     await expect(socialHint.first()).toBeVisible();
 });
 
-const nuclearClick = async (page: any, locator: any) => {
+const nuclearClick = async (page: Page, locator: Locator) => {
     await locator.scrollIntoViewIfNeeded();
     await locator.evaluate((el: HTMLElement) => {
         el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
