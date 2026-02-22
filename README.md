@@ -7,11 +7,26 @@
 <br/>
 
 <div align="center">
-  <strong>🔴 Untested Mode</strong> — Find the bugs &nbsp;|&nbsp; <strong>🟢 Verified Mode</strong> — See the fixes
-  <br/><br/>
-  <a href="https://www.miltonklun.com/untested"><img src="https://img.shields.io/badge/Try%20Untested-FF4444?style=for-the-badge" alt="Try Untested Mode"/></a>
-  &nbsp;
-  <a href="https://www.miltonklun.com/tested"><img src="https://img.shields.io/badge/Try%20Verified-22C55E?style=for-the-badge" alt="Try Verified Mode"/></a>
+  <table align="center" style="border-collapse: collapse; border: none; background: transparent;">
+    <tr style="border: none; background: transparent;">
+      <td align="center" style="border: none; padding: 10px 20px;">
+        <h3 style="margin: 0; padding-bottom: 5px;">🔴 Untested Mode</h3>
+        <p style="margin: 0; font-size: 14px; color: #888;">Find the hidden bugs</p>
+        <br/>
+        <a href="https://www.miltonklun.com/untested">
+          <img src="https://img.shields.io/badge/TRY_UNTESTED-FF4444?style=for-the-badge&logo=codeforces&logoColor=white" alt="Try Untested Mode"/>
+        </a>
+      </td>
+      <td align="center" style="border: none; padding: 10px 20px;">
+        <h3 style="margin: 0; padding-bottom: 5px;">🟢 Verified Mode</h3>
+        <p style="margin: 0; font-size: 14px; color: #888;">See the validated fixes</p>
+        <br/>
+        <a href="https://www.miltonklun.com/tested">
+          <img src="https://img.shields.io/badge/TRY_VERIFIED-22C55E?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Try Verified Mode"/>
+        </a>
+      </td>
+    </tr>
+  </table>
 </div>
 
 ---
@@ -160,12 +175,12 @@ npm run preview
 
 <div align="left">
   <a href="https://www.linkedin.com/in/milton-klun/">
-    <img src="https://img.shields.io/badge/LinkedIn-Milton%20Klun-blue?style=for-the-badge&logo=linkedin" alt="LinkedIn"/>
-  </a>
+    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+  </a>&nbsp;
   <a href="mailto:miltonericklun@gmail.com">
-    <img src="https://img.shields.io/badge/Email-Contact%20Me-red?style=for-the-badge&logo=gmail" alt="Email"/>
-  </a>
+    <img src="https://img.shields.io/badge/Email-D14836?style=flat-square&logo=gmail&logoColor=white" alt="Email"/>
+  </a>&nbsp;
   <a href="https://www.miltonklun.com">
-    <img src="https://img.shields.io/badge/Portfolio-miltonklun.com-purple?style=for-the-badge&logo=vercel" alt="Live Site"/>
+    <img src="https://img.shields.io/badge/Portfolio-000000?style=flat-square&logo=vercel&logoColor=white" alt="Live Site"/>
   </a>
 </div>
