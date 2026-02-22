@@ -7,26 +7,12 @@
 <br/>
 
 <div align="center">
-  <table align="center" style="border-collapse: collapse; border: none; background: transparent;">
-    <tr style="border: none; background: transparent;">
-      <td align="center" style="border: none; padding: 10px 20px;">
-        <h3 style="margin: 0; padding-bottom: 5px;">🔴 Untested Mode</h3>
-        <p style="margin: 0; font-size: 14px; color: #888;">Find the hidden bugs</p>
-        <br/>
-        <a href="https://www.miltonklun.com/untested">
-          <img src="https://img.shields.io/badge/TRY_UNTESTED-FF4444?style=for-the-badge&logo=codeforces&logoColor=white" alt="Try Untested Mode"/>
-        </a>
-      </td>
-      <td align="center" style="border: none; padding: 10px 20px;">
-        <h3 style="margin: 0; padding-bottom: 5px;">🟢 Verified Mode</h3>
-        <p style="margin: 0; font-size: 14px; color: #888;">See the validated fixes</p>
-        <br/>
-        <a href="https://www.miltonklun.com/tested">
-          <img src="https://img.shields.io/badge/TRY_VERIFIED-22C55E?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Try Verified Mode"/>
-        </a>
-      </td>
-    </tr>
-  </table>
+
+> ### 🔴 Untested Mode &nbsp;&nbsp; | &nbsp;&nbsp; 🟢 Verified Mode
+> **Find the hidden bugs** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **See the validated fixes**
+> <br/>
+> <a href="https://www.miltonklun.com/untested"><img src="https://img.shields.io/badge/TRY_UNTESTED-FF4444?style=for-the-badge&logo=codeforces&logoColor=white" alt="Try Untested Mode"/></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.miltonklun.com/tested"><img src="https://img.shields.io/badge/TRY_VERIFIED-22C55E?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Try Verified Mode"/></a>
+
 </div>
 
 ---
@@ -174,13 +160,5 @@ npm run preview
 *QA Automation Engineer | Backend Developer*
 
 <div align="left">
-  <a href="https://www.linkedin.com/in/milton-klun/">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-  </a>&nbsp;
-  <a href="mailto:miltonericklun@gmail.com">
-    <img src="https://img.shields.io/badge/Email-D14836?style=flat-square&logo=gmail&logoColor=white" alt="Email"/>
-  </a>&nbsp;
-  <a href="https://www.miltonklun.com">
-    <img src="https://img.shields.io/badge/Portfolio-000000?style=flat-square&logo=vercel&logoColor=white" alt="Live Site"/>
-  </a>
+  <a href="https://www.linkedin.com/in/milton-klun/"><img src="https://img.shields.io/badge/LINKEDIN-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a><a href="mailto:miltonericklun@gmail.com"><img src="https://img.shields.io/badge/EMAIL-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a><a href="https://www.miltonklun.com"><img src="https://img.shields.io/badge/PORTFOLIO-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Site"/></a>
 </div>
