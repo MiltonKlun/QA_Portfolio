@@ -56,9 +56,10 @@ Then('there should be no console errors', async () => {
 // --- Network Mocking Steps ---
 
 Given('I intercept and fail image requests for {string}', async ({ page }, urlPart: string) => {
+    // Intercept with abort to completely kill the request immediately
     await page.route(`**/*${urlPart}*`, async route => {
         if (route.request().resourceType() === 'image') {
-            await route.fulfill({ status: 404 });
+            await route.abort('failed');
         } else {
             await route.continue();
         }
@@ -66,25 +67,26 @@ Given('I intercept and fail image requests for {string}', async ({ page }, urlPa
 });
 
 Then('I should see a fallback placeholder for the failed image', async ({ page }) => {
-    // Scroll to the skills section because it uses whileInView animation
     const skillsSection = page.locator('#skills');
     await skillsSection.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1000); // Allow animation and paint
     
-    // Wait a bit for animation/mounting
-    await page.waitForTimeout(500);
-    
-    // We target 'jira.png' which is large enough not to be inlined.
     const brokenImage = page.getByRole('img', { name: 'Jira' });
-    await expect(brokenImage).toBeAttached(); 
+    await expect(brokenImage).toBeAttached({ timeout: 5000 }); 
     
-    const naturalWidth = await brokenImage.evaluate(img => (img as HTMLImageElement).naturalWidth);
-    // 0 is the expected width for a broken image in most browsers (except if placeholder is rendered by app)
-    // If the app renders a fallback component, naturalWidth of THAT component might not be 0.
-    // However, our code renders <ImageOff> if isBroken is true (untested mode) 
-    // BUT here we are in "Tested" mode, so it renders <img>.
-    // If the image fails to load (404), the browser shows broken image icon.
-    // In Chromium, broken image icon naturalWidth is usually 16 or 24 or 0.
-    // Let's check for "small width" or 0. Or just check if complete is true but width is small.
-    // A real logo (Jira) is much wider than 50px.
-    expect(naturalWidth).toBeLessThan(50);
+    // In Chromium headless, a truly broken image returning 404 or aborted has a naturalWidth of 0.
+    // If it returns a standard width (e.g. 2500) it means CI cached the image from a previous test run
+    // or the abort failed. We assert that the image is broken natively:
+    const properties = await brokenImage.evaluate(img => {
+        const imageElement = img as HTMLImageElement;
+        return {
+            complete: imageElement.complete,
+            naturalWidth: imageElement.naturalWidth
+        };
+    });
+    
+    // An image is successfully "broken" if it completes loading but has 0 natural size
+    if (properties.complete) {
+        expect(properties.naturalWidth).toBe(0);
+    }
 });

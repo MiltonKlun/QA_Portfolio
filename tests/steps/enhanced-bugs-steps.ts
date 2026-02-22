@@ -67,12 +67,12 @@ Then('the second project description should corrupt to "[object Object]"', async
 
     // Use a more specific locator to avoid matching potential wrapper groups
     const secondCard = page.locator('#experience .group').filter({ hasText: 'Healthcare App' });
-    const secondDescription = secondCard.locator('p').getByText('[object Object]');
+    const secondDescription = secondCard.getByText('[object Object]');
     await expect(secondDescription).toBeVisible({ timeout: 5000 });
 });
 
 Then('the corrupted text should have the "text-danger" class', async ({ page }) => {
      const secondCard = page.locator('#experience .group').filter({ hasText: 'Healthcare App' });
-     const secondDescriptionSpan = secondCard.locator('p span');
-     await expect(secondDescriptionSpan).toHaveClass(/text-danger/);
+     const secondDescriptionSpan = secondCard.locator('span.text-danger.animate-pulse');
+     await expect(secondDescriptionSpan).toBeVisible();
 });
