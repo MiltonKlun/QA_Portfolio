@@ -71,22 +71,18 @@ Then('I should see a fallback placeholder for the failed image', async ({ page }
     await skillsSection.scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000); // Allow animation and paint
     
-    const brokenImage = page.getByRole('img', { name: 'Jira' });
-    await expect(brokenImage).toBeAttached({ timeout: 5000 }); 
+    // Test mode does NOT render <ImageOff> when an image fails; it relies on the browser's native broken image icon.
+    // Untested mode DOES render <ImageOff> (when isBroken flag is forced).
+    // The test in `performance.feature` is "Network Failure Simulation (Image Load)", typically testing the app's resiliency.
+    // If the image aborts, the <img> tag will still be in the DOM but its naturalWidth will be 0.
+    // To combat aggressive CI caching, we evaluate naturalWidth specifically on the raw DOM node 
+    // AND assert that it's less than 50 or 0 using an evaluate block to ensure we bypass Playwright wrapper flakiness.
     
-    // In Chromium headless, a truly broken image returning 404 or aborted has a naturalWidth of 0.
-    // If it returns a standard width (e.g. 2500) it means CI cached the image from a previous test run
-    // or the abort failed. We assert that the image is broken natively:
-    const properties = await brokenImage.evaluate(img => {
-        const imageElement = img as HTMLImageElement;
-        return {
-            complete: imageElement.complete,
-            naturalWidth: imageElement.naturalWidth
-        };
+    const isImageBroken = await page.evaluate(() => {
+        const img = document.querySelector('img[alt="Jira"]') as HTMLImageElement;
+        // True if the image exists but hasn't loaded a valid src (naturalWidth 0)
+        return img && img.naturalWidth === 0;
     });
-    
-    // An image is successfully "broken" if it completes loading but has 0 natural size
-    if (properties.complete) {
-        expect(properties.naturalWidth).toBe(0);
-    }
+
+    expect(isImageBroken).toBeTruthy();
 });
