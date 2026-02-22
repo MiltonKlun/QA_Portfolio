@@ -13,6 +13,6 @@ Feature: Performance and Network Testing
   @perf @perf-network
   Scenario: Network Failure Simulation (Image Load)
     Given I start monitoring console errors
-    And I intercept and fail image requests for "jira.png"
+    And I intercept and fail image requests for "jira"
     When I perform a strict navigation to the "Tested" portfolio page
     Then I should see a fallback placeholder for the failed image
