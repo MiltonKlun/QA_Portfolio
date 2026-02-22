@@ -45,6 +45,7 @@ blob-report/
 # GSD / Workflow Artifacts (Root Markdown Files)
 # GSD / Workflow Artifacts (Root Markdown Files)
 # We explicitly ignore these to keep the repo clean for the portfolio
+docs/
 BDD_IMPLEMENTATION_PLAN.md
 BUG_IMPROVEMENT_PROPOSAL.md
 GSD_CHEATSHEET.md
