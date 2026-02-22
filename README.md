@@ -17,12 +17,14 @@
 
 ---
 
-## 💡 What Is This?
+## 💡 Executive Summary
 
-An interactive portfolio that **shows** QA skills instead of just listing them. The same website exists in two states — one full of deliberate bugs, and one where every issue has been found, documented, and fixed.
+The QA Portfolio is a custom-built, interactive showcase designed to demonstrate advanced Quality Assurance methodologies, test automation architecture, and bug lifecycle management. Rather than a traditional static resume, this application exists in a dual-state architecture:
 
-- **Untested Mode**: Chaos-engineered with 5 hidden bugs (broken layouts, flickering names, dead links, API failures). Click on glitches to see Jira-style bug reports with root cause analysis.
-- **Verified Mode**: Every bug is resolved. Click green checkmarks to see how each issue was fixed and validated.
+- **Untested Mode ("The Chaos Environment")**: A deliberate simulation of a fragile application. It contains strategically injected UI/UX defects, performance bottlenecks, unexpected DOM layout shifts, and functional network failures. It allows users to actively hunt bugs and view them documented in industry-standard Jira-format tickets with root cause analysis.
+- **Verified Mode ("The Production-Ready Environment")**: The exact same application state, but fortified with stringent quality gates. Every defect is resolved, edge cases are handled, and accessible DOM structures are implemented.
+
+This platform serves as a live testing ground verifying proficiency in **End-to-End (E2E) Test Automation**, **Behavior-Driven Development (BDD)**, **CI/CD Pipeline Integration**, and **Agile Defect Management**.
 
 ---
 
