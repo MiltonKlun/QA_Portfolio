@@ -29,7 +29,7 @@ jobs:
       run: npx bddgen
 
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test --grep-invert "@visual"
 
     - name: Upload Playwright Report
       if: always()

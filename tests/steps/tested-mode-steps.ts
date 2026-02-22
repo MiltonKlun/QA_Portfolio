@@ -7,7 +7,7 @@ const { Given, When, Then } = createBdd(test);
 // Scenario: Toggling to Tested Mode repairs the application
 When('I click the "Switch to Tested Version" toggle', async ({ page }) => {
     // Navigate back to the lobby from the Untested page
-    const backButton = page.getByRole('link').filter({ hasText: /Back/i });
+    const backButton = page.locator('a[aria-label="Back to Home"]').first();
     await backButton.click();
     await page.waitForURL('**/');
 

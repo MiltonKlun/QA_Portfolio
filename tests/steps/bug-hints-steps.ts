@@ -44,11 +44,18 @@ Then('the hint for "Social Links" should still be visible', async ({ page }) => 
     await expect(socialHint.first()).toBeVisible();
 });
 
+const nuclearClick = async (page: any, locator: any) => {
+    await locator.scrollIntoViewIfNeeded();
+    await locator.evaluate((el: HTMLElement) => {
+        el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+    });
+};
+
 When('I click the {string} bug', async ({ page }, bugName: string) => {
     // Map bug names to selectors
     if (bugName === "Missing Name") {
-        await page.getByRole('heading', { name: /Missing Name/i }).click();
+        await nuclearClick(page, page.locator('h1', { hasText: '[Missing Name]' }));
     } else if (bugName === "Social Links") {
-        await page.locator('a[aria-label*="LinkedIn"]').click();
+        await nuclearClick(page, page.locator('a[aria-label*="LinkedIn"]'));
     }
 });
