@@ -155,14 +155,6 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
                 href="http:///"
                 onClick={(e) => { e.preventDefault(); onSocialClick?.(e); }}
                 className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                aria-label="Email (bug)"
-              >
-                <Mail className="w-5 h-5 lg:w-6 lg:h-6" />
-              </a>
-              <a
-                href="http:///"
-                onClick={(e) => { e.preventDefault(); onSocialClick?.(e); }}
-                className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                 aria-label="LinkedIn (bug)"
               >
                 <Linkedin className="w-5 h-5 lg:w-6 lg:h-6" />
