@@ -8,10 +8,10 @@
 
 <div align="center">
 
-> ### 🔴 Untested Mode &nbsp;&nbsp; | &nbsp;&nbsp; 🟢 Verified Mode
-> **Find the hidden bugs** &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **See the validated fixes**
-> <br/>
-> <a href="https://www.miltonklun.com/untested"><img src="https://img.shields.io/badge/TRY_UNTESTED-FF4444?style=for-the-badge&logo=codeforces&logoColor=white" alt="Try Untested Mode"/></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.miltonklun.com/tested"><img src="https://img.shields.io/badge/TRY_VERIFIED-22C55E?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Try Verified Mode"/></a>
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔴 Untested Mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🟢 Verified Mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+| :---: | :---: |
+| Find the hidden bugs | See the validated fixes |
+| <a href="https://www.miltonklun.com/untested"><img src="https://img.shields.io/badge/TRY_UNTESTED-FF4444?style=for-the-badge&logo=codeforces&logoColor=white" alt="Try Untested Mode"/></a> | <a href="https://www.miltonklun.com/tested"><img src="https://img.shields.io/badge/TRY_VERIFIED-22C55E?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Try Verified Mode"/></a> |
 
 </div>
 
@@ -160,5 +160,5 @@ npm run preview
 *QA Automation Engineer | Backend Developer*
 
 <div align="left">
-  <a href="https://www.linkedin.com/in/milton-klun/"><img src="https://img.shields.io/badge/LINKEDIN-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a><a href="mailto:miltonericklun@gmail.com"><img src="https://img.shields.io/badge/EMAIL-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a><a href="https://www.miltonklun.com"><img src="https://img.shields.io/badge/PORTFOLIO-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Site"/></a>
+  <a href="https://www.linkedin.com/in/milton-klun/"><img src="https://img.shields.io/badge/LINKEDIN-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a><a href="mailto:miltonericklun@gmail.com"><img src="https://img.shields.io/badge/EMAIL-D14836?style=for-the-badge" alt="Email"/></a><a href="https://www.miltonklun.com"><img src="https://img.shields.io/badge/PORTFOLIO-000000?style=for-the-badge" alt="Live Site"/></a>
 </div>
