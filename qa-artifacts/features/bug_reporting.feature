@@ -16,7 +16,7 @@ Feature: Bug Reporting UI
       | Element             | Title                                             | Severity |
       | [Missing Name] Text | NullReferenceException: Portfolio Owner Name      | CRITICAL |
       | Broken Tech Icon    | Resource Load Error: Tech Stack Icons             | HIGH     |
-      | [object Object]     | [object Object] Cast Exception                    | HIGH     |
+      | [object Object]     | Type Coercion Error: Object Object                | HIGH     |
 
   Scenario: Unlocking the Job Done modal
     Given I have already found 4 bugs

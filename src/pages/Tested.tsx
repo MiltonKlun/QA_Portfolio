@@ -16,6 +16,7 @@ const fixedBugDetails: Record<
     description: string;
     solution: string;
     testSnippet: string;
+    testVerificationUrl: string;
   }
 > = {
   name: {
@@ -29,6 +30,7 @@ const fixedBugDetails: Record<
     await expect(testedPage.ownerName).not.toContainText('[Missing Name]');
     await expect(testedPage.ownerName).toContainText('Milton Klun');
 });`,
+    testVerificationUrl: "https://github.com/MiltonKlun/QA_Portfolio/blob/main/tests/steps/tested-mode-steps.ts"
   },
   social: {
     title: "Social Media Links Return 404/Broken",
@@ -44,6 +46,7 @@ const fixedBugDetails: Record<
         expect(href).not.toContain('undefined');
     }
 });`,
+    testVerificationUrl: "https://github.com/MiltonKlun/QA_Portfolio/blob/main/tests/steps/tested-mode-steps.ts"
   },
   techStack: {
     title: "Tech Stack Icons Missing - Null Reference Error",
@@ -59,6 +62,7 @@ const fixedBugDetails: Record<
         expect(src).not.toContain('undefined');
     }
 });`,
+    testVerificationUrl: "https://github.com/MiltonKlun/QA_Portfolio/blob/main/tests/steps/performance-steps.ts"
   },
   data: {
     title: "Progress Value Returns NaN",
@@ -71,6 +75,7 @@ const fixedBugDetails: Record<
     expect(text).not.toContain('NaN');
     expect(text).toMatch(/\\d+%/);
 });`,
+    testVerificationUrl: "https://github.com/MiltonKlun/QA_Portfolio/blob/main/tests/steps/enhanced-bugs-steps.ts"
   },
   responsive: {
     title: "Text Overflow on Mobile Viewport",
@@ -87,6 +92,7 @@ const fixedBugDetails: Record<
     const clientWidth = await page.evaluate(() => document.body.clientWidth);
     expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
 });`,
+    testVerificationUrl: "https://github.com/MiltonKlun/QA_Portfolio/blob/main/tests/steps/mobile-navigation-steps.ts"
   },
 };
 
@@ -135,6 +141,7 @@ const Tested = () => {
         bugDescription={fixedBugDetails[currentBug].description}
         solution={fixedBugDetails[currentBug].solution}
         testSnippet={fixedBugDetails[currentBug].testSnippet}
+        testVerificationUrl={fixedBugDetails[currentBug].testVerificationUrl}
       />
       
       <AriaLiveRegion message={announcement} />

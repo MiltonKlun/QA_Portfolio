@@ -13,6 +13,7 @@ interface QAVerifiedModalProps {
   bugDescription: string;
   solution: string;
   testSnippet: string;
+  testVerificationUrl?: string;
 }
 
 const QAVerifiedModal = ({
@@ -22,6 +23,7 @@ const QAVerifiedModal = ({
   bugDescription,
   solution,
   testSnippet,
+  testVerificationUrl,
 }: QAVerifiedModalProps) => {
   const { toast } = useToast();
 
@@ -121,15 +123,19 @@ const QAVerifiedModal = ({
                       variant="outline"
                       className="flex-1 border-success/50 text-success hover:bg-success/10"
                       onClick={() => {
-                        toast({
-                          title: "Coming Soon",
-                          description: "GitHub link will be added in production.",
-                          duration: 3000,
-                        });
+                        if (testVerificationUrl) {
+                          window.open(testVerificationUrl, '_blank', 'noopener,noreferrer');
+                        } else {
+                          toast({
+                            title: "Coming Soon",
+                            description: "Automated test link will be added in production.",
+                            duration: 3000,
+                          });
+                        }
                       }}
                     >
                       <FileText className="w-4 h-4 mr-2" />
-                      View on Github
+                      View Automated Test
                       <ExternalLink className="w-3 h-3 ml-2" />
                     </Button>
                     <Button

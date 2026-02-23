@@ -18,6 +18,7 @@ const bugDetails: Record<
     impact: string;
     severity: "critical" | "high" | "medium";
     reproductionSteps: string[];
+    githubIssueUrl: string;
   }
 > = {
   name: {
@@ -32,7 +33,8 @@ const bugDetails: Record<
       "Observe the Hero section headline",
       "Verify that the name field displays '[Missing Name]'",
       "Check console for 'Uncaught TypeError: Cannot read properties of undefined (reading 'name')'"
-    ]
+    ],
+    githubIssueUrl: "https://github.com/MiltonKlun/QA_Portfolio/issues/1"
   },
   social: {
     title: "Broken Link: Social Media Navigation",
@@ -46,7 +48,8 @@ const bugDetails: Record<
       "Attempt to click the LinkedIn icon",
       "Observe that the browser incorrectly redirects to a 404 page or does not react",
       "Inspect the element to confirm invalid href attribute"
-    ]
+    ],
+    githubIssueUrl: "https://github.com/MiltonKlun/QA_Portfolio/issues/5"
   },
   techStack: {
     title: "Resource Load Error: Tech Stack Icons",
@@ -60,10 +63,11 @@ const bugDetails: Record<
       "Observe broken image icons",
       "Hover over any icon placeholder",
       "Check network tab for 404 errors on image requests"
-    ]
+    ],
+    githubIssueUrl: "https://github.com/MiltonKlun/QA_Portfolio/issues/2"
   },
   data: {
-    title: "[object Object] Cast Exception",
+    title: "Type Coercion Error: Object Object",
     description:
       "A JavaScript object is being directly rendered into the DOM without proper stringification or data extraction, resulting in the '[object Object]' string literal.",
     impact:
@@ -74,7 +78,8 @@ const bugDetails: Record<
       "Locate the 'Healthcare App' project card",
       "Wait 2 seconds or observe the description text",
       "Verify the description renders as '[object Object]'"
-    ]
+    ],
+    githubIssueUrl: "https://github.com/MiltonKlun/QA_Portfolio/issues/3"
   },
   responsive: {
     title: "CSS Rule Violation: Text Overflow",
@@ -87,7 +92,8 @@ const bugDetails: Record<
       "Navigate to the 'About Me' section",
       "Resize browser window or use mobile view",
       "Observe the 'Test Automation Expert' text overflowing the right boundary of the card"
-    ]
+    ],
+    githubIssueUrl: "https://github.com/MiltonKlun/QA_Portfolio/issues/4"
   }
 };
 
@@ -159,6 +165,7 @@ const Untested = () => {
         bugDescription={bugDetails[currentBug].description}
         businessImpact={bugDetails[currentBug].impact}
         severity={bugDetails[currentBug].severity}
+        githubIssueUrl={bugDetails[currentBug].githubIssueUrl}
       />
 
       <CompletionModal

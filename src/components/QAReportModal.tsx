@@ -12,6 +12,7 @@ interface QAReportModalProps {
   bugDescription: string;
   businessImpact: string;
   severity: "critical" | "high" | "medium";
+  githubIssueUrl?: string;
 }
 
 const QAReportModal = ({
@@ -21,6 +22,7 @@ const QAReportModal = ({
   bugDescription,
   businessImpact,
   severity,
+  githubIssueUrl,
 }: QAReportModalProps) => {
   const { toast } = useToast();
   const severityColors = {
@@ -116,11 +118,15 @@ const QAReportModal = ({
                       variant="dangerOutline"
                       className="flex-1"
                       onClick={() => {
-                        toast({
-                          title: "Coming Soon",
-                          description: "GitHub link will be added in production.",
-                          duration: 3000,
-                        });
+                        if (githubIssueUrl) {
+                          window.open(githubIssueUrl, '_blank', 'noopener,noreferrer');
+                        } else {
+                          toast({
+                            title: "Coming Soon",
+                            description: "GitHub link will be added in production.",
+                            duration: 3000,
+                          });
+                        }
                       }}
                     >
                       <FileText className="w-4 h-4" />
