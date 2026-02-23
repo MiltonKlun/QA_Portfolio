@@ -8,7 +8,10 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e2e": "npx bddgen && npx playwright test",
+    "test:ui": "npx bddgen && npx playwright test --ui",
+    "test:report": "npx playwright show-report"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -78,6 +81,7 @@
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react-swc": "^3.11.0",
     "autoprefixer": "^10.4.21",
+    "axe-html-reporter": "^2.2.11",
     "cwebp-bin": "^4.0.0",
     "eslint": "^9.39.3",
     "eslint-plugin-react-hooks": "^5.2.0",
