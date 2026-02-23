@@ -1,6 +1,7 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect, Page, Locator } from '@playwright/test';
+import { TEST_DATA } from '../fixtures/test-data';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -20,7 +21,7 @@ const nuclearClick = async (page: Page, locator: Locator) => {
 };
 
 When('I click on the [Missing Name] Text', async ({ page }) => {
-    await nuclearClick(page, page.locator('h1', { hasText: '[Missing Name]' }));
+    await nuclearClick(page, page.locator('h1', { hasText: TEST_DATA.ownerName.broken }));
 });
 
 When('I click on the Broken Tech Icon', async ({ page }) => {
@@ -30,12 +31,12 @@ When('I click on the Broken Tech Icon', async ({ page }) => {
 
 When('I click on the [object Object]', async ({ page }) => {
     // This matches the Example table value "[object Object]"
-    await nuclearClick(page, page.getByText('[object Object]', { exact: true }));
+    await nuclearClick(page, page.getByText(TEST_DATA.projects.coercionError, { exact: true }));
 });
 
 When('I click on the [object Object] Text', async ({ page }) => {
     // Kept for backward compatibility if other scenarios use it
-    await nuclearClick(page, page.getByText('[object Object]', { exact: true }));
+    await nuclearClick(page, page.getByText(TEST_DATA.projects.coercionError, { exact: true }));
 });
 
 Then('the "Bug Report" modal should open', async ({ page }) => {
@@ -59,7 +60,7 @@ Given('I have already found 4 bugs', async ({ page }) => {
     // We need to carefully click 4 UNIQUE bugs.
 
     // 1. Name [Missing Name]
-    await nuclearClick(page, page.locator('h1', { hasText: '[Missing Name]' }));
+    await nuclearClick(page, page.locator('h1', { hasText: TEST_DATA.ownerName.broken }));
     await expect(page.getByRole('dialog')).toBeVisible();
     await page.getByRole('button', { name: /Close|Continue/i }).click();
     await expect(page.getByRole('dialog')).toBeHidden();
@@ -71,7 +72,7 @@ Given('I have already found 4 bugs', async ({ page }) => {
     await expect(page.getByRole('dialog')).toBeHidden();
 
     // 3. Projects ([object Object])
-    await nuclearClick(page, page.getByText('[object Object]', { exact: true }));
+    await nuclearClick(page, page.getByText(TEST_DATA.projects.coercionError, { exact: true }));
     await expect(page.getByRole('dialog')).toBeVisible();
     await page.getByRole('button', { name: /Close|Continue/i }).click();
     await expect(page.getByRole('dialog')).toBeHidden();

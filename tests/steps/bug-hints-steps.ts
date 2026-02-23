@@ -1,6 +1,7 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect, Page, Locator } from '@playwright/test';
+import { TEST_DATA } from '../fixtures/test-data';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -54,7 +55,7 @@ const nuclearClick = async (page: Page, locator: Locator) => {
 When('I click the {string} bug', async ({ page }, bugName: string) => {
     // Map bug names to selectors
     if (bugName === "Missing Name") {
-        await nuclearClick(page, page.locator('h1', { hasText: '[Missing Name]' }));
+        await nuclearClick(page, page.locator('h1', { hasText: TEST_DATA.ownerName.broken }));
     } else if (bugName === "Social Links") {
         await nuclearClick(page, page.locator('a[aria-label*="LinkedIn"]'));
     }

@@ -1,6 +1,7 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect } from '@playwright/test';
+import { TEST_DATA } from '../fixtures/test-data';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -50,7 +51,7 @@ Then('the name should flicker through garbage values', async ({ page }) => {
 
 Then('eventually settle on "[Missing Name]"', async ({ page }) => {
     const nameHeader = page.locator('h1');
-    await expect(nameHeader).toContainText('[Missing Name]', { timeout: 3000 });
+    await expect(nameHeader).toContainText(TEST_DATA.ownerName.broken, { timeout: 3000 });
 });
 
 // Duplicate step removed: When('I scroll to the "Experience" section'...)
@@ -67,12 +68,12 @@ Then('the second project description should corrupt to "[object Object]"', async
 
     // Use a more specific locator to avoid matching potential wrapper groups
     const secondCard = page.locator('#experience .group').filter({ hasText: 'CSA Pharma Framework' });
-    const secondDescription = secondCard.locator('p span.text-danger:has-text("[object Object]")');
+    const secondDescription = secondCard.locator(`p span.text-danger:has-text("${TEST_DATA.projects.coercionError}")`);
     await expect(secondDescription).toBeVisible({ timeout: 5000 });
 });
 
 Then('the corrupted text should have the "text-danger" class', async ({ page }) => {
      const secondCard = page.locator('#experience .group').filter({ hasText: 'CSA Pharma Framework' });
-     const secondDescriptionSpan = secondCard.locator('p span.text-danger:has-text("[object Object]")');
+     const secondDescriptionSpan = secondCard.locator(`p span.text-danger:has-text("${TEST_DATA.projects.coercionError}")`);
      await expect(secondDescriptionSpan).toBeVisible();
 });

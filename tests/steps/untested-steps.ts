@@ -1,6 +1,7 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect } from '@playwright/test';
+import { TEST_DATA } from '../fixtures/test-data';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -21,7 +22,7 @@ When('I view the Hero Headline', async ({ page }) => {
 Then('I should see the text "[Missing Name]"', async ({ page }) => {
     // The Intentional Bug 1: Name is missing
     // Wait for flickering to stop (1.5s delay)
-    await expect(page.locator('h1')).toContainText('[Missing Name]', { timeout: 5000 });
+    await expect(page.locator('h1')).toContainText(TEST_DATA.ownerName.broken, { timeout: 5000 });
 });
 
 Then('the text color should be "red"', async ({ page }) => {
@@ -35,7 +36,7 @@ Then('I should see the project description corrupt to "[object Object]"', async 
     // Wait for the corruption timeout (2s)
     // We target the second project card's description
     const description = page.locator('#experience p').nth(1); // 0-indexed, so 1 is the 2nd card
-    await expect(description).toContainText('[object Object]', { timeout: 5000 });
+    await expect(description).toContainText(TEST_DATA.projects.coercionError, { timeout: 5000 });
 
     // Check for the corrupted span class
     const corruptedSpan = description.locator('span.text-danger');
