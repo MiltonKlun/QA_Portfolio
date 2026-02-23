@@ -2,6 +2,7 @@ import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect } from '@playwright/test';
 import { TEST_DATA } from '../fixtures/test-data';
+import { UntestedPage } from '../pages/UntestedPage';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -16,17 +17,17 @@ Given('I am on the "Untested" page', async ({ page }) => {
 
 // Hero Scenario
 When('I view the Hero Headline', async ({ page }) => {
-    await expect(page.locator('h1')).toBeVisible();
+    await expect(new UntestedPage(page).ownerNameLocator).toBeVisible();
 });
 
 Then('I should see the text "[Missing Name]"', async ({ page }) => {
     // The Intentional Bug 1: Name is missing
     // Wait for flickering to stop (1.5s delay)
-    await expect(page.locator('h1')).toContainText(TEST_DATA.ownerName.broken, { timeout: 5000 });
+    await expect(new UntestedPage(page).ownerNameLocator).toContainText(TEST_DATA.ownerName.broken, { timeout: 5000 });
 });
 
 Then('the text color should be "red"', async ({ page }) => {
-    const heading = page.locator('h1');
+    const heading = new UntestedPage(page).ownerNameLocator;
     // Tailwind text-danger is usually a red color.
     // We can check class or computed style. Checking class is easier for now.
     await expect(heading).toHaveClass(/text-danger/);
@@ -35,7 +36,7 @@ Then('the text color should be "red"', async ({ page }) => {
 Then('I should see the project description corrupt to "[object Object]"', async ({ page }) => {
     // Wait for the corruption timeout (2s)
     // We target the second project card's description
-    const description = page.locator('#experience p').nth(1); // 0-indexed, so 1 is the 2nd card
+    const description = new UntestedPage(page).getProjectDescriptionLocator(1); // 0-indexed, so 1 is the 2nd card
     await expect(description).toContainText(TEST_DATA.projects.coercionError, { timeout: 5000 });
 
     // Check for the corrupted span class
@@ -47,13 +48,13 @@ Then('I should see the project description corrupt to "[object Object]"', async 
 When('I click the "Connect" button in the sidebar', async ({ page }) => {
     // The "Connect" button is conceptually the sidebar area containing links.
     // We verify the sidebar container exists as a proxy.
-    const sidebar = page.locator('nav').or(page.locator('header'));
+    const sidebar = new UntestedPage(page).sidebarLocator;
     await expect(sidebar.first()).toBeVisible();
 });
 
 When('I click the "LinkedIn" icon', async ({ page }) => {
     // Use specific aria-label from SidebarNav.tsx
-    const linkedin = page.locator('a[aria-label="LinkedIn (bug)"]');
+    const linkedin = new UntestedPage(page).socialLinkLocator;
     // Click to trigger potential error
     await linkedin.click();
 });
@@ -72,17 +73,17 @@ Given('I set the viewport width to "375px"', async ({ page }) => {
 });
 
 When('I scroll to the "About Me" section', async ({ page }) => {
-    const aboutSection = page.locator('#about');
+    const aboutSection = new UntestedPage(page).aboutSectionLocator;
     await aboutSection.scrollIntoViewIfNeeded();
 });
 
 When('I scroll to the "Experience" section', async ({ page }) => {
-    const experienceSection = page.locator('#experience');
+    const experienceSection = new UntestedPage(page).experienceSectionLocator;
     await experienceSection.scrollIntoViewIfNeeded();
 });
 
 Then('the text paragraph should overflow the container', async ({ page }) => {
-    const paragraph = page.locator('#about p').first();
+    const paragraph = new UntestedPage(page).aboutTextLocator;
 
     // We wait for the element to be stable to ensure layout is computed
     await expect(paragraph).toBeVisible();

@@ -2,6 +2,7 @@ import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect } from '@playwright/test';
 import { TEST_DATA } from '../fixtures/test-data';
+import { UntestedPage } from '../pages/UntestedPage';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -19,13 +20,13 @@ Given('I am on the "Untested Mode" page', async ({ page }) => {
 });
 
 When('I look at the Portfolio Owner Name', async ({ page }) => {
-    const nameHeader = page.locator('h1');
+    const nameHeader = new UntestedPage(page).ownerNameLocator;
     await expect(nameHeader).toBeVisible();
     await nameHeader.scrollIntoViewIfNeeded();
 });
 
 Then('the name should flicker through garbage values', async ({ page }) => {
-    const nameHeader = page.locator('h1 span').first();
+    const nameHeader = new UntestedPage(page).ownerNameSpanLocator;
     
     // We poll the text content rapidly to catch the flickering values
     // The flicker interval is 100ms.
@@ -50,7 +51,7 @@ Then('the name should flicker through garbage values', async ({ page }) => {
 });
 
 Then('eventually settle on "[Missing Name]"', async ({ page }) => {
-    const nameHeader = page.locator('h1');
+    const nameHeader = new UntestedPage(page).ownerNameLocator;
     await expect(nameHeader).toContainText(TEST_DATA.ownerName.broken, { timeout: 3000 });
 });
 
@@ -67,13 +68,13 @@ Then('the second project description should corrupt to "[object Object]"', async
     // Untested logic: const showDataBug = isUntested && index === 1;
 
     // Use a more specific locator to avoid matching potential wrapper groups
-    const secondCard = page.locator('#experience .group').filter({ hasText: 'CSA Pharma Framework' });
+    const secondCard = new UntestedPage(page).getProjectCardLocator('CSA Pharma Framework');
     const secondDescription = secondCard.locator(`p span.text-danger:has-text("${TEST_DATA.projects.coercionError}")`);
     await expect(secondDescription).toBeVisible({ timeout: 5000 });
 });
 
 Then('the corrupted text should have the "text-danger" class', async ({ page }) => {
-     const secondCard = page.locator('#experience .group').filter({ hasText: 'CSA Pharma Framework' });
+     const secondCard = new UntestedPage(page).getProjectCardLocator('CSA Pharma Framework');
      const secondDescriptionSpan = secondCard.locator(`p span.text-danger:has-text("${TEST_DATA.projects.coercionError}")`);
      await expect(secondDescriptionSpan).toBeVisible();
 });

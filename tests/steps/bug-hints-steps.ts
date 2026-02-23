@@ -2,47 +2,45 @@ import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect, Page, Locator } from '@playwright/test';
 import { TEST_DATA } from '../fixtures/test-data';
+import { BasePage } from '../pages/BasePage';
+import { UntestedPage } from '../pages/UntestedPage';
 
 const { Given, When, Then } = createBdd(test);
 
 Then('I should see the "Hints" toggle button in the header', async ({ page }) => {
-    await expect(page.getByRole('button', { name: /HINTS/i })).toBeVisible();
+    await expect(new BasePage(page).hintsToggleLocator).toBeVisible();
 });
 
 Then('the "Hints" toggle should be "OFF" by default', async ({ page }) => {
-    // Check looking for HINTS text which implies OFF state
-    await expect(page.getByRole('button', { name: 'HINTS', exact: true })).toBeVisible();
-    // Ensure no hints are visible
-    await expect(page.locator('.animate-ping')).not.toBeVisible();
+    const basePage = new BasePage(page);
+    await expect(basePage.hintsToggleOffLocator).toBeVisible();
+    await expect(basePage.hintsPulsesLocator.first()).not.toBeVisible();
 });
 
 When('I toggle the "Hints" switch to "ON"', async ({ page }) => {
-    await page.getByRole('button', { name: /HINTS/i }).click();
+    await new BasePage(page).hintsToggleLocator.click();
 });
 
 Given('I have toggled the "Hints" switch to "ON"', async ({ page }) => {
-    await page.getByRole('button', { name: /HINTS/i }).click();
+    await new BasePage(page).hintsToggleLocator.click();
 });
 
 Then('I should see pulsing red dots near the bugs', async ({ page }) => {
-    // Check for at least one visible hint
-    await expect(page.locator('.animate-ping').first()).toBeVisible();
+    await expect(new BasePage(page).hintsPulsesLocator.first()).toBeVisible();
 });
 
 Then('the "Hints" toggle should indicate "ON"', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'HINTS ON' })).toBeVisible();
+    await expect(new BasePage(page).hintsToggleOnLocator).toBeVisible();
 });
 
 Then('the hint for "Missing Name" should disappear', async ({ page }) => {
-    // The Missing Name hint is inside the h1
-    const nameHint = page.locator('h1 .animate-ping');
-    await expect(nameHint).not.toBeVisible();
+    const untestedPage = new UntestedPage(page);
+    await expect(untestedPage.getHintsPulseLocatorFor(untestedPage.ownerNameLocator)).not.toBeVisible();
 });
 
 Then('the hint for "Social Links" should still be visible', async ({ page }) => {
-    // Social hint is in the social links container
-    const socialHint = page.locator('[data-testid="social-links-container"] .animate-ping');
-    await expect(socialHint.first()).toBeVisible();
+    const untestedPage = new UntestedPage(page);
+    await expect(untestedPage.getHintsPulseLocatorFor(untestedPage.sidebarLocator).first()).toBeVisible();
 });
 
 const nuclearClick = async (page: Page, locator: Locator) => {
@@ -53,10 +51,10 @@ const nuclearClick = async (page: Page, locator: Locator) => {
 };
 
 When('I click the {string} bug', async ({ page }, bugName: string) => {
-    // Map bug names to selectors
+    const untestedPage = new UntestedPage(page);
     if (bugName === "Missing Name") {
-        await nuclearClick(page, page.locator('h1', { hasText: TEST_DATA.ownerName.broken }));
+        await nuclearClick(page, untestedPage.ownerNameLocator);
     } else if (bugName === "Social Links") {
-        await nuclearClick(page, page.locator('a[aria-label*="LinkedIn"]'));
+        await nuclearClick(page, untestedPage.socialLinkLocator);
     }
 });

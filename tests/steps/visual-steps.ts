@@ -1,6 +1,7 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect } from '@playwright/test';
+import { UntestedPage } from '../pages/UntestedPage';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -25,7 +26,7 @@ Then('the page should match the "untested-mode" snapshot with masking', async ({
     // Also the footer date or any time-based element? None known.
     
     // Masking syntax: mask: [locator, locator...]
-    const nameHeader = page.locator('h1 span').first();
+    const nameHeader = new UntestedPage(page).ownerNameSpanLocator;
     
     await expect(page).toHaveScreenshot('untested-mode.png', { 
         fullPage: true,

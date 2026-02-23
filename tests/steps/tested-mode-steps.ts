@@ -1,13 +1,15 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect } from '@playwright/test';
+import { TestedPage } from '../pages/TestedPage';
+import { BasePage } from '../pages/BasePage';
 
 const { Given, When, Then } = createBdd(test);
 
 // Scenario: Toggling to Tested Mode repairs the application
 When('I click the "Switch to Tested Version" toggle', async ({ page }) => {
     // Navigate back to the lobby from the Untested page
-    const backButton = page.locator('a[aria-label="Back to Home"]').first();
+    const backButton = new BasePage(page).backButtonLocator;
     await backButton.click();
     await page.waitForURL('**/');
 
@@ -26,11 +28,11 @@ Then('the URL should contain {string}', async ({ page }, urlPart: string) => {
 
 Then('the Hero Headline should display {string}', async ({ page }, text: string) => {
     // The text might be in H1 or H2 depending on the layout/semantic structure.
-    await expect(page.locator('h1, h2').filter({ hasText: text }).first()).toBeVisible();
+    await expect(new BasePage(page).getHeadingLocator(text)).toBeVisible();
 });
 
 Then('the Tech Stack images should load correctly', async ({ page }) => {
-    const images = page.locator('#skills img');
+    const images = new TestedPage(page).techStackImagesLocator;
     await expect(images.first()).toBeVisible();
 
     // Check for broken images
@@ -51,14 +53,13 @@ Given('I am on the "Tested" page', async ({ page }) => {
 When('I hover over the "Green Tick" badge in the About section', async ({ page }) => {
     // The green tick is inside the h2 on mobile, or a separate button on desktop.
     // Look for any *visible* button with title containing "verified" inside the #about section.
-    const badge = page.locator('#about button[title*="verified"]:visible');
+    const badge = new TestedPage(page).getVerifiedBadgesLocator();
     await expect(badge.first()).toBeVisible({ timeout: 5000 });
 });
 
 Then('I should see a tooltip with {string}', async ({ page }, text: string) => {
     // Check for a title attribute matching the expected text
-    // Check for a title attribute matching the expected text
-    const elementWithTitle = page.locator(`[title="${text}"]:visible`);
+    const elementWithTitle = new TestedPage(page).getVerifiedBadgeLocator(text);
     await expect(elementWithTitle.first()).toBeVisible();
 });
 
@@ -68,7 +69,7 @@ Then('the tooltip should reference the test file {string}', async ({ page }, fil
         await expect(page.getByText(filename)).toBeVisible({ timeout: 1000 });
     } catch (e) {
         // Fallback: Check for title attribute on any visible element
-        const elementWithTitle = page.locator(`[title="${filename}"]:visible`);
+        const elementWithTitle = new TestedPage(page).getVerifiedBadgeLocator(filename);
         await expect(elementWithTitle).toBeVisible();
     }
 });

@@ -1,6 +1,7 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect } from '@playwright/test';
+import { BasePage } from '../pages/BasePage';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -24,9 +25,9 @@ Given('I perform a strict navigation to the {string} portfolio page', async ({ p
     
     try {
         // Ensure the page is fully loaded by waiting for the main heading
-        await expect(page.locator('h1').first()).toBeVisible({ timeout: 10000 });
+        await expect(new BasePage(page).heroHeadlineLocator.first()).toBeVisible({ timeout: 10000 });
         // Wait for the skills section to be attached to the DOM
-        await expect(page.locator('#skills')).toBeAttached({ timeout: 10000 });
+        await expect(new BasePage(page).skillsSectionLocator).toBeAttached({ timeout: 10000 });
     } catch (error) {
         console.error("Strict Navigation Failed! Console Errors:", consoleErrors);
         throw error;
@@ -74,7 +75,7 @@ Given('I intercept and fail image requests for {string}', async ({ page }, urlPa
 });
 
 Then('I should see a fallback placeholder for the failed image', async ({ page }) => {
-    const skillsSection = page.locator('#skills');
+    const skillsSection = new BasePage(page).skillsSectionLocator;
     await skillsSection.scrollIntoViewIfNeeded();
     await page.waitForTimeout(1000); // Allow animation and paint
     

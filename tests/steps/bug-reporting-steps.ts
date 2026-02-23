@@ -2,6 +2,7 @@ import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect, Page, Locator } from '@playwright/test';
 import { TEST_DATA } from '../fixtures/test-data';
+import { UntestedPage } from '../pages/UntestedPage';
 
 const { Given, When, Then } = createBdd(test);
 
@@ -21,88 +22,76 @@ const nuclearClick = async (page: Page, locator: Locator) => {
 };
 
 When('I click on the [Missing Name] Text', async ({ page }) => {
-    await nuclearClick(page, page.locator('h1', { hasText: TEST_DATA.ownerName.broken }));
+    await nuclearClick(page, new UntestedPage(page).ownerNameLocator);
 });
 
 When('I click on the Broken Tech Icon', async ({ page }) => {
-    // Scope to experience section and handle 'border-danger/50' class
-    await nuclearClick(page, page.locator('#skills [class*="border-danger"]').first());
+    await nuclearClick(page, new UntestedPage(page).techStackImagesLocator.first());
 });
 
 When('I click on the [object Object]', async ({ page }) => {
-    // This matches the Example table value "[object Object]"
-    await nuclearClick(page, page.getByText(TEST_DATA.projects.coercionError, { exact: true }));
+    await nuclearClick(page, new UntestedPage(page).getBugCardTriggerLocatorByText(TEST_DATA.projects.coercionError));
 });
 
 When('I click on the [object Object] Text', async ({ page }) => {
-    // Kept for backward compatibility if other scenarios use it
-    await nuclearClick(page, page.getByText(TEST_DATA.projects.coercionError, { exact: true }));
+    await nuclearClick(page, new UntestedPage(page).getBugCardTriggerLocatorByText(TEST_DATA.projects.coercionError));
 });
 
 Then('the "Bug Report" modal should open', async ({ page }) => {
-    // Debugging: Verify state change (Bug Count) to confirm click registered
-    await expect(page.locator('text=/Bugs Found:/')).toBeVisible();
-
-    // Allow animation time for modal
-    await expect(page.getByRole('dialog').first()).toBeVisible({ timeout: 5000 });
+    const untestedPage = new UntestedPage(page);
+    await expect(untestedPage.bugCounterLocator).toBeVisible();
+    await expect(untestedPage.modalLocator.first()).toBeVisible({ timeout: 5000 });
 });
 
 Then('the modal title should be {string}', async ({ page }, title: string) => {
-    await expect(page.getByRole('dialog').first()).toContainText(title);
+    await expect(new UntestedPage(page).modalLocator.first()).toContainText(title);
 });
 
 Then('the severity badge should display {string}', async ({ page }, severity: string) => {
-    await expect(page.getByRole('dialog').first()).toContainText(severity);
+    await expect(new UntestedPage(page).modalLocator.first()).toContainText(severity);
 });
 
 // Scenario: Unlocking the Job Done modal
 Given('I have already found 4 bugs', async ({ page }) => {
-    // We need to carefully click 4 UNIQUE bugs.
+    const untestedPage = new UntestedPage(page);
 
     // 1. Name [Missing Name]
-    await nuclearClick(page, page.locator('h1', { hasText: TEST_DATA.ownerName.broken }));
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await page.getByRole('button', { name: /Close|Continue/i }).click();
-    await expect(page.getByRole('dialog')).toBeHidden();
+    await nuclearClick(page, untestedPage.ownerNameLocator);
+    await expect(untestedPage.modalLocator).toBeVisible();
+    await untestedPage.modalCloseButtonLocator.click();
+    await expect(untestedPage.modalLocator).toBeHidden();
 
     // 2. Tech Stack (Broken Icon)
-    await nuclearClick(page, page.locator('#skills [class*="border-danger"]').first());
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await page.getByRole('button', { name: /Close|Continue/i }).click();
-    await expect(page.getByRole('dialog')).toBeHidden();
+    await nuclearClick(page, untestedPage.techStackImagesLocator.first());
+    await expect(untestedPage.modalLocator).toBeVisible();
+    await untestedPage.modalCloseButtonLocator.click();
+    await expect(untestedPage.modalLocator).toBeHidden();
 
     // 3. Projects ([object Object])
-    await nuclearClick(page, page.getByText(TEST_DATA.projects.coercionError, { exact: true }));
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await page.getByRole('button', { name: /Close|Continue/i }).click();
-    await expect(page.getByRole('dialog')).toBeHidden();
+    await nuclearClick(page, untestedPage.getBugCardTriggerLocatorByText(TEST_DATA.projects.coercionError));
+    await expect(untestedPage.modalLocator).toBeVisible();
+    await untestedPage.modalCloseButtonLocator.click();
+    await expect(untestedPage.modalLocator).toBeHidden();
 
     // 4. Responsive (About Text)
-    // In Untested.tsx logic, clicking "Responsive" usually comes from the AboutSection container or specific handler.
-    await nuclearClick(page, page.locator('#about p').first());
-
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await page.getByRole('button', { name: /Close|Continue/i }).click();
-    await expect(page.getByRole('dialog')).toBeHidden();
+    await nuclearClick(page, untestedPage.aboutTextLocator);
+    await expect(untestedPage.modalLocator).toBeVisible();
+    await untestedPage.modalCloseButtonLocator.click();
+    await expect(untestedPage.modalLocator).toBeHidden();
 });
 
 When('I click the last remaining bug', async ({ page }) => {
-    // 5. Social Bug (LinkedIn) via Sidebar icon
-    // Ensure we are in unteste mode logic (sidebar icons).
-    // Using nuclearClick for mobile robustness
-    const linkedin = page.locator('a[aria-label="LinkedIn (bug)"]');
-    await nuclearClick(page, linkedin);
+    await nuclearClick(page, new UntestedPage(page).socialLinkLocator);
 });
 
 When('I close the Bug Report modal', async ({ page }) => {
-    await page.getByRole('button', { name: /Close|Continue/i }).click();
+    await new UntestedPage(page).modalCloseButtonLocator.click();
 });
 
 Then('the "Job Done" completion modal should appear', async ({ page }) => {
-    await expect(page.getByText('Job Done')).toBeVisible();
+    await expect(new UntestedPage(page).jobDoneModalLocator).toBeVisible();
 });
 
 Then('I should see a "Green Bug" icon', async ({ page }) => {
-    const icon = page.locator('.bg-success .lucide-bug');
-    await expect(icon).toBeVisible();
+    await expect(new UntestedPage(page).jobDoneIconLocator).toBeVisible();
 });
