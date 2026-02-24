@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, AlertTriangle, ExternalLink, Bug, FileText, ClipboardList } from "lucide-react";
+import { X, AlertTriangle, ExternalLink, Bug, FileText } from "lucide-react";
 import FocusTrap from "focus-trap-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";

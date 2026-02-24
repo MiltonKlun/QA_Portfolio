@@ -3,7 +3,7 @@ import { test } from 'playwright-bdd';
 import { expect } from '@playwright/test';
 import { BasePage } from '../pages/BasePage';
 
-const { Given, When, Then } = createBdd(test);
+const { Given, Then } = createBdd(test);
 
 // --- State to track console errors ---
 let consoleErrors: string[] = [];
@@ -34,7 +34,7 @@ Given('I perform a strict navigation to the {string} portfolio page', async ({ p
     }
 });
 
-Then('the page {string} should be less than {int} ms', async ({ page }, metric: string, threshold: number) => {
+Then('the page {string} should be less than {int} ms', async ({ page }) => {
     // Use Performance Navigation Timing API (more reliable than legacy timing)
     const loadTime = await page.evaluate(() => {
         const entry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;

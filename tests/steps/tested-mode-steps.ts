@@ -67,7 +67,7 @@ Then('the tooltip should reference the test file {string}', async ({ page }, fil
     // Check for visible text (custom tooltip) OR title attribute (native tooltip)
     try {
         await expect(page.getByText(filename)).toBeVisible({ timeout: 1000 });
-    } catch (e) {
+    } catch {
         // Fallback: Check for title attribute on any visible element
         const elementWithTitle = new TestedPage(page).getVerifiedBadgeLocator(filename);
         await expect(elementWithTitle).toBeVisible();

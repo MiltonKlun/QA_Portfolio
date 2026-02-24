@@ -1,7 +1,6 @@
 import { createBdd } from 'playwright-bdd';
 import { test } from 'playwright-bdd';
 import { expect, Page, Locator } from '@playwright/test';
-import { TEST_DATA } from '../fixtures/test-data';
 import { BasePage } from '../pages/BasePage';
 import { UntestedPage } from '../pages/UntestedPage';
 
@@ -43,7 +42,7 @@ Then('the hint for "Social Links" should still be visible', async ({ page }) => 
     await expect(untestedPage.getHintsPulseLocatorFor(untestedPage.sidebarLocator).first()).toBeVisible();
 });
 
-const nuclearClick = async (page: Page, locator: Locator) => {
+const nuclearClick = async (_page: Page, locator: Locator) => {
     await locator.scrollIntoViewIfNeeded();
     await locator.evaluate((el: HTMLElement) => {
         el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));

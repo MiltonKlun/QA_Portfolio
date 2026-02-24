@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, CheckCircle } from "lucide-react";
 import BugHint from "@/components/BugHint";
 

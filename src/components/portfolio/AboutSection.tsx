@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import QAVerifiedBadge from "@/components/QAVerifiedBadge";
 import { CheckCircle } from "lucide-react";
 import BugHint from "@/components/BugHint";
 

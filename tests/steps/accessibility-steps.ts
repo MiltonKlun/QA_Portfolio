@@ -4,7 +4,7 @@ import { expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { createHtmlReport } from 'axe-html-reporter';
 
-const { Given, When, Then } = createBdd(test);
+const { Then } = createBdd(test);
 
 // Navigation steps are reused from other step files:
 // 'I navigate to the "Tested" portfolio page' -> visual-steps.ts

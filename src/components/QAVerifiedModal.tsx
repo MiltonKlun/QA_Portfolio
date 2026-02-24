@@ -1,9 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle, ShieldCheck, FileText, ExternalLink, Code2, Terminal } from "lucide-react";
+import { X, CheckCircle, ShieldCheck, FileText, ExternalLink } from "lucide-react";
 import FocusTrap from "focus-trap-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
 import { createPortal } from "react-dom";
 
 interface QAVerifiedModalProps {
@@ -22,7 +21,6 @@ const QAVerifiedModal = ({
   bugTitle,
   bugDescription,
   solution,
-  testSnippet,
   testVerificationUrl,
 }: QAVerifiedModalProps) => {
   const { toast } = useToast();

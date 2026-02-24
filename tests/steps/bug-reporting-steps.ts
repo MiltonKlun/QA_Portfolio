@@ -13,7 +13,7 @@ const { Given, When, Then } = createBdd(test);
 // And the modal title should be "<Title>"
 // And the severity badge should display "<Severity>"
 
-const nuclearClick = async (page: Page, locator: Locator) => {
+const nuclearClick = async (_page: Page, locator: Locator) => {
     // Scroll and dispatch event to ensure React catches it even if obscured
     await locator.scrollIntoViewIfNeeded();
     await locator.evaluate((el: HTMLElement) => {

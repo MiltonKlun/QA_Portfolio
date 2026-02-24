@@ -24,6 +24,11 @@ export class TestedPage extends BasePage {
     get techStackImagesLocator() { return this._techStackImages; }
     get progressValueLocator() { return this._progressValue; }
 
+    get ownerName() { return this.ownerNameLocator; }
+    get socialLinks() { return this.socialLinksLocator; }
+    get techStackImages() { return this.techStackImagesLocator; }
+    get progressValue() { return this.progressValueLocator; }
+
     getVerifiedBadgeLocator(title: string) {
         return this.page.locator(`[title="${title}"]:visible`);
     }

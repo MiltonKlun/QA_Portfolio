@@ -47,6 +47,17 @@ export class UntestedPage extends BasePage {
     get modalJiraButtonLocator() { return this._modalJiraButton; }
     get bugCounterLocator() { return this._bugCounter; }
 
+    get ownerName() { return this.ownerNameLocator; }
+    get ownerNameSpan() { return this.ownerNameSpanLocator; }
+    get socialLink() { return this.socialLinkLocator; }
+    get techStackImages() { return this.techStackImagesLocator; }
+    get progressValue() { return this.progressValueLocator; }
+    get aboutText() { return this.aboutTextLocator; }
+    get bugCardTrigger() { return this.bugCardTriggerLocator; }
+    get modal() { return this.modalLocator; }
+    get modalJiraButton() { return this.modalJiraButtonLocator; }
+    get bugCounter() { return this.bugCounterLocator; }
+
     getProjectDescriptionLocator(index: number) {
         return this.page.locator('#experience p').nth(index);
     }

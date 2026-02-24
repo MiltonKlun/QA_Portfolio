@@ -99,7 +99,7 @@ Then('the text paragraph should overflow the container', async ({ page }) => {
     expect(isOverflowing).toBe(true);
 });
 
-Then('a horizontal scrollbar should be visible', async ({ page }) => {
+Then('a horizontal scrollbar should be visible', async () => {
     expect(true).toBe(true);
 });
 

@@ -84,15 +84,6 @@ const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechSta
     { title: "Databases", items: techStack.databases },
   ];
 
-  const handleItemClick = (item: TechItem) => {
-    if (item.isBroken && onBugClick) {
-      onBugClick();
-    }
-    if (item.wasFixed && isTested && onBugClick) {
-      onBugClick();
-    }
-  };
-
   return (
     <section id="skills" className="scroll-mt-24 relative">
       <motion.div

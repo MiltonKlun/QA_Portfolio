@@ -4,7 +4,7 @@ import { expect } from '@playwright/test';
 import { UntestedPage } from '../pages/UntestedPage';
 import { BasePage } from '../pages/BasePage';
 
-const { Given, When, Then } = createBdd(test);
+const { Given, Then } = createBdd(test);
 
 // Navigation Step (Specific to this feature to match the exact string)
 Given('I navigate to the "Tested" portfolio page', async ({ page }) => {

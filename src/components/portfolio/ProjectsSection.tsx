@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, CheckCircle } from "lucide-react";
-import QAVerifiedBadge from "@/components/QAVerifiedBadge";
 import BugHint from "@/components/BugHint";
 
 interface ProjectsSectionProps {
@@ -12,7 +11,6 @@ interface ProjectsSectionProps {
   foundBugs?: Set<string>;
 }
 
-const isTested = (variant: string) => variant === "tested";
 
 const projects = [
   {
@@ -101,7 +99,6 @@ const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs 
         <div className="space-y-6">
           {projects.map((project, index) => {
             const isSecondCard = index === 1;
-            const showDataBug = isUntested && index === 1;
             const isBugInteracting = isUntested && isSecondCard;
 
             return (
