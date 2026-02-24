@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, CheckCircle } from "lucide-react";
 import BugHint from "@/components/BugHint";
 
-
-
 interface SidebarNavProps {
   variant: "untested" | "tested";
   activeSection: string;
@@ -30,12 +28,10 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
   useEffect(() => {
     if (isUntested) {
       const glitches = ["null", "undefined", "NaN", "[Object]", "Error", "void"];
-      // Start flickering
       const interval = setInterval(() => {
         setBuggyName(glitches[Math.floor(Math.random() * glitches.length)]);
       }, 100);
 
-      // Stop after 1.5 seconds and settle on the bug
       const timeout = setTimeout(() => {
         clearInterval(interval);
         setBuggyName("[Missing Name]");
@@ -52,7 +48,6 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header Info */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -104,7 +99,6 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
 
       </motion.div>
 
-      {/* Navigation - Only visible on large screens */}
       <nav className="hidden lg:block mb-auto relative">
         <ul className="space-y-1">
           {navItems.map((item, index) => (
@@ -134,7 +128,6 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
         </ul>
       </nav>
 
-      {/* Social Links */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -198,7 +191,6 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
               >
                 <Github className="w-5 h-5 lg:w-6 lg:h-6" />
               </a>
-              {/* Verified tick next to GitHub with same spacing */}
               <button
                 onClick={(e) => onSocialClick?.(e)}
                 className={`w-5 h-5 rounded-full bg-success/20 border border-success/40 flex items-center justify-center hover:bg-success/30 transition-all duration-300 ${showChecks ? "opacity-100" : "opacity-0 group-hover:opacity-100"
@@ -210,7 +202,6 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
             </div>
           )}
         </div>
-
 
       </motion.div>
     </div>

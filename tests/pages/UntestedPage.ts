@@ -14,16 +14,14 @@ export class UntestedPage extends BasePage {
 
     constructor(page: Page) {
         super(page);
-        // Locating by text or accessible role where possible to simulate user behavior
         this._ownerName = page.locator('h1');
-        this._socialLink = page.locator('a[aria-label="LinkedIn (bug)"]'); // Malformed link with explicit label
-        this._techStackImages = page.locator('#skills [class*="border-danger"]'); // Broken tech icons under Skills section
-        this._progressValue = page.locator('text=NaN%'); // Broken data
-        this._aboutText = page.locator('#about p').first(); // For CSS check
+        this._socialLink = page.locator('a[aria-label="LinkedIn (bug)"]');
+        this._techStackImages = page.locator('#skills [class*="border-danger"]');
+        this._progressValue = page.locator('text=NaN%');
+        this._aboutText = page.locator('#about p').first();
 
-        // UI Interaction elements
-        this._bugCardTrigger = page.locator('text=Missing Name'); // Triggers modal
-        this._modal = page.locator('[role="dialog"]'); // Modal container
+        this._bugCardTrigger = page.locator('text=Missing Name');
+        this._modal = page.locator('[role="dialog"]');
         this._modalJiraButton = page.locator('button:has-text("View on Github")');
         this._bugCounter = page.locator('text=Bugs Found:');
     }

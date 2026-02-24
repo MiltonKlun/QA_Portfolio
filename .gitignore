@@ -18,6 +18,8 @@ dist-ssr
 test-results/
 playwright-report/
 blob-report/
+clean_comments.cjs
+clean_comments.js
 
 # Local Environment
 *.local
@@ -43,8 +45,6 @@ blob-report/
 .features-gen/
 
 # GSD / Workflow Artifacts (Root Markdown Files)
-# GSD / Workflow Artifacts (Root Markdown Files)
-# We explicitly ignore these to keep the repo clean for the portfolio
 docs/
 BDD_IMPLEMENTATION_PLAN.md
 BUG_IMPROVEMENT_PROPOSAL.md

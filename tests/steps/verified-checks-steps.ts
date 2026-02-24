@@ -25,7 +25,6 @@ When('I click the "CHECKS" toggle button', async ({ page }) => {
 
 Given('the "CHECKS" toggle is ON', async ({ page }) => {
     const button = page.getByRole('button', { name: /CHECKS/i });
-    // If it says 'CHECKS', click it. If 'CHECKS ON', do nothing.
     const text = await button.textContent();
     if (text === 'CHECKS') {
         await button.click();
@@ -35,30 +34,24 @@ Given('the "CHECKS" toggle is ON', async ({ page }) => {
 
 Then('the verified checkmarks should be hidden', async ({ page }) => {
     const testedPage = new TestedPage(page);
-    // Check opacity of a known checkmark button (About section)
     const aboutCheck = testedPage.getVerifiedBadgeLocator('Responsive text verified').first();
     await expect(aboutCheck).toHaveCSS('opacity', '0');
 
-    // Check Name verified check (Sidebar)
     const nameCheck = testedPage.getVerifiedBadgeLocator('Name display verified').first();
     await expect(nameCheck).toHaveCSS('opacity', '0');
 
-    // Check Social verified check (Sidebar)
     const socialCheck = testedPage.getVerifiedBadgeLocator('Social links verified').first();
     await expect(socialCheck).toHaveCSS('opacity', '0');
 });
 
 Then('the verified checkmarks should be visible', async ({ page }) => {
     const testedPage = new TestedPage(page);
-    // Check About section
     const aboutCheck = testedPage.getVerifiedBadgeLocator('Responsive text verified').first();
     await expect(aboutCheck).toHaveCSS('opacity', '1');
 
-    // Check Name verified check (Sidebar)
     const nameCheck = testedPage.getVerifiedBadgeLocator('Name display verified').first();
     await expect(nameCheck).toHaveCSS('opacity', '1');
 
-    // Check Social verified check (Sidebar)
     const socialCheck = testedPage.getVerifiedBadgeLocator('Social links verified').first();
     await expect(socialCheck).toHaveCSS('opacity', '1');
 });

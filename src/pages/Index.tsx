@@ -11,19 +11,15 @@ const Index = () => {
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-6 sm:px-8 lg:px-12 py-16 sm:py-20 lg:py-24">
       <SEO title="Milton Klun | QA Automation Engineer" />
 
-      {/* Particle Grid Background */}
       <ParticleGrid />
 
-      {/* Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,hsl(var(--primary)/0.08)_0%,transparent_70%)]" />
       <div className="absolute top-0 left-0 w-full h-full">
         <div className="absolute top-20 left-20 w-72 h-72 bg-danger/5 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-20 w-72 h-72 bg-success/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
       </div>
 
-      {/* Main Content */}
       <div className="relative z-10 w-full max-w-4xl text-center">
-        {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -34,14 +30,12 @@ const Index = () => {
           <span className="text-gradient">QA Portfolio</span>
         </motion.h1>
 
-        {/* Choice Cards */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-6 lg:gap-8 w-full max-w-xs mx-auto md:max-w-none"
         >
-          {/* Untested Card */}
           <div className="group relative p-5 sm:p-8 rounded-2xl glass border border-danger/20 hover:border-danger/50 transition-all duration-300 hover:shadow-danger/20 hover:shadow-2xl h-full cursor-default">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--danger)/0.1)_0%,transparent_70%)] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -68,7 +62,6 @@ const Index = () => {
             </div>
           </div>
 
-          {/* Tested Card */}
           <div className="group relative p-5 sm:p-8 rounded-2xl glass border border-success/20 hover:border-success/50 transition-all duration-300 hover:shadow-success/20 hover:shadow-2xl h-full cursor-default">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--success)/0.1)_0%,transparent_70%)] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 

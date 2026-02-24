@@ -122,7 +122,6 @@ const Untested = () => {
 
   const handleReportClose = () => {
     setModalOpen(false);
-    // If all bugs are found (5), open completion modal ONLY if not shown before
     if (foundBugs.size === 5 && !hasShownCompletion) {
       setHasShownCompletion(true);
       setTimeout(() => setCompletionModalOpen(true), 300);

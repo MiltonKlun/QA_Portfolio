@@ -11,7 +11,6 @@ interface ProjectsSectionProps {
   foundBugs?: Set<string>;
 }
 
-
 const projects = [
   {
     id: 1,
@@ -68,7 +67,6 @@ const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs 
         viewport={{ once: true }}
         className="group"
       >
-        {/* Mobile section title */}
         <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 flex items-center justify-between group/mobile">
           Experience
           {!isUntested && (
@@ -83,7 +81,6 @@ const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs 
           )}
         </h2>
 
-        {/* Desktop verified tick */}
         {!isUntested && (
           <button
             onClick={() => onBugClick?.("data")}
@@ -95,7 +92,6 @@ const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs 
           </button>
         )}
 
-        {/* Experience List */}
         <div className="space-y-6">
           {projects.map((project, index) => {
             const isSecondCard = index === 1;
@@ -133,12 +129,10 @@ const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs 
               >
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  {/* Project Image */}
                   <div className="flex-shrink-0 w-full sm:w-32 h-20 sm:h-20 bg-muted rounded-lg flex items-center justify-center text-3xl">
                     {project.image}
                   </div>
 
-                  {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start gap-2 mb-2">
                       <h3 className="text-base font-semibold group-hover:text-primary">
@@ -163,7 +157,6 @@ const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs 
                       )}
                     </p>
 
-                    {/* Tags */}
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
                         <span
@@ -174,7 +167,6 @@ const ProjectsSection = ({ variant, onBugClick, showHint, showChecks, foundBugs 
                         </span>
                       ))}
                     </div>
-
 
                   </div>
                 </div>

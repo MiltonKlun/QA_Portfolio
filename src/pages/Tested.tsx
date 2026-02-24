@@ -42,7 +42,7 @@ const fixedBugDetails: Record<
     const links = testedPage.socialLinks;
     for (let i = 0; i < await links.count(); ++i) {
         const href = await links.nth(i).getAttribute('href');
-        expect(href).toMatch(/^https:\\/\\//);
+        expect(href).toMatch(/^https:\\/\\
         expect(href).not.toContain('undefined');
     }
 });`,
@@ -84,10 +84,8 @@ const fixedBugDetails: Record<
     solution:
       "Fixed responsive typography with proper breakpoint handling. Added correct text-wrap properties and ensured content is readable across all device sizes.",
     testSnippet: `test('Fix #5: Viewport Verification', async ({ page }) => {
-    // Verified via Mobile Chrome emulation
     await page.setViewportSize({ width: 375, height: 667 });
     await expect(page.locator('#about p')).toBeVisible();
-    // No horizontal scrollbar check
     const scrollWidth = await page.evaluate(() => document.body.scrollWidth);
     const clientWidth = await page.evaluate(() => document.body.clientWidth);
     expect(scrollWidth).toBeLessThanOrEqual(clientWidth);
@@ -95,8 +93,6 @@ const fixedBugDetails: Record<
     testVerificationUrl: "https://github.com/MiltonKlun/QA_Portfolio/blob/main/tests/steps/mobile-navigation-steps.ts"
   },
 };
-
-
 
 const Tested = () => {
   const [modalOpen, setModalOpen] = useState(false);

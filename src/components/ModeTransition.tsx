@@ -18,11 +18,8 @@ const ModeTransition = ({ isPlaying, onComplete }: ModeTransitionProps) => {
             return;
         }
 
-        // Phase 1 → Phase 2 after 1.2s
         const t1 = setTimeout(() => setPhase("passing"), 1200);
-        // Phase 2 → done after 2.8s total (green icon visible for 1.6s)
         const t2 = setTimeout(() => setPhase("done"), 2800);
-        // Call onComplete after fade-out finishes (~3.2s total)
         const t3 = setTimeout(() => onComplete(), 3200);
 
         return () => {
@@ -43,7 +40,6 @@ const ModeTransition = ({ isPlaying, onComplete }: ModeTransitionProps) => {
                     className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
                     style={{ backgroundColor: "hsl(222 47% 6% / 0.97)" }}
                 >
-                    {/* Icon */}
                     <div className="relative w-28 h-28 mb-8">
                         <AnimatePresence mode="wait">
                             {phase === "deploying" && (
@@ -92,7 +88,6 @@ const ModeTransition = ({ isPlaying, onComplete }: ModeTransitionProps) => {
                         </AnimatePresence>
                     </div>
 
-                    {/* Text */}
                     <AnimatePresence mode="wait">
                         {phase === "deploying" && (
                             <motion.div
@@ -142,5 +137,4 @@ const ModeTransition = ({ isPlaying, onComplete }: ModeTransitionProps) => {
 };
 
 export default ModeTransition;
-
-
+

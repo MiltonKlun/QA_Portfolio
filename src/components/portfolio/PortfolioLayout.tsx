@@ -40,7 +40,6 @@ const PortfolioLayout = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const isScrollingRef = useRef(false);
 
-  // Track mouse position for spotlight effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -50,7 +49,6 @@ const PortfolioLayout = ({
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Track active section on scroll
   useEffect(() => {
     const sections = ["about", "skills", "experience"];
 
@@ -67,14 +65,11 @@ const PortfolioLayout = ({
       viewportHeight = window.innerHeight;
     };
 
-    // Calculate initial offsets
     calculateOffsets();
 
     const handleScroll = () => {
-      // Don't update if we're programmatically scrolling
       if (isScrollingRef.current) return;
 
-      // Check if we're at the bottom of the page
       const isAtBottom = viewportHeight + window.scrollY >= pageHeight - 50;
 
       if (isAtBottom) {
@@ -87,7 +82,6 @@ const PortfolioLayout = ({
       const scrollY = window.scrollY;
 
       for (const section of sectionOffsets) {
-        // If current scroll position is past the section's top (minus header buffer)
         if (scrollY >= section.top - headerOffset) {
           currentSection = section.id;
         }
@@ -96,11 +90,9 @@ const PortfolioLayout = ({
       setActiveSection(currentSection);
     };
 
-    // Recalculate offsets on resize to maintain accuracy
     window.addEventListener("resize", calculateOffsets);
     window.addEventListener("scroll", handleScroll, { passive: true });
     
-    // Set initial state
     handleScroll();
 
     return () => {
@@ -112,11 +104,10 @@ const PortfolioLayout = ({
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      // Immediately set active section on click
       setActiveSection(sectionId);
       isScrollingRef.current = true;
 
-      const headerOffset = 96; // Account for fixed header
+      const headerOffset = 96;
       const offsetPosition = element.offsetTop - headerOffset;
 
       window.scrollTo({
@@ -124,7 +115,6 @@ const PortfolioLayout = ({
         behavior: "smooth"
       });
 
-      // Re-enable observer after scroll completes
       setTimeout(() => {
         isScrollingRef.current = false;
       }, 1000);
@@ -138,12 +128,10 @@ const PortfolioLayout = ({
   };
 
   const handleSocialClick = (e: React.MouseEvent) => {
-    // BUG for untested: Social links don't work
     if (isUntested && onBugClick) {
       e.preventDefault();
       onBugClick("social");
     }
-    // Verified for tested: Show success modal
     if (!isUntested && onBugClick) {
       e.preventDefault();
       onBugClick("social");
@@ -152,12 +140,10 @@ const PortfolioLayout = ({
 
   return (
     <div ref={containerRef} className="min-h-screen relative">
-      {/* Particle Grid Background */}
       <div className="fixed inset-0 z-[1] pointer-events-none">
         <ParticleGrid />
       </div>
 
-      {/* Mouse spotlight effect */}
       <div
         className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 lg:block hidden"
         style={{
@@ -167,7 +153,6 @@ const PortfolioLayout = ({
             }, transparent 80%)`,
         }}
       />
-      {/* Status Bar */}
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -194,7 +179,6 @@ const PortfolioLayout = ({
                   Bugs Found: {bugCount}/{totalBugs}
                 </span>
 
-                {/* Hints Toggle */}
                 {onToggleHints && (
                   <button
                     onClick={onToggleHints}
@@ -218,7 +202,6 @@ const PortfolioLayout = ({
                   All Tests Passing
                 </span>
 
-                {/* Checks Toggle */}
                 {onToggleChecks && (
                   <button
                     onClick={onToggleChecks}
@@ -235,7 +218,6 @@ const PortfolioLayout = ({
             )}
           </div>
 
-          {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
             className="w-8 h-8 rounded-full flex items-center justify-center
@@ -253,11 +235,9 @@ const PortfolioLayout = ({
         </div>
       </motion.header>
 
-      {/* Main Layout */}
       <div className="pt-12 min-h-screen relative z-10 pb-20 lg:pb-0">
         <div className="mx-auto max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
           <div className="lg:flex lg:justify-between lg:gap-4">
-            {/* Left Sidebar - Sticky on desktop */}
             <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
               <SidebarNav
                 variant={variant}
@@ -271,7 +251,6 @@ const PortfolioLayout = ({
               />
             </header>
 
-            {/* Right Content - Scrollable */}
             <main className="pt-12 lg:w-1/2 lg:py-24">
               <div className="space-y-24 lg:space-y-36">
                 {children}
@@ -281,7 +260,6 @@ const PortfolioLayout = ({
         </div>
       </div>
 
-      {/* Mobile Navigation - Stick to bottom on small screens */}
       <MobileNav
         activeSection={activeSection}
         onNavigate={scrollToSection}

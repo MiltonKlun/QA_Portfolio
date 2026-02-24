@@ -15,7 +15,6 @@ test.describe('The "Untested" Experience (Chaos Mode)', () => {
     });
 
     test('Bug #2: Social Links should be broken', async () => {
-        // Check at least one social link has the malformed href
         const count = await untestedPage.socialLink.count();
         expect(count).toBeGreaterThan(0);
         const firstLink = untestedPage.socialLink.first();
@@ -23,7 +22,6 @@ test.describe('The "Untested" Experience (Chaos Mode)', () => {
     });
 
     test('Bug #3: Tech Stack icons should be broken', async () => {
-        // Expect at least some images to use the broken source
         await expect(untestedPage.techStackImages.first()).toBeVisible();
     });
 

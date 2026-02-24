@@ -26,7 +26,6 @@ const AppRoutes = () => {
         <Route path="/untested" element={<UntestedPage />} />
         <Route path="/tested" element={<TestedPage />} />
 
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

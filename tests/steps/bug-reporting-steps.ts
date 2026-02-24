@@ -6,15 +6,7 @@ import { UntestedPage } from '../pages/UntestedPage';
 
 const { Given, When, Then } = createBdd(test);
 
-// Scenario Outline: Clicking a bug opens the detailed Report Modal
-// Steps:
-// When I click on the <Element>
-// Then the "Bug Report" modal should open
-// And the modal title should be "<Title>"
-// And the severity badge should display "<Severity>"
-
 const nuclearClick = async (_page: Page, locator: Locator) => {
-    // Scroll and dispatch event to ensure React catches it even if obscured
     await locator.scrollIntoViewIfNeeded();
     await locator.evaluate((el: HTMLElement) => {
         el.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
@@ -51,29 +43,24 @@ Then('the severity badge should display {string}', async ({ page }, severity: st
     await expect(new UntestedPage(page).modalLocator.first()).toContainText(severity);
 });
 
-// Scenario: Unlocking the Job Done modal
 Given('I have already found 4 bugs', async ({ page }) => {
     const untestedPage = new UntestedPage(page);
 
-    // 1. Name [Missing Name]
     await nuclearClick(page, untestedPage.ownerNameLocator);
     await expect(untestedPage.modalLocator).toBeVisible();
     await untestedPage.modalCloseButtonLocator.click();
     await expect(untestedPage.modalLocator).toBeHidden();
 
-    // 2. Tech Stack (Broken Icon)
     await nuclearClick(page, untestedPage.techStackImagesLocator.first());
     await expect(untestedPage.modalLocator).toBeVisible();
     await untestedPage.modalCloseButtonLocator.click();
     await expect(untestedPage.modalLocator).toBeHidden();
 
-    // 3. Projects ([object Object])
     await nuclearClick(page, untestedPage.getBugCardTriggerLocatorByText(TEST_DATA.projects.coercionError));
     await expect(untestedPage.modalLocator).toBeVisible();
     await untestedPage.modalCloseButtonLocator.click();
     await expect(untestedPage.modalLocator).toBeHidden();
 
-    // 4. Responsive (About Text)
     await nuclearClick(page, untestedPage.aboutTextLocator);
     await expect(untestedPage.modalLocator).toBeVisible();
     await untestedPage.modalCloseButtonLocator.click();

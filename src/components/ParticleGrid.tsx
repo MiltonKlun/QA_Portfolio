@@ -47,7 +47,7 @@ const ParticleGrid = () => {
         dotsRef.current = dots;
     }, []);
 
-    const primaryHslRef = useRef<string>("210 100% 50%"); // Fallback
+    const primaryHslRef = useRef<string>("210 100% 50%");
 
     const animate = useCallback((ctx: CanvasRenderingContext2D, width: number, height: number) => {
         const now = Date.now();
@@ -56,19 +56,17 @@ const ParticleGrid = () => {
         const primaryHSL = primaryHslRef.current;
 
         for (const dot of dotsRef.current) {
-            // Pulse breathing effect
             const pulse = Math.sin(now * PULSE_SPEED + dot.pulseOffset) * 0.5 + 0.5;
             dot.opacity = dot.baseOpacity + pulse * 0.06;
             dot.radius = dot.baseRadius + pulse * 0.3;
 
-            // Mouse proximity glow
             const dx = mouseRef.current.x - dot.x;
             const dy = mouseRef.current.y - dot.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < MOUSE_RADIUS) {
                 const intensity = 1 - distance / MOUSE_RADIUS;
-                const eased = intensity * intensity; // quadratic easing for softer falloff
+                const eased = intensity * intensity;
                 dot.opacity = Math.min(MAX_OPACITY, dot.opacity + eased * (MAX_OPACITY - dot.opacity));
                 dot.radius = Math.min(DOT_MAX_RADIUS, dot.radius + eased * (DOT_MAX_RADIUS - dot.radius));
             }
@@ -97,7 +95,6 @@ const ParticleGrid = () => {
             canvas.height = rect.height * dpr;
             ctx.scale(dpr, dpr);
             
-            // Cache CSS variable here to avoid forced reflows in the render loop
             const style = getComputedStyle(document.documentElement);
             const cssPrimary = style.getPropertyValue("--primary").trim();
             if (cssPrimary) {
@@ -105,23 +102,19 @@ const ParticleGrid = () => {
             }
 
             initDots(rect.width, rect.height);
-            // Cancel any existing animation before starting new
             if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
             animate(ctx, rect.width, rect.height);
         };
 
-        // Initial setup - deferred to protect FCP and LCP main thread
         const startTimeout = setTimeout(() => {
             setupCanvas();
         }, 800);
 
-        // Resize observer for responsive canvas
         resizeObserverRef.current = new ResizeObserver(() => {
             setupCanvas();
         });
         resizeObserverRef.current.observe(canvas);
 
-        // Mouse tracking
         const handleMouseMove = (e: MouseEvent) => {
             if (!canvasRectRef.current) return;
             const rect = canvasRectRef.current;
@@ -135,7 +128,6 @@ const ParticleGrid = () => {
             mouseRef.current = { x: -1000, y: -1000 };
         };
 
-        // Touch tracking for mobile devices
         const handleTouchMove = (e: TouchEvent) => {
             const touch = e.touches[0];
             if (!touch || !canvasRectRef.current) return;
@@ -147,7 +139,6 @@ const ParticleGrid = () => {
         };
 
         const handleTouchEnd = () => {
-            // Fade out gradually by moving "mouse" far away
             mouseRef.current = { x: -1000, y: -1000 };
         };
 

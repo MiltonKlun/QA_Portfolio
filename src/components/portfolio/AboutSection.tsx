@@ -22,7 +22,6 @@ const AboutSection = ({ variant, onBugClick, showHint, showChecks }: AboutSectio
         transition={{ duration: 0.5 }}
         className="group"
       >
-        {/* Mobile section title */}
         <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 flex items-center justify-between group/mobile">
           About Me
           {isTested && (
@@ -48,7 +47,6 @@ const AboutSection = ({ variant, onBugClick, showHint, showChecks }: AboutSectio
           )}
         </h2>
 
-        {/* Desktop verified tick */}
         {isTested && (
           <button
             onClick={onBugClick}
@@ -67,7 +65,6 @@ const AboutSection = ({ variant, onBugClick, showHint, showChecks }: AboutSectio
           <div className="hidden lg:block">
             <BugHint visible={!!showHint} className="-left-8 top-2" />
           </div>
-          {/* BUG: Responsive text issue for untested variant */}
           <p className={`leading-relaxed ${isUntested
             ? "text-muted-foreground text-[18px] sm:text-base leading-[1.2] tracking-[-0.5px] overflow-hidden whitespace-nowrap text-ellipsis sm:whitespace-normal sm:overflow-visible border-r-2 border-danger sm:border-none"
             : "text-lg text-muted-foreground"

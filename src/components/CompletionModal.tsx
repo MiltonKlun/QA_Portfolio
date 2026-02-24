@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Bug, ArrowRight } from "lucide-react";
-import FocusTrap from "focus-trap-react"; // Added import for FocusTrap
+import FocusTrap from "focus-trap-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import ModeTransition from "@/components/ModeTransition";
@@ -32,7 +32,6 @@ const CompletionModal = ({ isOpen, onClose }: CompletionModalProps) => {
             <AnimatePresence>
                 {isOpen && (
                     <>
-                        {/* Modal Container - No Backdrop */}
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -40,7 +39,6 @@ const CompletionModal = ({ isOpen, onClose }: CompletionModalProps) => {
                             transition={{ type: "spring", damping: 20, stiffness: 300 }}
                             className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none"
                         >
-                            {/* Wrapped the inner modal structure with FocusTrap */}
                             <FocusTrap active={isOpen}>
                                 <div
                                     role="dialog"
@@ -48,7 +46,6 @@ const CompletionModal = ({ isOpen, onClose }: CompletionModalProps) => {
                                     className="w-full max-w-lg rounded-2xl bg-card border border-border/50 shadow-2xl pointer-events-auto overflow-hidden"
                                     onClick={(e) => e.stopPropagation()}
                                 >
-                                    {/* Header (Simplified) */}
                                     <div className="pt-12 px-8 pb-4 flex flex-col items-center justify-center text-center relative">
                                         <button
                                             onClick={onClose}
@@ -85,7 +82,6 @@ const CompletionModal = ({ isOpen, onClose }: CompletionModalProps) => {
                                         </motion.p>
                                     </div>
 
-                                    {/* Content */}
                                     <div className="p-8 pt-2 space-y-6">
                                         <div className="flex flex-col gap-3">
                                             <Button
@@ -116,7 +112,6 @@ const CompletionModal = ({ isOpen, onClose }: CompletionModalProps) => {
                 )}
             </AnimatePresence>
 
-            {/* Cinematic Transition Overlay */}
             <ModeTransition isPlaying={isTransitioning} onComplete={handleTransitionComplete} />
         </>,
         document.body
@@ -124,4 +119,4 @@ const CompletionModal = ({ isOpen, onClose }: CompletionModalProps) => {
 };
 
 export default CompletionModal;
-
+

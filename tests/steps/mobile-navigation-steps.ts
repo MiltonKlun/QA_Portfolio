@@ -11,12 +11,10 @@ Given('I am viewing on a mobile device', async ({ page }) => {
 
 Then('the bottom navigation bar should be visible', async ({ page }) => {
     const mobileNav = new BasePage(page).mobileNavLocator;
-    // ensuring we target the one with About/Skills/Experience icons, usually rendered last
     await expect(mobileNav).toBeVisible();
 });
 
 Then('the bottom navigation should contain {string}, {string}, and {string} links', async ({ page, }, arg1, arg2, arg3) => {
-    // Mobile nav items are buttons
     const basePage = new BasePage(page);
     await expect(basePage.getMobileNavLinkLocator(arg1)).toBeVisible();
     await expect(basePage.getMobileNavLinkLocator(arg2)).toBeVisible();

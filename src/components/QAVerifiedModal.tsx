@@ -29,7 +29,6 @@ const QAVerifiedModal = ({
     <AnimatePresence mode="wait">
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -38,7 +37,6 @@ const QAVerifiedModal = ({
             className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100]"
           />
 
-          {/* Modal Container */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -54,7 +52,6 @@ const QAVerifiedModal = ({
                 className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-card border border-success/30 shadow-2xl shadow-success/20 pointer-events-auto flex flex-col outline-none"
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Header */}
                 <div className="bg-success/5 border-b border-success/20 px-6 py-4 flex items-center justify-between sticky top-0 z-10 shrink-0">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center">
@@ -76,7 +73,6 @@ const QAVerifiedModal = ({
                   </button>
                 </div>
 
-                {/* Content */}
                 <div className="p-6 overflow-y-auto">
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
@@ -114,7 +110,6 @@ const QAVerifiedModal = ({
                   </motion.div>
                 </div>
 
-                {/* Actions */}
                 <div className="p-6 pt-2 shrink-0">
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button

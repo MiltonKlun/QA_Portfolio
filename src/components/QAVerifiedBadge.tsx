@@ -58,7 +58,6 @@ const QAVerifiedBadge = ({ testName, testFile }: QAVerifiedBadgeProps) => {
                 <ExternalLink className="w-3 h-3" />
               </a>
 
-              {/* Arrow */}
               <div className="absolute left-1/2 -translate-x-1/2 -bottom-1.5 w-3 h-3 bg-card border-b border-r border-success/30 rotate-45" />
             </div>
           </motion.div>

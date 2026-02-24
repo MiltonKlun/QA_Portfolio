@@ -18,21 +18,16 @@ describe('ThemeToggle Component', () => {
 
     const button = screen.getByRole('button', { name: /switch to /i });
     
-    // Initial state is dark based on hook default
     expect(document.documentElement.classList.contains('dark')).toBe(true);
     expect(document.documentElement.classList.contains('light')).toBe(false);
 
-    // Click to toggle
     fireEvent.click(button);
 
-    // Verify update to light
     expect(document.documentElement.classList.contains('light')).toBe(true);
     expect(window.localStorage.getItem('qa-portfolio-theme')).toBe('light');
     
-    // Click to toggle back
     fireEvent.click(button);
     
-    // Verify update back to dark
     expect(document.documentElement.classList.contains('dark')).toBe(true);
     expect(window.localStorage.getItem('qa-portfolio-theme')).toBe('dark');
   });

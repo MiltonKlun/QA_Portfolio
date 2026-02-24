@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { ImageOff, CheckCircle } from "lucide-react";
 import BugHint from "@/components/BugHint";
 
-// Import tech logos
 import pythonLogo from "@/assets/tech-logos/python.svg";
 import javaLogo from "@/assets/tech-logos/java.svg";
 import sqlLogo from "@/assets/tech-logos/sql.webp";
@@ -34,19 +33,19 @@ interface TechStackSectionProps {
 interface TechItem {
   name: string;
   logo: string;
-  isBroken?: boolean; // For untested variant
-  wasFixed?: boolean; // For tested variant (items that were broken)
+  isBroken?: boolean;
+  wasFixed?: boolean;
 }
 
 const getTechStack = (isUntested: boolean): Record<string, TechItem[]> => ({
   languages: [
-    { name: "Python", logo: pythonLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
+    { name: "Python", logo: pythonLogo, isBroken: isUntested, wasFixed: !isUntested },
     { name: "Java", logo: javaLogo },
     { name: "SQL", logo: sqlLogo },
   ],
   automation: [
-    { name: "Playwright", logo: playwrightLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
-    { name: "Selenium", logo: seleniumLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
+    { name: "Playwright", logo: playwrightLogo, isBroken: isUntested, wasFixed: !isUntested },
+    { name: "Selenium", logo: seleniumLogo, isBroken: isUntested, wasFixed: !isUntested },
     { name: "Pytest", logo: pytestLogo },
     { name: "Cucumber", logo: cucumberLogo },
     { name: "Appium", logo: appiumLogo },
@@ -61,7 +60,7 @@ const getTechStack = (isUntested: boolean): Record<string, TechItem[]> => ({
   infrastructure: [
     { name: "AWS", logo: awsLogo },
     { name: "Git", logo: gitLogo },
-    { name: "Docker", logo: dockerLogo, isBroken: isUntested, wasFixed: !isUntested }, // Bug: broken
+    { name: "Docker", logo: dockerLogo, isBroken: isUntested, wasFixed: !isUntested },
     { name: "Jenkins", logo: jenkinsLogo },
     { name: "GitHub Actions", logo: githubLogo },
   ],
@@ -93,7 +92,6 @@ const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechSta
         transition={{ duration: 0.5 }}
         className="group/section"
       >
-        {/* Mobile section title */}
         <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 flex items-center justify-between group/mobile">
           Skills
           {isTested && (
@@ -108,7 +106,6 @@ const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechSta
           )}
         </h2>
 
-        {/* Desktop verified tick */}
         {isTested && (
           <button
             onClick={onBugClick}
@@ -161,7 +158,6 @@ const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechSta
                   >
 
                     {item.isBroken ? (
-                      // BUG: Show broken image placeholder
                       <div className="w-full h-full flex items-center justify-center">
                         <ImageOff className="w-6 h-6 text-danger/50" />
                       </div>
@@ -175,13 +171,11 @@ const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechSta
                         className="w-full h-full object-contain"
                       />
                     )}
-                    {/* Tooltip - only show for non-broken items */}
                     {!item.isBroken && (
                       <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-popover text-popover-foreground rounded shadow-lg opacity-0 group-hover/item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
                         {item.name}
                       </span>
                     )}
-                    {/* BUG tooltip for broken items - shows undefined */}
                     {item.isBroken && (
                       <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-danger/20 text-danger border border-danger/30 rounded shadow-lg opacity-0 group-hover/item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
                         undefined

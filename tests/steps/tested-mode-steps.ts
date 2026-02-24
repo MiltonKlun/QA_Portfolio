@@ -6,14 +6,11 @@ import { BasePage } from '../pages/BasePage';
 
 const { Given, When, Then } = createBdd(test);
 
-// Scenario: Toggling to Tested Mode repairs the application
 When('I click the "Switch to Tested Version" toggle', async ({ page }) => {
-    // Navigate back to the lobby from the Untested page
     const backButton = new BasePage(page).backButtonLocator;
     await backButton.click();
     await page.waitForURL('**/');
 
-    // Now click "Launch Verified" on the landing page
     await page.getByRole('link', { name: /Launch Verified/i }).click();
     await page.waitForURL('**/tested');
 });
@@ -27,7 +24,6 @@ Then('the URL should contain {string}', async ({ page }, urlPart: string) => {
 });
 
 Then('the Hero Headline should display {string}', async ({ page }, text: string) => {
-    // The text might be in H1 or H2 depending on the layout/semantic structure.
     await expect(new BasePage(page).getHeadingLocator(text)).toBeVisible();
 });
 
@@ -35,7 +31,6 @@ Then('the Tech Stack images should load correctly', async ({ page }) => {
     const images = new TestedPage(page).techStackImagesLocator;
     await expect(images.first()).toBeVisible();
 
-    // Check for broken images
     const count = await images.count();
     for (let i = 0; i < count; ++i) {
         const img = images.nth(i);
@@ -45,30 +40,24 @@ Then('the Tech Stack images should load correctly', async ({ page }) => {
     }
 });
 
-// Scenario: Verified Badges link to Code
 Given('I am on the "Tested" page', async ({ page }) => {
     await page.goto('/tested');
 });
 
 When('I hover over the "Green Tick" badge in the About section', async ({ page }) => {
-    // The green tick is inside the h2 on mobile, or a separate button on desktop.
-    // Look for any *visible* button with title containing "verified" inside the #about section.
     const badge = new TestedPage(page).getVerifiedBadgesLocator();
     await expect(badge.first()).toBeVisible({ timeout: 5000 });
 });
 
 Then('I should see a tooltip with {string}', async ({ page }, text: string) => {
-    // Check for a title attribute matching the expected text
     const elementWithTitle = new TestedPage(page).getVerifiedBadgeLocator(text);
     await expect(elementWithTitle.first()).toBeVisible();
 });
 
 Then('the tooltip should reference the test file {string}', async ({ page }, filename: string) => {
-    // Check for visible text (custom tooltip) OR title attribute (native tooltip)
     try {
         await expect(page.getByText(filename)).toBeVisible({ timeout: 1000 });
     } catch {
-        // Fallback: Check for title attribute on any visible element
         const elementWithTitle = new TestedPage(page).getVerifiedBadgeLocator(filename);
         await expect(elementWithTitle).toBeVisible();
     }

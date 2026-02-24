@@ -9,7 +9,6 @@ export const AriaLiveRegion = ({ message }: AriaLiveRegionProps) => {
 
   useEffect(() => {
     if (message) {
-      // Small delay ensures the screen reader catches the change if it happens immediately on mount
       const timeoutId = setTimeout(() => {
         setAnnouncement(message);
       }, 50);
