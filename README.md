@@ -1,18 +1,16 @@
 # QA Automation Engineer Portfolio
 
 <div align="center">
-  <img src="https://github.com/MiltonKlun/QA_Portfolio/actions/workflows/tests.yml/badge.svg" alt="Playwright Tests" />
-</div>
-
-<br/>
-
-<div align="center">
 
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🔴 Untested Mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🟢 Verified Mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
 | :---: | :---: |
 | Find the hidden bugs | See the validated fixes |
 | <a href="https://www.miltonklun.com/untested"><img src="https://img.shields.io/badge/TRY_UNTESTED-FF4444?style=for-the-badge&logo=codeforces&logoColor=white" alt="Try Untested Mode"/></a> | <a href="https://www.miltonklun.com/tested"><img src="https://img.shields.io/badge/TRY_VERIFIED-22C55E?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Try Verified Mode"/></a> |
 
+</div>
+
+<div align="center">
+  <img src="https://github.com/MiltonKlun/QA_Portfolio/actions/workflows/tests.yml/badge.svg" alt="Playwright Tests" />
 </div>
 
 ---
