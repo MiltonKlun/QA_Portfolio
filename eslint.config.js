@@ -28,4 +28,10 @@ export default tseslint.config(
       "react-refresh/only-export-components": "off",
     },
   },
+  {
+    files: ["tests/**/*.ts", "tests/**/*.tsx"],
+    rules: {
+      "react-hooks/rules-of-hooks": "off",
+    },
+  },
 );

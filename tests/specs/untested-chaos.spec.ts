@@ -18,7 +18,7 @@ test.describe('The "Untested" Experience (Chaos Mode)', () => {
         const count = await untestedPage.socialLink.count();
         expect(count).toBeGreaterThan(0);
         const firstLink = untestedPage.socialLink.first();
-        await expect(firstLink).toHaveAttribute('href', /http:\/\/\/|null|undefined/);
+        await expect(firstLink).toHaveAttribute('href', /linkedin\.com\/in\/undefined/);
     });
 
     test('Bug #3: Tech Stack icons should be broken', async () => {

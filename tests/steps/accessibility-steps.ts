@@ -1,5 +1,5 @@
 import { createBdd } from 'playwright-bdd';
-import { test } from 'playwright-bdd';
+import { test } from '../fixtures/pom-fixtures';
 import { expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { createHtmlReport } from 'axe-html-reporter';

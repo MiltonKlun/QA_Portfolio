@@ -5,20 +5,24 @@ export class BasePage {
     private readonly _sidebar: Locator;
     private readonly _themeToggle: Locator;
     private readonly _hintsToggle: Locator;
+    private readonly _checksToggle: Locator;
     private readonly _heroHeadline: Locator;
     private readonly _skillsSection: Locator;
     private readonly _aboutSection: Locator;
     private readonly _experienceSection: Locator;
+    private readonly _launchVerifiedLink: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this._sidebar = page.locator('aside, nav, header');
         this._themeToggle = page.locator('button[aria-label*="Switch to"]');
         this._hintsToggle = page.getByRole('button', { name: /HINTS/i });
+        this._checksToggle = page.getByRole('button', { name: /CHECKS/i });
         this._heroHeadline = page.locator('h1');
         this._skillsSection = page.locator('#skills');
         this._aboutSection = page.locator('#about');
         this._experienceSection = page.locator('#experience');
+        this._launchVerifiedLink = page.getByRole('link', { name: /Launch Verified/i });
     }
 
     async navigateTo(path: string) {
@@ -79,6 +83,26 @@ export class BasePage {
 
     get hintsToggleOnLocator() {
         return this.page.getByRole('button', { name: 'HINTS ON', exact: true });
+    }
+
+    get checksToggleLocator() {
+        return this._checksToggle;
+    }
+
+    get checksToggleOffLocator() {
+        return this.page.getByRole('button', { name: 'CHECKS', exact: true });
+    }
+
+    get checksToggleOnLocator() {
+        return this.page.getByRole('button', { name: 'CHECKS ON' });
+    }
+
+    get launchVerifiedLinkLocator() {
+        return this._launchVerifiedLink;
+    }
+
+    getTextLocator(text: string, exact = false) {
+        return this.page.getByText(text, { exact });
     }
 
     get backButtonLocator() {

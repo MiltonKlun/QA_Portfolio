@@ -4,6 +4,7 @@ import { defineBddConfig } from 'playwright-bdd';
 const testDir = defineBddConfig({
     features: 'qa-artifacts/features/*.feature',
     steps: 'tests/steps/*.ts',
+    importTestFrom: 'tests/fixtures/pom-fixtures.ts',
 });
 
 export default defineConfig({

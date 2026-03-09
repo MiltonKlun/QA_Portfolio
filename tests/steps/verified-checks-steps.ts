@@ -1,30 +1,33 @@
 import { createBdd } from 'playwright-bdd';
-import { test } from 'playwright-bdd';
+import { test } from '../fixtures/pom-fixtures';
 import { expect } from '@playwright/test';
 import { TestedPage } from '../pages/TestedPage';
+import { BasePage } from '../pages/BasePage';
 
 const { Given, When, Then } = createBdd(test);
 
 Then('I should see the "CHECKS" toggle button', async ({ page }) => {
-    await expect(page.getByRole('button', { name: /CHECKS/i })).toBeVisible();
+    await expect(new BasePage(page).checksToggleLocator).toBeVisible();
 });
 
 Then('the "CHECKS" toggle should be OFF', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'CHECKS', exact: true })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'CHECKS ON' })).not.toBeVisible();
+    const basePage = new BasePage(page);
+    await expect(basePage.checksToggleOffLocator).toBeVisible();
+    await expect(basePage.checksToggleOnLocator).not.toBeVisible();
 });
 
 Then('the "CHECKS" toggle should be ON', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'CHECKS ON' })).toBeVisible();
+    await expect(new BasePage(page).checksToggleOnLocator).toBeVisible();
 });
 
 When('I click the "CHECKS" toggle button', async ({ page }) => {
-    const button = page.getByRole('button', { name: /CHECKS/i });
+    const button = new BasePage(page).checksToggleLocator;
     await button.click();
 });
 
 Given('the "CHECKS" toggle is ON', async ({ page }) => {
-    const button = page.getByRole('button', { name: /CHECKS/i });
+    const basePage = new BasePage(page);
+    const button = basePage.checksToggleLocator;
     const text = await button.textContent();
     if (text === 'CHECKS') {
         await button.click();
@@ -57,13 +60,13 @@ Then('the verified checkmarks should be visible', async ({ page }) => {
 });
 
 Then('I should see "VERIFIED" in the header', async ({ page }) => {
-    await expect(page.getByText('VERIFIED', { exact: true })).toBeVisible();
+    await expect(new BasePage(page).getTextLocator('VERIFIED', true)).toBeVisible();
 });
 
 Then('I should not see "Back to Lobby" in the header', async ({ page }) => {
-    await expect(page.getByText('Back to Lobby')).not.toBeVisible();
+    await expect(new BasePage(page).getTextLocator('Back to Lobby')).not.toBeVisible();
 });
 
 Then('I should not see "QA VERIFIED" in the header', async ({ page }) => {
-    await expect(page.getByText('QA VERIFIED')).not.toBeVisible();
+    await expect(new BasePage(page).getTextLocator('QA VERIFIED')).not.toBeVisible();
 });

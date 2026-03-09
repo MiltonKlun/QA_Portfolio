@@ -1,5 +1,5 @@
 import { createBdd } from 'playwright-bdd';
-import { test } from 'playwright-bdd';
+import { test } from '../fixtures/pom-fixtures';
 import { expect, Page, Locator } from '@playwright/test';
 import { TEST_DATA } from '../fixtures/test-data';
 import { UntestedPage } from '../pages/UntestedPage';

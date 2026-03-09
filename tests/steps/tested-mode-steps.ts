@@ -1,5 +1,5 @@
 import { createBdd } from 'playwright-bdd';
-import { test } from 'playwright-bdd';
+import { test } from '../fixtures/pom-fixtures';
 import { expect } from '@playwright/test';
 import { TestedPage } from '../pages/TestedPage';
 import { BasePage } from '../pages/BasePage';
@@ -11,7 +11,7 @@ When('I click the "Switch to Tested Version" toggle', async ({ page }) => {
     await backButton.click();
     await page.waitForURL('**/');
 
-    await page.getByRole('link', { name: /Launch Verified/i }).click();
+    await new BasePage(page).launchVerifiedLinkLocator.click();
     await page.waitForURL('**/tested');
 });
 
@@ -56,7 +56,7 @@ Then('I should see a tooltip with {string}', async ({ page }, text: string) => {
 
 Then('the tooltip should reference the test file {string}', async ({ page }, filename: string) => {
     try {
-        await expect(page.getByText(filename)).toBeVisible({ timeout: 1000 });
+        await expect(new BasePage(page).getTextLocator(filename)).toBeVisible({ timeout: 1000 });
     } catch {
         const elementWithTitle = new TestedPage(page).getVerifiedBadgeLocator(filename);
         await expect(elementWithTitle).toBeVisible();

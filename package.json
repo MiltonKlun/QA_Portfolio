@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test:e2e": "npx bddgen && npx playwright test",
-    "test:ui": "npx playwright test --ui",
+    "test:ui": "npx bddgen && npx playwright test --ui",
     "test:component": "vitest run",
     "test:report": "npx playwright show-report"
   },
