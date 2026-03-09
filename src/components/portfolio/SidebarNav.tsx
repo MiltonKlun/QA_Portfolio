@@ -27,6 +27,11 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
 
   useEffect(() => {
     if (isUntested) {
+      console.error(
+        "Uncaught TypeError: Cannot read properties of undefined (reading 'name')\n" +
+        "    at SidebarNav (SidebarNav.tsx:27)\n" +
+        "    at renderWithHooks (react-dom.development.js:16305)"
+      );
       const glitches = ["null", "undefined", "NaN", "[Object]", "Error", "void"];
       const interval = setInterval(() => {
         setBuggyName(glitches[Math.floor(Math.random() * glitches.length)]);
@@ -138,14 +143,14 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
           {isUntested ? (
             <>
               <a
-                href="http:///"
+                href="mailto:"
                 onClick={(e) => { e.preventDefault(); onSocialClick?.(e); }}
                 className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               >
                 <Mail className="w-5 h-5 lg:w-6 lg:h-6" />
               </a>
               <a
-                href="http:///"
+                href="https://linkedin.com/in/undefined"
                 onClick={(e) => { e.preventDefault(); onSocialClick?.(e); }}
                 className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                 aria-label="LinkedIn (bug)"
@@ -153,7 +158,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
                 <Linkedin className="w-5 h-5 lg:w-6 lg:h-6" />
               </a>
               <a
-                href="http:///"
+                href="https://github/MiltonKlun"
                 onClick={(e) => { e.preventDefault(); onSocialClick?.(e); }}
                 className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                 aria-label="GitHub (bug)"

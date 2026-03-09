@@ -37,6 +37,13 @@ interface TechItem {
   wasFixed?: boolean;
 }
 
+const MISMATCHED_NAMES: Record<string, string> = {
+  Python: "Java",
+  Playwright: "Cypress",
+  Selenium: "Puppeteer",
+  Docker: "Kubernetes",
+};
+
 const getTechStack = (isUntested: boolean): Record<string, TechItem[]> => ({
   languages: [
     { name: "Python", logo: pythonLogo, isBroken: isUntested, wasFixed: !isUntested },
@@ -178,7 +185,7 @@ const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechSta
                     )}
                     {item.isBroken && (
                       <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-danger/20 text-danger border border-danger/30 rounded shadow-lg opacity-0 group-hover/item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
-                        undefined
+                        {MISMATCHED_NAMES[item.name] ?? "undefined"}
                       </span>
                     )}
                   </div>

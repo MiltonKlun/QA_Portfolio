@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,12 +6,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/hooks/useTheme";
 import ThemeToggle from "@/components/ThemeToggle";
-import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import UntestedPage from "./pages/Untested";
-import TestedPage from "./pages/Tested";
 import { Analytics } from "@vercel/analytics/react";
+
+const Index = lazy(() => import("./pages/Index"));
+const UntestedPage = lazy(() => import("./pages/Untested"));
+const TestedPage = lazy(() => import("./pages/Tested"));
 
 const queryClient = new QueryClient();
 
@@ -21,13 +23,15 @@ const AppRoutes = () => {
   return (
     <>
       {isLandingPage && <ThemeToggle />}
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/untested" element={<UntestedPage />} />
-        <Route path="/tested" element={<TestedPage />} />
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/untested" element={<UntestedPage />} />
+          <Route path="/tested" element={<TestedPage />} />
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </>
   );
 };

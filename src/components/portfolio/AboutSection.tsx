@@ -14,7 +14,7 @@ const AboutSection = ({ variant, onBugClick, showHint, showChecks }: AboutSectio
   const isTested = variant === "tested";
 
   return (
-    <section id="about" className="scroll-mt-24 relative">
+    <section id="about" className="scroll-mt-24 relative" aria-label={isUntested ? "" : "About Milton Klun"}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

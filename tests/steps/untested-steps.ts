@@ -1,5 +1,5 @@
 import { createBdd } from 'playwright-bdd';
-import { test } from 'playwright-bdd';
+import { test } from '../fixtures/pom-fixtures';
 import { expect } from '@playwright/test';
 import { TEST_DATA } from '../fixtures/test-data';
 import { UntestedPage } from '../pages/UntestedPage';
@@ -82,4 +82,4 @@ Then('the text paragraph should overflow the container', async ({ page }) => {
 Then('a horizontal scrollbar should be visible', async () => {
     expect(true).toBe(true);
 });
-
+
