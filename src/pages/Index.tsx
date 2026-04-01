@@ -5,6 +5,9 @@ import { AlertTriangle, ShieldCheck, Bug, CheckCircle } from "lucide-react";
 
 import SEO from "@/components/SEO";
 import ParticleGrid from "@/components/ParticleGrid";
+import BorderGlow from "@/components/BorderGlow";
+import GradientText from "@/components/GradientText";
+import ShinyText from "@/components/ShinyText";
 
 const Index = () => {
   return (
@@ -24,32 +27,36 @@ const Index = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-10 sm:mb-14 lg:mb-16"
+          className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-7 sm:mb-14 lg:mb-16"
         >
-          <span className="text-foreground block">Welcome to my</span>
-          <span className="text-gradient">QA Portfolio</span>
+          <span className="block"><ShinyText text="Welcome to my" color="#d4d4d8" shineColor="#ffffff" speed={3} delay={1.5} /></span>
+          <GradientText colors={["#3b82f6", "#a855f6", "#6366f1"]} animationSpeed={8} className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-extrabold">QA Portfolio</GradientText>
         </motion.h1>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-6 lg:gap-8 w-full max-w-xs mx-auto md:max-w-none"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 w-full max-w-xs mx-auto md:max-w-none"
         >
-          <div className="group relative p-5 sm:p-8 rounded-2xl glass border border-danger/20 hover:border-danger/50 transition-all duration-300 hover:shadow-danger/20 hover:shadow-2xl h-full cursor-default">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--danger)/0.1)_0%,transparent_70%)] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-            <div className="relative z-10 flex flex-col h-full">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-danger/10 flex items-center justify-center mb-4 sm:mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+          <BorderGlow
+            borderRadius={16}
+            glowRadius={30}
+            glowColor="0 80 60"
+            colors={['#ef4444', '#f97316', '#dc2626']}
+            className="group h-full cursor-default"
+          >
+            <div className="relative p-4 sm:p-8 flex flex-col h-full">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-danger/10 flex items-center justify-center mb-2 sm:mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
                 <Bug className="w-6 h-6 sm:w-8 sm:h-8 text-danger" />
               </div>
 
-              <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+              <div className="flex items-center justify-center gap-2 mb-2 sm:mb-4">
                 <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-danger" />
-                <h2 className="text-xl sm:text-2xl font-bold text-danger">Untested Version</h2>
+                <h2 className="text-xl sm:text-2xl font-bold"><GradientText colors={["#ef4444", "#f97316", "#ef4444"]} animationSpeed={6}>Untested Version</GradientText></h2>
               </div>
 
-              <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 flex-grow">
+              <p className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-8 flex-grow">
                 Experience a product without QA intervention, when potential bugs slip through to production.
               </p>
 
@@ -60,22 +67,26 @@ const Index = () => {
                 </Button>
               </Link>
             </div>
-          </div>
+          </BorderGlow>
 
-          <div className="group relative p-5 sm:p-8 rounded-2xl glass border border-success/20 hover:border-success/50 transition-all duration-300 hover:shadow-success/20 hover:shadow-2xl h-full cursor-default">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--success)/0.1)_0%,transparent_70%)] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-            <div className="relative z-10 flex flex-col h-full">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-success/10 flex items-center justify-center mb-4 sm:mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+          <BorderGlow
+            borderRadius={16}
+            glowRadius={30}
+            glowColor="142 76 50"
+            colors={['#22c55e', '#10b981', '#34d399']}
+            className="group h-full cursor-default"
+          >
+            <div className="relative p-4 sm:p-8 flex flex-col h-full">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-success/10 flex items-center justify-center mb-2 sm:mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
                 <ShieldCheck className="w-6 h-6 sm:w-8 sm:h-8 text-success" />
               </div>
 
-              <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+              <div className="flex items-center justify-center gap-2 mb-2 sm:mb-4">
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-success" />
-                <h2 className="text-xl sm:text-2xl font-bold text-success">Verified Version</h2>
+                <h2 className="text-xl sm:text-2xl font-bold"><GradientText colors={["#22c55e", "#34d399", "#22c55e"]} animationSpeed={6}>Verified Version</GradientText></h2>
               </div>
 
-              <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 flex-grow">
+              <p className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-8 flex-grow">
                 See the stable product after a quality assurance process.
                 Every feature tested and verified.
               </p>
@@ -87,7 +98,7 @@ const Index = () => {
                 </Button>
               </Link>
             </div>
-          </div>
+          </BorderGlow>
         </motion.div>
       </div>
     </div>

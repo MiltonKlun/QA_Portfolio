@@ -124,7 +124,7 @@ const ModeTransition = ({ isPlaying, onComplete }: ModeTransitionProps) => {
                                 className="text-center"
                             >
                                 <p className="text-lg sm:text-xl font-semibold text-success">
-                                    All Tests Passing ✓
+                                    All Tests Passing
                                 </p>
                             </motion.div>
                         )}
