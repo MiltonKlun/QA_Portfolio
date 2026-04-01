@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useAnimationFrame, useTransform } from 'framer-motion';
 import './ShinyText.css';
 
@@ -102,12 +102,14 @@ const ShinyText = ({
   }, [pauseOnHover]);
 
   const gradientStyle = {
-    backgroundImage: `linear-gradient(${spread}deg, ${color} 0%, ${color} 35%, ${shineColor} 50%, ${color} 65%, ${color} 100%)`,
+    '--shiny-color': color,
+    '--shiny-shine-color': shineColor,
+    backgroundImage: `linear-gradient(${spread}deg, var(--shiny-color) 0%, var(--shiny-color) 35%, var(--shiny-shine-color) 50%, var(--shiny-color) 65%, var(--shiny-color) 100%)`,
     backgroundSize: '200% auto',
     WebkitBackgroundClip: 'text' as const,
     backgroundClip: 'text' as const,
     WebkitTextFillColor: 'transparent' as const
-  };
+  } as React.CSSProperties;
 
   return (
     <motion.span
