@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { ImageOff, CheckCircle } from "lucide-react";
 import BugHint from "@/components/BugHint";
+import BorderGlow from "@/components/BorderGlow";
+import ShinyText from "@/components/ShinyText";
 
 import pythonLogo from "@/assets/tech-logos/python.svg";
 import javaLogo from "@/assets/tech-logos/java.svg";
@@ -99,8 +101,8 @@ const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechSta
         transition={{ duration: 0.5 }}
         className="group/section"
       >
-        <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 flex items-center justify-between group/mobile">
-          Skills
+        <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest mb-6 flex items-center justify-between group/mobile">
+          <ShinyText text="Skills" color="#9ca3af" shineColor="#e5e7eb" speed={3} delay={1.5} />
           {isTested && (
             <button
               onClick={onBugClick}
@@ -146,49 +148,58 @@ const TechStackSection = ({ variant, onBugClick, showHint, showChecks }: TechSta
               </div>
               <div className="flex flex-wrap gap-3">
                 {category.items.map((item) => (
-                  <div
+                  <BorderGlow
                     key={item.name}
-                    onClick={() => item.isBroken && onBugClick?.()}
-                    onKeyDown={(e) => {
-                      if (item.isBroken && (e.key === "Enter" || e.key === " ")) {
-                        e.preventDefault();
-                        onBugClick?.();
-                      }
-                    }}
-                    tabIndex={item.isBroken ? 0 : -1}
-                    aria-label={item.isBroken ? "Trigger broken image bug" : item.name}
-                    className={`group/item relative flex items-center justify-center w-12 h-12 rounded-lg bg-card border transition-all duration-200 p-2 outline-none focus-visible:ring-2 focus-visible:ring-primary ${item.isBroken
-                      ? "border-danger/50 cursor-pointer hover:border-danger bg-danger/5"
-                      : "border-border hover:border-primary/50 hover:scale-110"
+                    borderRadius={8}
+                    glowRadius={8}
+                    edgeSensitivity={20}
+                    coneSpread={30}
+                    glowColor={item.isBroken ? "0 80 60" : "210 80 60"}
+                    colors={item.isBroken ? ['#ef4444', '#f97316', '#dc2626'] : ['#3b82f6', '#6366f1', '#8b5cf6']}
+                    className={`group/item w-12 h-12 transition-all duration-200 ${item.isBroken
+                      ? "cursor-pointer"
+                      : "hover:scale-110"
                       }`}
-                    title={item.isBroken ? "" : item.name}
                   >
-
-                    {item.isBroken ? (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <ImageOff className="w-6 h-6 text-danger/50" />
-                      </div>
-                    ) : (
-                      <img
-                        src={item.logo}
-                        alt={item.name}
-                        width={56}
-                        height={56}
-                        loading="lazy"
-                        className="w-full h-full object-contain"
-                      />
-                    )}
-                    {!item.isBroken && (
-                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-popover text-popover-foreground rounded shadow-lg opacity-0 group-hover/item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
-                        {item.name}
-                      </span>
-                    )}
-                    {item.isBroken && (
-                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-danger/20 text-danger border border-danger/30 rounded shadow-lg opacity-0 group-hover/item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
-                        {MISMATCHED_NAMES[item.name] ?? "undefined"}
-                      </span>
-                    )}
-                  </div>
+                    <div
+                      onClick={() => item.isBroken && onBugClick?.()}
+                      onKeyDown={(e) => {
+                        if (item.isBroken && (e.key === "Enter" || e.key === " ")) {
+                          e.preventDefault();
+                          onBugClick?.();
+                        }
+                      }}
+                      tabIndex={item.isBroken ? 0 : -1}
+                      aria-label={item.isBroken ? "Trigger broken image bug" : item.name}
+                      className="relative flex items-center justify-center w-full h-full p-2 outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                      title={item.isBroken ? "" : item.name}
+                    >
+                      {item.isBroken ? (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <ImageOff className="w-6 h-6 text-danger/50" />
+                        </div>
+                      ) : (
+                        <img
+                          src={item.logo}
+                          alt={item.name}
+                          width={56}
+                          height={56}
+                          loading="lazy"
+                          className="w-full h-full object-contain"
+                        />
+                      )}
+                      {!item.isBroken && (
+                        <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-popover text-popover-foreground rounded shadow-lg opacity-0 group-hover/item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                          {item.name}
+                        </span>
+                      )}
+                      {item.isBroken && (
+                        <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs bg-danger/20 text-danger border border-danger/30 rounded shadow-lg opacity-0 group-hover/item:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-10">
+                          {MISMATCHED_NAMES[item.name] ?? "undefined"}
+                        </span>
+                      )}
+                    </div>
+                  </BorderGlow>
                 ))}
               </div>
             </motion.div>

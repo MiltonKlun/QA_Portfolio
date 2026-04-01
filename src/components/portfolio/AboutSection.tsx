@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import BugHint from "@/components/BugHint";
+import ShinyText from "@/components/ShinyText";
 
 interface AboutSectionProps {
   variant: "untested" | "tested";
@@ -22,8 +23,8 @@ const AboutSection = ({ variant, onBugClick, showHint, showChecks }: AboutSectio
         transition={{ duration: 0.5 }}
         className="group"
       >
-        <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest text-foreground mb-6 flex items-center justify-between group/mobile">
-          About Me
+        <h2 className="lg:hidden text-sm font-bold uppercase tracking-widest mb-6 flex items-center justify-between group/mobile">
+          <ShinyText text="About Me" color="#9ca3af" shineColor="#e5e7eb" speed={3} delay={1.5} />
           {isTested && (
             <button
               onClick={onBugClick}

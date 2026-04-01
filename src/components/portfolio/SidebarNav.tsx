@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, CheckCircle } from "lucide-react";
 import BugHint from "@/components/BugHint";
+import GradientText from "@/components/GradientText";
+import ShinyText from "@/components/ShinyText";
 
 interface SidebarNavProps {
   variant: "untested" | "tested";
@@ -65,7 +67,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
               role="button"
               tabIndex={0}
               aria-label="Trigger corrupted name bug"
-              className="text-4xl lg:text-5xl font-extrabold mb-2 cursor-pointer text-danger/50 italic relative inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+              className="text-4xl lg:text-5xl font-extrabold mb-2 cursor-pointer text-danger italic relative w-fit overflow-visible focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
               onClick={onNameClick}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -75,14 +77,14 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
               }}
               title="Click to see bug details"
             >
-              <span className="opacity-40">{buggyName}</span>
+              <ShinyText text={buggyName} color="#ef4444" shineColor="#fca5a5" speed={3} delay={1.5} className="opacity-60 pr-4 pb-1" />
               <BugHint visible={!!showHint && !foundBugs?.has("name")} className="-right-6 top-1/2 -translate-y-1/2" />
             </h1>
           ) : (
             <div className="group flex items-center gap-3">
 
               <h1 className="text-4xl lg:text-5xl font-extrabold mb-2 flex items-center">
-                <span className="text-foreground">Milton Klun</span>
+                <ShinyText text="Milton Klun" color="#d4d4d8" shineColor="#ffffff" speed={3} delay={1.5} />
               </h1>
               <button
                 onClick={(e) => {
@@ -98,8 +100,8 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
             </div>
           )}
         </div>
-        <h2 className="text-lg lg:text-xl font-semibold text-gradient mb-2">
-          QA Automation Engineer
+        <h2 className="text-lg lg:text-xl font-semibold mb-2">
+          <GradientText colors={["#3b82f6", "#a855f6", "#6366f1"]} animationSpeed={8}>QA Automation Engineer</GradientText>
         </h2>
 
       </motion.div>
@@ -126,7 +128,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
                     : "w-8 bg-muted-foreground group-hover:w-16 group-hover:bg-foreground"
                     }`}
                 />
-                {item.label}
+                <ShinyText text={item.label} color="#9ca3af" shineColor="#e5e7eb" speed={3} delay={1.5} />
               </button>
             </motion.li>
           ))}
