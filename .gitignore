@@ -62,3 +62,15 @@ notes.md
 # Keep README.md
 !README.md
 axe-reports/
+
+# AI assistant state
+.claude/
+
+# Bun lockfile (project uses npm)
+bun.lockb
+
+# Test output files
+test-results.json
+
+# Planning docs
+IMPROVEMENTS_PLAN.md
