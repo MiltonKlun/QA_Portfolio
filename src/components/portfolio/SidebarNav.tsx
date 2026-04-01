@@ -67,7 +67,7 @@ const SidebarNav = ({ variant, activeSection, onNavigate, onSocialClick, onNameC
               role="button"
               tabIndex={0}
               aria-label="Trigger corrupted name bug"
-              className="text-4xl lg:text-5xl font-extrabold mb-2 cursor-pointer italic relative w-fit overflow-visible focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+              className="text-4xl lg:text-5xl font-extrabold mb-2 cursor-pointer text-danger italic relative w-fit overflow-visible focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
               onClick={onNameClick}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
